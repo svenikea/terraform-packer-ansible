@@ -14,3 +14,10 @@ private_cidr_blocks     = [
     "10.0.3.0/24",
     "10.0.4.0/24"
 ]
+
+instance_number         = 2
+instance_class          = "t3.small"
+database_engine         = "mysql"
+database_version        = "5.7.12"
+aurora_user             = "auroraadmin"
+backup_retention_period = 1

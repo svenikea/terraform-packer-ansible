@@ -10,6 +10,20 @@ module "network_layer" {
     private_cidr_blocks     = var.private_cidr_blocks
 }
 
+# database layer
+module "database_layer" {
+    source                  = "./modules/database_layer"
+    project                 = var.project 
+    environment             = var.environment
+    instance_number         = var.instance_number
+    instance_class          = var.instance_class
+    aurora_engine           = var.database_engine
+    engine_version          = var.database_version
+    aurora_user             = var.aurora_user
+    aurora_vpc_id           = module.network_layer.vpc_id
+    private_subnets         = module.network_layer.private_subnets
+    backup_retention_period = var.backup_retention_period
+}
 # route_layer
 # module "route_layer" {
 #     source    = "./modules/route_layer"

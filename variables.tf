@@ -33,4 +33,32 @@ variable "private_cidr_blocks" {
     description = "A list of private subnet CIDR Block"
 }
 
+variable "instance_number" {
+    type        = number 
+    description = "A numbber of instances"
+}
 
+variable "instance_class" {
+    type        = string
+    description = "Instance class"
+}
+
+variable "database_engine" {
+    type        = string
+    description = "Aurora engine"
+}
+
+variable "database_version" {
+    type        = string
+    description = "Aurora version"
+}
+
+variable "aurora_user" {
+    type        = string 
+    description = "Aurora username"
+}
+
+variable "backup_retention_period" {
+    type        = number
+    description = "Backup rentation perioud"
+}

@@ -1,4 +1,4 @@
-resource "aws_security_group" "elb_sg" {
+uresource "aws_security_group" "elb_sg" {
     name = "lab-architect-sg-elb"
     vpc_id = var.vpc_id
     description = "Allow HTTP Web Access"
