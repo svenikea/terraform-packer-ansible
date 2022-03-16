@@ -35,6 +35,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
     engine_version          = var.engine_version
     master_username         = var.aurora_user
     master_password         = random_string.aurora_password.result
+    database_name           = var.aurora_database_name
     vpc_security_group_ids  = [aws_security_group.aurora_sg.id]
     db_subnet_group_name    = aws_db_subnet_group.aurora_subnet.id
     skip_final_snapshot     = true

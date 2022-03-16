@@ -51,3 +51,5 @@ variable "backup_retention_period" {
     type        = number
     description = "Backup rentation perioud"
 }
+
+variable "aurora_database_name" {}

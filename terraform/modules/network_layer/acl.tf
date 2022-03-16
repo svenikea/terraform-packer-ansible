@@ -118,14 +118,24 @@ resource "aws_network_acl" "my_private_acl" {
         rule_no         = 150
         action          = "allow"
         cidr_block      = var.vpc_cidr_block
+        from_port       = var.app_port
+        to_port         = var.app_port
+    }
+    ingress {
+        protocol        = "tcp"
+        rule_no         = 160
+        action          = "allow"
+        #cidr_block      = var.vpc_cidr_block
+        cidr_block      = "0.0.0.0/0"
         from_port       = 1024
         to_port         = 65535
     }
     egress {
-        protocol        = -1
+        protocol        = "all"
         rule_no         = 100
         action          = "allow"
         cidr_block      = "0.0.0.0/0"
+        #cidr_block      = var.vpc_cidr_block
         from_port       = 0
         to_port         = 0
     }

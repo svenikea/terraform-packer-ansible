@@ -9,3 +9,11 @@ output "aurora_rds_instance_endpoint" {
 output "aurora_rds_cluster_endpoint" {
     value = aws_rds_cluster.aurora_cluster.endpoint
 }
+
+output "aurora_rds_cluster_database" {
+    value = aws_rds_cluster.aurora_cluster.database_name
+}
+
+output "aurora_sg" {
+    value = aws_security_group.aurora_sg.id
+}

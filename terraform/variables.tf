@@ -38,6 +38,11 @@ variable "instance_number" {
     description = "A numbber of instances"
 }
 
+variable "instance_type" {
+    type        = string
+    description = "Instance type"
+}
+
 variable "instance_class" {
     type        = string
     description = "Instance class"
@@ -58,7 +63,57 @@ variable "aurora_user" {
     description = "Aurora username"
 }
 
+variable "aurora_database_name" {
+    type        = string
+    description = "Aurora database name"
+}
+
 variable "backup_retention_period" {
     type        = number
     description = "Backup rentation perioud"
+}
+
+variable "app_port" {
+    type        = number
+    description = "APP port"
+}
+
+variable "bastion_instance_number" {
+    type        = number
+    description = "A number of bastion instances" 
+}   
+
+variable "min_scale_size" {
+    type        = number
+    description = "Min EC2 numbers"
+}
+
+variable "max_scale_size" {
+    type        = number
+    description = "Max EC2 numbers"
+}
+
+variable "frontend_cpu_target" {
+    type        = number
+    description = "Frontend Average CPU Utilization target" 
+}
+
+variable "app_cpu_target" {
+    type        = number
+    description = "App Average CPU Utilization target"
+}
+
+variable "instance_volume_size" {
+    type        = number
+    description = "Instance Volume Size"
+}
+
+variable "instance_volume_type" {
+    type        = string
+    description = "Instance Volume Type"
+}
+
+variable "instance_keypair_name" {
+    type        = string
+    description = "SSH key name"
 }
