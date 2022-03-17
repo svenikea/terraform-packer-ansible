@@ -93,11 +93,6 @@ variable "max_scale_size" {
     description = "Max EC2 numbers"
 }
 
-variable "frontend_cpu_target" {
-    type        = number
-    description = "Frontend Average CPU Utilization target" 
-}
-
 variable "app_cpu_target" {
     type        = number
     description = "App Average CPU Utilization target"
@@ -116,4 +111,9 @@ variable "instance_volume_type" {
 variable "instance_keypair_name" {
     type        = string
     description = "SSH key name"
+}
+
+variable "eip_number" {
+    type        = number
+    description = "Number of Elastic IP"
 }

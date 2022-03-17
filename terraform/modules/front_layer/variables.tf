@@ -10,15 +10,10 @@ variable "public_subnets" {}
 
 # INSTANCE LAYER
 variable "instance_type" {}
-variable "frontend_cpu_target" {}
 variable "instance_volume_size" {}
 variable "instance_volume_type" {}
 variable "instance_keypair_name" {}
 variable "bastion_instance_number" {}
-variable "app_port" {}
-variable "app_lb_sg" {}
-variable "min_scale_size" {}
-variable "max_scale_size" {}
 variable "app_sg" {}
 
 locals {    

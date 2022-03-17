@@ -4,7 +4,7 @@ resource "aws_security_group" "app_sg" {
     vpc_id                      = var.vpc_id
     description                 = "APP SG"
     tags = {
-        Name = "${var.project}-app-lb-${var.environment}-sg"
+        Name = "${var.project}-app-${var.environment}-sg"
     }
 }
 
@@ -15,8 +15,7 @@ resource "aws_security_group_rule" "app_ingress_port_webbserver" {
     to_port                     = 80 
     protocol                    = "tcp"
     security_group_id           = aws_security_group.app_sg.id
-    source_security_group_id    = aws_security_group.app_lb_sg.id
-    #cidr_blocks                 = [var.vpc_cidr_block]
+    source_security_group_id    = var.alb_sg
 }
 
 resource "aws_security_group_rule" "app_ingress_ssh_from_bastion" {
@@ -58,34 +57,3 @@ resource "aws_security_group_rule" "app_egress_aurora" {
     security_group_id           = aws_security_group.app_sg.id
     source_security_group_id    = var.aurora_sg  
 }
-
-# APP ALB SG
-resource "aws_security_group" "app_lb_sg" {
-    name                        = "${var.project}-app-lb-${var.environment}-sg"
-    vpc_id                      = var.vpc_id
-    description                 = "APP ALB SG"
-    tags = {
-        Name = "${var.project}-app-lb-${var.environment}-sg"
-    }
-}
-
-resource "aws_security_group_rule" "app_lb_ingress_app_sg" {
-    type                        = "ingress"
-    description                 = "Inbound from frontend"
-    from_port                   = 80
-    to_port                     = 80
-    protocol                    = "tcp"
-    security_group_id           = aws_security_group.app_lb_sg.id
-    source_security_group_id    = var.webserver_sg
-}
-
-resource "aws_security_group_rule" "app_lb_egress_port_webserver_app_port" {
-    type                        = "egress"
-    description                 = "Outbound to APP SG"
-    from_port                   = 80
-    to_port                     = 80
-    protocol                    = "tcp"
-    security_group_id           = aws_security_group.app_lb_sg.id
-    source_security_group_id    = aws_security_group.app_sg.id
-}
-

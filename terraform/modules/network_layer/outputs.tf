@@ -15,13 +15,13 @@ output "public_subnets" {
 }
 
 output "nat_gateway_public_ip" {
-    value = aws_nat_gateway.my_nat.id
+    value = aws_nat_gateway.my_nat.*.id
 }
 
 output "public_route_table_name" {
-    value = aws_route_table.public_route.tags.Name
+    value = aws_route_table.public_route.*.tags.Name
 }
 
 output "private_route_table_name" {
-    value = aws_route_table.private_route.tags.Name
+    value = aws_route_table.private_route.*.tags.Name
 }

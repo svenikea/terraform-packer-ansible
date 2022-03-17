@@ -10,13 +10,13 @@ resource "aws_lb" "frontend_load_balancer" {
     #     create_before_destroy = true 
     # }
     tags = {
-        Name                = "${var.project}-alb-${var.environment}"
+        Name                = "${var.project}-frontend-lb-${var.environment}"
     }
     #enable_deletion_protection = true
 }
 
 resource "aws_lb_target_group" "frontend_load_balancer_target_group" {
-    name                    = "${var.project}-tg-${var.environment}"
+    name                    = "${var.project}-frontend-tg-${var.environment}"
     port                    = 80
     protocol                = "HTTP"
     vpc_id                  = var.vpc_id 

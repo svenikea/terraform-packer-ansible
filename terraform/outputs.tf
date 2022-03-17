@@ -46,6 +46,6 @@ output "frontent_lb_dns_name" {
     value = module.front_layer.load_balance_dns
 }
 
-output "app_lb_dns_name" {
-    value = module.app_layer.load_balance_dns
-}
+# output "app_lb_dns_name" {
+#     value = module.app_layer.load_balance_dns
+# }

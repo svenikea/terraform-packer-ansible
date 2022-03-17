@@ -7,17 +7,8 @@ resource "aws_security_group" "bastion_sg" {
     }
 }
 
-resource "aws_security_group" "webserver_sg" {
-    name                        = "${var.project}-webserver-${var.environment}-sg"
-    vpc_id                      = var.vpc_id
-    description                 = "Webserver SG"
-    tags = {
-        Name = "${var.project}-webserver-${var.environment}-sg"
-    }
-}
-
 resource "aws_security_group" "alb_sg" {
-    name = "${var.project}-alb-${var.environment}-sg"
+    name = "${var.project}-frontend-lb-${var.environment}-sg"
     vpc_id = var.vpc_id
     description = "Application Load Balancer"
     tags = {
@@ -52,7 +43,7 @@ resource "aws_security_group_rule" "alb_egress_to_webserver" {
     to_port                     = 80
     protocol                    = "tcp"
     security_group_id           = aws_security_group.alb_sg.id
-    source_security_group_id    = aws_security_group.webserver_sg.id
+    source_security_group_id    = var.app_sg
 }
 
 # Bastion SG
@@ -64,16 +55,6 @@ resource "aws_security_group_rule" "bastion_ingress_ssh" {
     protocol                    = "tcp"
     security_group_id           = aws_security_group.bastion_sg.id
     cidr_blocks                 = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "bastion_egress_ssh_to_webserver" {
-    type                        = "egress"
-    description                 = "Outbound SSH to Webserver"
-    from_port                   = 22
-    to_port                     = 22
-    protocol                    = "tcp"
-    security_group_id           = aws_security_group.bastion_sg.id
-    source_security_group_id    = aws_security_group.webserver_sg.id
 }
 
 resource "aws_security_group_rule" "bastion_egress_ssh_to_app" {
@@ -105,56 +86,3 @@ resource "aws_security_group_rule" "bastion_egress_internet_https" {
     security_group_id           = aws_security_group.bastion_sg.id
     cidr_blocks                 = ["0.0.0.0/0"]
 }
-
-# Webserver SG
-resource "aws_security_group_rule" "webserver_ingress_from_alb" {
-    type                        = "ingress"
-    description                 = "Inbound from ALB"
-    from_port                   = 80
-    to_port                     = 80
-    protocol                    = "tcp"
-    security_group_id           = aws_security_group.webserver_sg.id
-    source_security_group_id    = aws_security_group.alb_sg.id
-}
-
-resource "aws_security_group_rule" "webserver_ingress_from_bastion" {
-    type                        = "ingress"
-    description                 = "Inbound SSH from bastion"
-    from_port                   = 22
-    to_port                     = 22
-    protocol                    = "tcp"
-    security_group_id           = aws_security_group.webserver_sg.id
-    source_security_group_id    = aws_security_group.bastion_sg.id
-}
-
-resource "aws_security_group_rule" "webserver_egress_to_app" {
-    type                        = "egress"
-    description                 = "Webserver Outbound to App LB"
-    from_port                   = 80
-    to_port                     = 80
-    protocol                    = "tcp"
-    security_group_id           = aws_security_group.webserver_sg.id
-    source_security_group_id    = var.app_lb_sg
-}
-
-
-resource "aws_security_group_rule" "webserver_egress_internet_http" {
-    type                        = "egress"
-    description                 = "Outbound to Internet"
-    from_port                   = 80
-    to_port                     = 80
-    protocol                    = "tcp"
-    security_group_id           = aws_security_group.webserver_sg.id
-    cidr_blocks                 = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "webserver_egress_internet_https" {
-    type                        = "egress"
-    description                 = "Outbound to Internet"
-    from_port                   = 443
-    to_port                     = 443
-    protocol                    = "tcp"
-    security_group_id           = aws_security_group.webserver_sg.id
-    cidr_blocks                 = ["0.0.0.0/0"]
-}
-

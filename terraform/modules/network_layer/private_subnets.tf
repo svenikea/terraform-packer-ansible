@@ -11,17 +11,18 @@ resource "aws_subnet" "private_subnet" {
 
 resource "aws_route_table" "private_route" {
     vpc_id                      = aws_vpc.my_vpc.id
+    count                       = var.private_subnet_number
     route {
         cidr_block              = "0.0.0.0/0"
-        gateway_id              = aws_nat_gateway.my_nat.id
+        gateway_id              = aws_nat_gateway.my_nat.*.id[count.index]
     }
     tags = {
-        Name                    = "${var.project}-private-route-${var.environment}"
+        Name                    = "${var.project}-private-route-${var.environment}-${count.index+1}"
     }
 }
 
 resource "aws_route_table_association" "associate_private_subnet" {
     count                       = var.private_subnet_number
     subnet_id                   = aws_subnet.private_subnet.*.id[count.index]
-    route_table_id              = aws_route_table.private_route.id
+    route_table_id              = aws_route_table.private_route.*.id[count.index]
 }

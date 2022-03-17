@@ -11,7 +11,7 @@ resource "aws_launch_configuration" "app_launch_config" {
         iops                    = 3000
     }
     security_groups             = [aws_security_group.app_sg.id]
-    #user_data                   = local.app_user_data
+    user_data                   = local.app_user_data
 }
 
 resource "aws_autoscaling_group" "autoscale_app" {
@@ -44,7 +44,7 @@ resource "aws_autoscaling_group" "autoscale_app" {
 
 resource "aws_autoscaling_attachment" "asg_attachment" {
     autoscaling_group_name      = aws_autoscaling_group.autoscale_app.id
-    lb_target_group_arn         = aws_lb_target_group.app_load_balancer_target_group.arn
+    lb_target_group_arn         = var.frontend_lb_target_arn
 }
 
 resource "aws_autoscaling_policy" "scale_policty" {
