@@ -1,0 +1,25 @@
+php_packages: 
+  - -curl 
+  - -fpm 
+  - -mysql 
+  - -curl 
+  - -gd 
+  - -intl 
+  - -mbstring 
+  - -soap 
+  - -xml 
+  - -xmlrpc 
+  - -zip
+
+zabbix_php_packages: 
+  - -fpm 
+  - -mysql 
+  - -mbstring 
+  - -xml 
+  - -gd 
+  - -curl 
+  - -bcmath 
+  - -ldap
+  
+
+

@@ -63,37 +63,9 @@ module "app_layer" {
     instance_volume_size    = var.instance_volume_size
     instance_volume_type    = var.instance_volume_type
     instance_keypair_name   = var.instance_keypair_name
+    aurora_user             = var.aurora_user
+    aurora_database_name    = var.aurora_database_name
+    aurora_password         = module.database_layer.aurora_password
+    aurora_endpoint         = module.database_layer.aurora_rds_cluster_endpoint
+
 }
-# route_layer
-# module "route_layer" {
-#     source    = "./modules/route_layer"
-#     igw_id    = module.network_layer.igw_id
-#     subnet_id = [
-#         module.network_layer.public_subnet_1a,
-#         module.network_layer.public_subnet_1b
-#     ]
-#     vpc_id    = module.network_layer.vpc_id
-# }
-
-# # security_layer 
-# module "security_layer" {
-#     source = "./modules/security_layer"
-#     vpc_id = module.network_layer.vpc_id
-# }
-
-# # web_layer
-# module "web_layer" {
-#     source              = "./modules/web_layer"
-#     ec2_sg_id           = module.security_layer.ec2_sg_id
-#     vpc_id              = module.network_layer.vpc_id
-#     subnet_id           = [
-#         module.network_layer.public_subnet_1a,
-#         module.network_layer.public_subnet_1b
-#     ]
-#     elb_sg_id           = module.security_layer.elb_sg_id
-#     instance_name       = var.instance_names
-#     instance_type       = var.instance_type
-#     alb_name            = var.alb_name
-#     min_scale_size      = var.min_scale_size
-#     max_scale_size      = var.max_scale_size
-# }

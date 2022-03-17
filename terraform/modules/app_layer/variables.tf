@@ -20,12 +20,16 @@ variable "app_cpu_target" {}
 variable "instance_volume_size" {}
 variable "instance_volume_type" {}
 variable "instance_keypair_name" {}
+variable "aurora_user" {} 
+variable "aurora_database_name" {}
+variable "aurora_password" {}
+variable "aurora_endpoint" {}
 data "aws_ami" "app_instance_data"{
     most_recent = true
-    owners      = ["amazon"]
+    owners      = ["self"]
     filter {
         name    = "name"
-        values  = ["amzn2-ami-*"]
+        values  = ["app-ami-*"]
     }
     filter {
         name    = "architecture"
@@ -43,38 +47,19 @@ data "aws_ami" "app_instance_data"{
         name    = "image-type"
         values  = ["machine"]
     }
-    filter {
-        name    = "block-device-mapping.volume-type"
-        values  = ["gp2"]
-    }
+    # filter {
+    #     name    = "block-device-mapping.volume-type"
+    #     values  = ["gp2"]
+    # }
 }
 
 locals {    
     app_user_data = <<-EOF
                 #!/bin/sh
-                amazon-linux-extras enable nginx1 
-                yum clean metadata
-                yum -y install httpd php telnet lsof curl wget bind-utils unzip -y
-                cd /var/www/html
-                wget https://us-west-2-aws-training.s3.amazonaws.com/awsu-spl/spl03-working-elb/static/examplefiles-elb.zip
-                unzip examplefiles-elb.zip
-                systemctl start httpd
-                systemctl enable httpd
+                sudo sed -i "s/aurora_user/${var.aurora_user}/g" /var/www/mydomain.na/wp-config.php
+                sudo sed -i "s/aurora_pass/${var.aurora_password}/g" /var/www/mydomain.na/wp-config.php
+                sudo sed -i "s/aurora_db/${var.aurora_database_name}/g" /var/www/mydomain.na/wp-config.php
+                sudo sed -i "s/aurora_host/${var.aurora_endpoint}/g" /var/www/mydomain.na/wp-config.php
+                sudo systemctl restart nginx
                 EOF
 }
-
-# locals {    
-#     app_user_data = <<-EOF
-#                 #!/bin/sh
-#                 yum update -y
-#                 yum install amazon-linux-extras -y
-#                 amazon-linux-extras enable php7.4
-#                 yum install lsof bind-utils curl mysql nginx php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap} -y
-#                 #sed -i "s/listen\s=\s\/run\/php-fpm\/www.sock/listen = 0.0.0.0:${var.app_port}/g" /etc/php-fpm.d/www.conf
-#                 sed -i "s/listen = 127.0.0.1:9000/listen\s=\s\/run\/php-fpm\/www.sock/g" /etc/php-fpm.d/www.conf
-#                 setenforce 0
-#                 systemctl start nginx php-fpm
-#                 systemctl enable nginx php-fpm
-#                 setenforce 1
-#                 EOF
-# }

@@ -1,17 +1,17 @@
+ami:
+	cd ./packer && packer build app.pkr.hcl && packer build bastion.pkr.hcl && cd -
+
 init:
 	cd ./terraform && terraform init 
+
+plan:
+	cd ./terraform && terraform plan && cd -
 
 apply:
 	cd ./terraform && terraform apply --auto-approve && cd -
 
 destroy:
 	cd ./terraform && terraform destroy --auto-approve && cd -
-
-plan:
-	cd ./terraform && terraform plan && cd -
-
-build-ami:
-	cd ./packer && packer build bastion.pkr.hcl
 
 clean:
 	cd ./terraform && rm -rf ./.terraform *.tfstate *.hcl *.info *.backup *. .terraform.lock.hcl && cd -

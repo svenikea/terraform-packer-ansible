@@ -1,0 +1,46 @@
+- name: Nginx Role
+  become: yes
+  block:
+    - name: Installing Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Main Nginx Config
+      template:
+        src: nginx.j2
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: "644"
+
+    - name: Remove The Defaut Website
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: "{{ chosen_domain }} Web Location"
+      file:
+        path: /var/www/{{ chosen_domain }}
+        state: directory
+        owner: www-data 
+        group: www-data 
+        mode: "755"
+
+    - name: "Copying {{ chosen_domain }} config"
+      template: 
+        src: website.j2
+        dest: /etc/nginx/conf.d/{{ app_name }}.conf
+        owner: root
+        group: root
+        mode: "644"
+
+    - name: "Creating {{ chosen_domain }} Log"
+      file: 
+        path : /var/log/nginx/{{ chosen_domain }}
+        state: directory
+        owner: root
+        group: root
+        mode: "640"
+      notify: Start Nginx Service
+
