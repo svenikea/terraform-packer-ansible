@@ -48,7 +48,7 @@ build {
         script = "./scripts/install.sh"
     }
     provisioner "file" {
-        source      = "/Users/svenikea/Desktop/aws-key.pem"
+        source      = "./keypairs/aws-key.pem"
         destination = "/home/ec2-user/aws-key.pem"
     }
 }
