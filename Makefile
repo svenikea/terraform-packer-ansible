@@ -1,5 +1,5 @@
 ami:
-	cd ./packer && packer build app.pkr.hcl && packer build bastion.pkr.hcl && cd -
+	cd ./packer && packer build -var-file=variables.json bastion.json && packer build -var-file=variables.json app.json && cd -
 
 init:
 	cd ./terraform && terraform init 
