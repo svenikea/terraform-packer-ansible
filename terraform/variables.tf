@@ -58,6 +58,13 @@ variable "database_version" {
     description = "Aurora version"
 }
 
+
+variable "aurora_parameter_group" {
+    type        = list
+    description = "Parameter"
+}
+
+
 variable "aurora_user" {
     type        = string 
     description = "Aurora username"

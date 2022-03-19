@@ -23,6 +23,36 @@ database_engine         = "mysql"
 database_version        = "5.7.12"
 aurora_user             = "admin"
 aurora_database_name    = "aurora"
+aurora_parameter_group  = [
+    {
+        name    = "log_output"
+        value   = "FILE"
+    },
+    {
+        name    = "log_warnings"
+        value   = "2"
+    },
+    {
+        name    = "slow_query_log"
+        value   = "1"
+    },
+    {
+        name    = "log_queries_not_using_indexes"
+        value   = "1"
+    },
+    {
+        name    = "long_query_time"
+        value   = "5"
+    },
+    {
+        name    = "general_log"
+        value   = "1"
+    },
+    {
+        name    = "innodb_lock_wait_timeout"
+        value   = "50"
+    }
+]
 backup_retention_period = 1
 app_port                = 5000
 instance_volume_size    = 20

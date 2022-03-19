@@ -25,9 +25,10 @@ module "database_layer" {
     aurora_vpc_id           = module.network_layer.vpc_id
     private_subnets         = module.network_layer.private_subnets
     backup_retention_period = var.backup_retention_period
+    aurora_parameter_group  = var.aurora_parameter_group
 }
 
-# front layer
+#front layer
 module "front_layer" {
     source                  = "./modules/front_layer"
     instance_type           = var.instance_type

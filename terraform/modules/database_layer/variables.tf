@@ -1,55 +1,22 @@
-variable "instance_number" {
-    type        = number 
-    description = "Number of instances" 
-}
+variable "instance_number" {}
 
-variable "project" {
-    type        = string
-    description = "Name of project"
-}
+variable "project" {}
 
-variable "environment" {
-    type        = string
-    description = "Name of environment"
-}
+variable "environment" {}
 
-variable "instance_class" {
-    type        = string
-    description = "Instance class"
-}
+variable "instance_class" {}
 
-variable "aurora_engine" {
-    type        = string
-    description = "Aurora database engine"
-}
+variable "aurora_engine" {}
 
-variable "engine_version" {
-    type        = string 
-    description = "Aurora database version" 
-}
+variable "engine_version" {}
 
-variable "aurora_user" {
-    type        = string 
-    description = "Aurora database username" 
-}
+variable "aurora_user" {}
 
-variable "private_subnets" {
-    type        = list
-    description = "Aurora subnet list" 
-}
-# variable "aurora_parameter_group" {
-#     type        = string 
-#     description = "Aurora parameter group" 
-# }
+variable "private_subnets" {}
+variable "aurora_parameter_group" {}
 
-variable "aurora_vpc_id" {
-    type        = string
-    description = "Aurora VPC ID"
-}
+variable "aurora_vpc_id" {}
 
-variable "backup_retention_period" {
-    type        = number
-    description = "Backup rentation perioud"
-}
+variable "backup_retention_period" {}
 
 variable "aurora_database_name" {}
