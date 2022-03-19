@@ -1,17 +1,24 @@
-# Terraform
+# Architecture 
+!["architect"](./images/wordpress-on-aws.png)
 
-## aws-cli command example
+# Deploy procedure
+* ### Step 1
+Deploy Networking and database 
 
-```bash
-aws ec2 describe-images --region us-east-1  --owners amazon --filters "Name=name,Values=amzn2-ami-hvm*" "Name=root-device-type,Values=ebs" "Name=architecture,Values=x86_64"
-```
-## Apply a specific tartget 
+* ### Step 2
+Build AMI with packer
+
+* ### Step 3
+Deploy EC2, ALB and Autoscale 
+
+# Terraform commands
+## Apply a specific target 
 
 ```bash
 terraform apply -target RESOURCE_TYPE.RESOURCE_NAME --auto-approve
 ```
 
-## Destroy a specific tartget 
+## Destroy a specific target 
 
 ```bash
 terraform destroy -target RESOURCE_TYPE.RESOURCE_NAME --auto-approve
