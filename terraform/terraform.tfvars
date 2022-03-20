@@ -55,7 +55,7 @@ aurora_parameter_group  = [
 ]
 backup_retention_period = 1
 app_port                = 5000
-instance_volume_size    = 20
+instance_volume_size    = 40
 instance_volume_type    = "gp3"
 instance_keypair_name   = "aws-key"
 bastion_instance_number = 1
