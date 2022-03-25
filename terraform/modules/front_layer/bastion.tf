@@ -32,7 +32,7 @@ resource "aws_instance" "bastion_ec2" {
     instance_type               = var.instance_type
     count                       = var.bastion_instance_number
     key_name                    = var.instance_keypair_name
-    security_groups             = [aws_security_group.bastion_sg.id]
+    security_groups             = [var.bastion_sg]
     subnet_id                   = var.public_subnets[0]
     root_block_device {
         volume_type             = var.instance_volume_type

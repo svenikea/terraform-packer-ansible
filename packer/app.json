@@ -37,12 +37,16 @@
         },
         {
             "type"                                  : "ansible-local",
-            "playbook_file"                         : "../ansible/app/setup.yml",
+            "playbook_file"                         : "../ansible/app/setup-app.yml",
             "role_paths" : [
+                "../ansible/app/roles/bastion/",
                 "../ansible/app/roles/nginx",
                 "../ansible/app/roles/wordpress",
-                "../ansible/app/roles/php",
-                "../ansible/app/roles/mysql"
+                "../ansible/app/roles/php"
+            ],
+            "inventory_groups"                      : [
+                "app_role",
+                "ev_env"
             ],
             "group_vars"                            : "../ansible/app/group_vars/"
         },

@@ -10,8 +10,7 @@ resource "aws_launch_configuration" "app_launch_config" {
         encrypted               = false
         iops                    = 3000
     }
-    security_groups             = [aws_security_group.app_sg.id]
-    user_data                   = local.app_user_data
+    security_groups             = [var.app_sg]
 }
 
 resource "aws_autoscaling_group" "autoscale_app" {

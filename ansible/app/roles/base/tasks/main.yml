@@ -1,0 +1,40 @@
+- name: Create {{ deploy_user }} user 
+  user:
+    name: "{{ deploy_user }}"
+    group: sudo
+    state: present
+    shell: /bin/bash
+    append: yes
+    create_home: yes
+
+- name: Allow passwordless {{ deploy_user }} 
+  lineinfile:
+    path: /etc/sudoers
+    line: "%{{ deploy_user }} ALL=(ALL:ALL) NOPASSWD: ALL"
+    state: present
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: Installing base packages 
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ base_packages }}"
+
+- name: Copying chrony template
+  template:
+    src: chrony.j2
+    dest: /etc/chrony/chrony.conf
+    owner: root
+    group: root
+    mode: "644"
+
+- name: Restart Chrony 
+  service:
+    name: chrony
+    state: restarted
+    enabled: yes
+
+- name: Set timezone to {{ time_zone }}
+  timezone:
+    name: "{{ time_zone }}"

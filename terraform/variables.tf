@@ -58,10 +58,34 @@ variable "database_version" {
     description = "Aurora version"
 }
 
+variable "node_class" {
+    type        = string
+    description = "ElastiCache Class"
+}
+
+variable "cache_engine" {
+    type        = string
+    description = "ElastiCache Engine"
+}
+
+variable "cache_version" {
+    type        = string
+    description = "ElastiCache Engine Version"
+}
+
+variable "cache_family" {
+    type        = string
+    description = "ElastiCache Family"
+}
+
+variable "elasticache_parameter_group" {
+    type        = list
+    description = "ElastiCache Parameter Group"
+}
 
 variable "aurora_parameter_group" {
     type        = list
-    description = "Parameter"
+    description = "Aurora Parameter Group"
 }
 
 

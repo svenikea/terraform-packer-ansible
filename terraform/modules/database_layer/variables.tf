@@ -20,3 +20,4 @@ variable "aurora_vpc_id" {}
 variable "backup_retention_period" {}
 
 variable "aurora_database_name" {}
+variable "aurora_sg" {}

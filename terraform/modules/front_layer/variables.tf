@@ -14,7 +14,8 @@ variable "instance_volume_size" {}
 variable "instance_volume_type" {}
 variable "instance_keypair_name" {}
 variable "bastion_instance_number" {}
-variable "app_sg" {}
+variable "bastion_sg" {}
+variable "alb_sg" {}
 
 locals {    
     webserver_user_data = <<-EOF

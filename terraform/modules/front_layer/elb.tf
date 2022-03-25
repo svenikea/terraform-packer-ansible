@@ -2,7 +2,7 @@ resource "aws_lb" "frontend_load_balancer" {
     name                    = "${var.project}-frontend-lb-${var.environment}"
     internal                = false
     load_balancer_type      = "application"
-    security_groups         = [aws_security_group.alb_sg.id]
+    security_groups         = [var.alb_sg]
     subnets                 = var.public_subnets
     idle_timeout            = 60
     # Make sure that the replacement object is created first before deleting

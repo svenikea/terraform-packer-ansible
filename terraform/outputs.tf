@@ -17,6 +17,14 @@ output "aurora_rds_cluster_endpoint" {
     value = module.database_layer.aurora_rds_cluster_endpoint
 }
 
+output "elasticache_primary_endpoint" {
+    value = module.cache_layer.elasticache_primary_endpoint
+}
+
+output "elasticache_reader_endpoint" {
+    value = module.cache_layer.elasticache_reader_endpoint
+}
+
 # output "vpc_id" {
 #     value = module.network_layer.vpc_id
 # }
@@ -53,18 +61,13 @@ output "aurora_rds_cluster_endpoint" {
 #     value = module.app_layer.load_balance_dns
 # }
 resource "local_file" "ansible_vars" {
-    filename    = "../ansible/app/group_vars/all/main.yml"
+    filename    = "../ansible/app/group_vars/app_role/main.yml"
     content     = <<EOF
-# Database
-aurora_user: ${var.aurora_user}
-aurora_password: ${module.database_layer.aurora_password}
-aurora_database: ${module.database_layer.aurora_rds_cluster_database}
-aurora_endpoint: ${module.database_layer.aurora_rds_cluster_endpoint}
-app_name: "app"
-sub_domain:
-- mydomain.na
-- mydomain.com
-chosen_domain:  "{{ sub_domain[0] }}"
-php_version: "php7.4"
-                    EOF 
+aurora_user=${var.aurora_user}
+aurora_password=${module.database_layer.aurora_password}
+aurora_database=${module.database_layer.aurora_rds_cluster_database}
+aurora_endpoint=${module.database_layer.aurora_rds_cluster_endpoint}
+elasticache_primary_endpoint=${module.cache_layer.elasticache_primary_endpoint}
+elasticache_reader_endpoint=${module.cache_layer.elasticache_reader_endpoint}
+EOF 
 }

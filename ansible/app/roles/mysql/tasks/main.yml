@@ -1,5 +1,0 @@
-- name: Install MYSQL Client
-  become: yes
-  apt:
-    name: mysql-client
-    state: present

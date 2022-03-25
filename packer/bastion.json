@@ -41,6 +41,18 @@
             "destination"                           : "/home/{{user `bastion_ssh_user`}}/aws-key.pem"
         },
         {
+            "type"                                  : "ansible-local",
+            "playbook_file"                         : "../ansible/app/setup-bastion.yml",
+            "role_paths" : [
+                "../ansible/app/roles/bastion/"
+            ],
+            "inventory_groups"                      : [
+                "bastion_role",
+                "ev_env"
+            ],
+            "group_vars"                            : "../ansible/app/group_vars/"
+        },
+        {
             "type"                                  : "shell",
             "script"                                : "./scripts/clean.sh"
         }

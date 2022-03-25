@@ -1,28 +1,28 @@
 # NETWORK LAYER
 
-project                 = "terraform"
-environment             = "lab"
-vpc_cidr_block          = "10.0.0.0/16"
-public_subnet_number    = 2
-eip_number              = 2
-public_cidr_blocks      = [
+project                         = "terraform"
+environment                     = "lab"
+vpc_cidr_block                  = "10.0.0.0/16"
+public_subnet_number            = 2
+eip_number                      = 2
+public_cidr_blocks              = [
     "10.0.1.0/24",
     "10.0.2.0/24"
 ]
 
-private_subnet_number   = 2
-private_cidr_blocks     = [
+private_subnet_number           = 2
+private_cidr_blocks             = [
     "10.0.3.0/24",
     "10.0.4.0/24"
 ]
 
-instance_number         = 2
-instance_class          = "t3.small"
-instance_type           = "t2.micro"
-database_engine         = "mysql"
-database_version        = "5.7.12"
-aurora_user             = "admin"
-aurora_database_name    = "aurora"
+instance_number                 = 2
+instance_class                  = "t3.small"
+instance_type                   = "t2.micro"
+database_engine                 = "mysql"
+database_version                = "5.7.12"
+aurora_user                     = "admin"
+aurora_database_name            = "aurora"
 aurora_parameter_group  = [
     {
         name    = "log_output"
@@ -53,12 +53,27 @@ aurora_parameter_group  = [
         value   = "50"
     }
 ]
-backup_retention_period = 1
-app_port                = 5000
-instance_volume_size    = 40
-instance_volume_type    = "gp3"
-instance_keypair_name   = "aws-key"
-bastion_instance_number = 1
-min_scale_size          = 2
-max_scale_size          = 4
-app_cpu_target          = 40.0
+
+node_class                      = "t3.small"
+cache_engine                    = "redis"
+cache_version                   = "6.x"
+cache_family                    = "redis6.x"
+elasticache_parameter_group     = [
+    {
+        name    = "activedefrag"
+        value   = "yes"
+    },
+    {
+        name    = "activerehashing"
+        value   = "yes"
+    }
+]
+backup_retention_period         = 1
+app_port                        = 5000
+instance_volume_size            = 40
+instance_volume_type            = "gp3"
+instance_keypair_name           = "aws-key"
+bastion_instance_number         = 1
+min_scale_size                  = 2
+max_scale_size                  = 4
+app_cpu_target                  = 40.0

@@ -14,6 +14,6 @@ output "aurora_rds_cluster_database" {
     value = aws_rds_cluster.aurora_cluster.database_name
 }
 
-output "aurora_sg" {
-    value = aws_security_group.aurora_sg.id
-}
+# output "aurora_sg" {
+#     value = aws_security_group.aurora_sg.id
+# }

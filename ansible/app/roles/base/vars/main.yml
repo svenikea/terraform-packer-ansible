@@ -1,0 +1,37 @@
+base_packages:
+  - tcl-dev
+  - gettext
+  - fail2ban
+  - openssl
+  - python3-pip
+  - chrony
+  - make
+  - wget
+  - unzip
+  - telnet
+  - logrotate
+  - zlib1g-dev
+  - libssl-dev
+  - libreadline6-dev
+  - libncurses5-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - libcurl4-openssl-dev
+  - libexpat1-dev
+  - libz-dev
+  - libssl-dev
+  - libffi-dev
+  - libyaml-dev
+  - libsqlite3-dev
+  - sqlite3
+  - software-properties-common
+  - build-essential
+  - apt-transport-https
+  - mysql-client
+  - curl
+  - vim
+  - git
+  - acl
+  - htop
+
+time_zone: America/Chicago

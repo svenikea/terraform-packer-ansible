@@ -1,0 +1,10 @@
+[bastion_role]
+
+[app_role]
+
+[dev_env:children]
+bastion_role
+app_role
+
+[app_role:vars]
+

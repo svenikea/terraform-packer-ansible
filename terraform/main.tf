@@ -11,6 +11,14 @@ module "network_layer" {
     eip_number              = var.eip_number
 }
 
+# security layer
+module "security_layer" {
+    source                  = "./modules/security_layer"
+    project                 = var.project
+    environment             = var.environment
+    vpc_id                  = module.network_layer.vpc_id
+}
+
 # database layer
 module "database_layer" {
     source                  = "./modules/database_layer"
@@ -22,10 +30,26 @@ module "database_layer" {
     engine_version          = var.database_version
     aurora_user             = var.aurora_user
     aurora_database_name    = var.aurora_database_name
+    aurora_sg               = module.security_layer.aurora_sg
     aurora_vpc_id           = module.network_layer.vpc_id
     private_subnets         = module.network_layer.private_subnets
     backup_retention_period = var.backup_retention_period
     aurora_parameter_group  = var.aurora_parameter_group
+}
+
+module "cache_layer" {
+    source                  = "./modules/cache_layer"
+    environment             = var.environment
+    project                 = var.project
+    private_subnets         = module.network_layer.private_subnets
+    node_class              = var.node_class
+    cluster_number          = var.instance_number
+    cache_engine            = var.cache_engine
+    cache_version           = var.cache_version
+    cache_family            = var.cache_family
+    elasticache_paragroup   = var.elasticache_parameter_group
+    vpc_id                  = module.network_layer.vpc_id
+    elasticache_sg          = module.security_layer.elasticache_sg
 }
 
 #front layer
@@ -38,7 +62,8 @@ module "front_layer" {
     project                 = var.project 
     environment             = var.environment
     vpc_id                  = module.network_layer.vpc_id
-    app_sg                  = module.app_layer.app_sg
+    bastion_sg              = module.security_layer.bastion_sg
+    alb_sg                  = module.security_layer.alb_sg
     vpc_cidr_block          = var.vpc_cidr_block 
     instance_volume_size    = var.instance_volume_size
     instance_volume_type    = var.instance_volume_type
@@ -51,11 +76,9 @@ module "app_layer" {
     environment             = var.environment
     vpc_id                  = module.network_layer.vpc_id
     instance_type           = var.instance_type
-    alb_sg                  = module.front_layer.alb_sg
-    bastion_sg              = module.front_layer.bastion_sg
+    app_sg                  = module.security_layer.app_sg
     frontend_lb_target_arn  = module.front_layer.frontend_lb_target_arn
     app_port                = var.app_port
-    aurora_sg               = module.database_layer.aurora_sg
     min_scale_size          = var.min_scale_size
     max_scale_size          = var.max_scale_size
     private_subnets         = module.network_layer.private_subnets
