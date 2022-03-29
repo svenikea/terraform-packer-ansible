@@ -25,6 +25,18 @@ output "elasticache_reader_endpoint" {
     value = module.cache_layer.elasticache_reader_endpoint
 }
 
+# output "elasticache_configure_endpoint" {
+#     value = module.cache_layer.elasticache_configure_endpoint
+# }
+
+output "s3_domain_name" {
+    value = module.storage_layer.web_static_domain_name
+}
+
+output "web_static_arn" {
+    value = module.storage_layer.web_static_arn
+}
+
 # output "vpc_id" {
 #     value = module.network_layer.vpc_id
 # }
@@ -63,11 +75,13 @@ output "elasticache_reader_endpoint" {
 resource "local_file" "ansible_vars" {
     filename    = "../ansible/app/group_vars/app_role/main.yml"
     content     = <<EOF
-aurora_user=${var.aurora_user}
-aurora_password=${module.database_layer.aurora_password}
-aurora_database=${module.database_layer.aurora_rds_cluster_database}
-aurora_endpoint=${module.database_layer.aurora_rds_cluster_endpoint}
-elasticache_primary_endpoint=${module.cache_layer.elasticache_primary_endpoint}
-elasticache_reader_endpoint=${module.cache_layer.elasticache_reader_endpoint}
+aurora_user: ${var.aurora_user}
+aurora_password: ${module.database_layer.aurora_password}
+aurora_database: ${module.database_layer.aurora_rds_cluster_database}
+aurora_endpoint: ${module.database_layer.aurora_rds_cluster_endpoint}
+#elasticache_primary_endpoint: ${module.cache_layer.elasticache_primary_endpoint}
+#elasticache_reader_endpoint: ${module.cache_layer.elasticache_reader_endpoint}
+s3_domain: ${module.storage_layer.web_static_domain_name}
 EOF 
 }
+

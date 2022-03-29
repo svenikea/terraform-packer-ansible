@@ -1,6 +1,6 @@
 # NETWORK LAYER
-
-project                         = "terraform"
+region                          = "us-east-1"
+project                         = "wordpress"
 environment                     = "lab"
 vpc_cidr_block                  = "10.0.0.0/16"
 public_subnet_number            = 2
@@ -66,6 +66,10 @@ elasticache_parameter_group     = [
     {
         name    = "activerehashing"
         value   = "yes"
+    },
+    {
+        name    = "cluster-enabled"
+        value   = "yes"
     }
 ]
 backup_retention_period         = 1
@@ -77,3 +81,7 @@ bastion_instance_number         = 1
 min_scale_size                  = 2
 max_scale_size                  = 4
 app_cpu_target                  = 40.0
+bucket_list                     = [
+    "app-log",
+    "app-static-file"
+]

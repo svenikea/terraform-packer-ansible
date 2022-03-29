@@ -11,6 +11,14 @@ module "network_layer" {
     eip_number              = var.eip_number
 }
 
+# storage layer
+module "storage_layer" {
+    source                  = "./modules/storage_layer"
+    environment             = var.environment
+    project                 = var.project
+    bucket_list             = var.bucket_list
+}
+
 # security layer
 module "security_layer" {
     source                  = "./modules/security_layer"
@@ -37,6 +45,7 @@ module "database_layer" {
     aurora_parameter_group  = var.aurora_parameter_group
 }
 
+# cache layer
 module "cache_layer" {
     source                  = "./modules/cache_layer"
     environment             = var.environment
@@ -91,5 +100,4 @@ module "app_layer" {
     aurora_database_name    = var.aurora_database_name
     aurora_password         = module.database_layer.aurora_password
     aurora_endpoint         = module.database_layer.aurora_rds_cluster_endpoint
-
 }

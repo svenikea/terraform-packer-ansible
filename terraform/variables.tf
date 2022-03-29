@@ -148,3 +148,13 @@ variable "eip_number" {
     type        = number
     description = "Number of Elastic IP"
 }
+
+variable "region" {
+    type        = string
+    description = "AWS Region"
+}
+
+variable "bucket_list" {
+    type        = list
+    description = "A list of S3 buckets"
+}
