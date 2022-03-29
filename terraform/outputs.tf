@@ -33,8 +33,8 @@ output "s3_domain_name" {
     value = module.storage_layer.web_static_domain_name
 }
 
-output "web_static_arn" {
-    value = module.storage_layer.web_static_arn
+output "bucket_arns" {
+    value = module.storage_layer.bucket_arns
 }
 
 # output "vpc_id" {
