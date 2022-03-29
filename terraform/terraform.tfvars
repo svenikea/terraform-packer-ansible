@@ -85,3 +85,7 @@ bucket_list                     = [
     "app-log",
     "app-static-file"
 ]
+efs_performance_mode            = "generalPurpose"
+efs_throughput_mode             = "bursting"
+
+
