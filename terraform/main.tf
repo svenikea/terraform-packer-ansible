@@ -11,6 +11,14 @@ module "network_layer" {
     eip_number              = var.eip_number
 }
 
+# iam layer
+module "iam_layer" {
+    source                  = "./modules/iam_layer"
+    environment             = var.environment
+    project                 = var.project 
+    bucket_arns             = module.storage_layer.bucket_arns
+}   
+
 # storage layer
 module "storage_layer" {
     source                  = "./modules/storage_layer"
@@ -77,6 +85,7 @@ module "front_layer" {
     instance_volume_size    = var.instance_volume_size
     instance_volume_type    = var.instance_volume_type
     instance_keypair_name   = var.instance_keypair_name
+    ec2_iam_role            = module.iam_layer.ec2_iam_role
 }
 
 module "app_layer" {
@@ -100,4 +109,5 @@ module "app_layer" {
     aurora_database_name    = var.aurora_database_name
     aurora_password         = module.database_layer.aurora_password
     aurora_endpoint         = module.database_layer.aurora_rds_cluster_endpoint
+    ec2_iam_role            = module.iam_layer.ec2_iam_role
 }

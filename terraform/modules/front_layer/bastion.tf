@@ -34,6 +34,7 @@ resource "aws_instance" "bastion_ec2" {
     key_name                    = var.instance_keypair_name
     security_groups             = [var.bastion_sg]
     subnet_id                   = var.public_subnets[0]
+    iam_instance_profile        = var.ec2_iam_role
     root_block_device {
         volume_type             = var.instance_volume_type
         volume_size             = var.instance_volume_size

@@ -21,6 +21,7 @@ variable "aurora_user" {}
 variable "aurora_database_name" {}
 variable "aurora_password" {}
 variable "aurora_endpoint" {}
+variable "ec2_iam_role" {}
 variable "app_sg" {}
 data "aws_ami" "app_instance_data"{
     most_recent = true

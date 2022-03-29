@@ -11,6 +11,7 @@ resource "aws_launch_configuration" "app_launch_config" {
         iops                    = 3000
     }
     security_groups             = [var.app_sg]
+    iam_instance_profile        = var.ec2_iam_role
 }
 
 resource "aws_autoscaling_group" "autoscale_app" {

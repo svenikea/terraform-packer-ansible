@@ -1,42 +1,4 @@
-output "aurora_user" {
-    value = var.aurora_user
-}
-output "aurora_password" {
-    value = module.database_layer.aurora_password
-}
-
-output "aurora_rds_database" {
-    value = module.database_layer.aurora_rds_cluster_database
-}
-
-# output "aurora_rds_instance_endpoint" {
-#     value = module.database_layer.aurora_rds_instance_endpoint
-# }
-
-output "aurora_rds_cluster_endpoint" {
-    value = module.database_layer.aurora_rds_cluster_endpoint
-}
-
-output "elasticache_primary_endpoint" {
-    value = module.cache_layer.elasticache_primary_endpoint
-}
-
-output "elasticache_reader_endpoint" {
-    value = module.cache_layer.elasticache_reader_endpoint
-}
-
-# output "elasticache_configure_endpoint" {
-#     value = module.cache_layer.elasticache_configure_endpoint
-# }
-
-output "s3_domain_name" {
-    value = module.storage_layer.web_static_domain_name
-}
-
-output "bucket_arns" {
-    value = module.storage_layer.bucket_arns
-}
-
+# NETWORK LAYER
 # output "vpc_id" {
 #     value = module.network_layer.vpc_id
 # }
@@ -65,6 +27,50 @@ output "bucket_arns" {
 #     value = module.network_layer.private_route_table_name
 # }
 
+# RDS LAYER
+output "aurora_user" {
+    value = var.aurora_user
+}
+output "aurora_password" {
+    value = module.database_layer.aurora_password
+}
+
+output "aurora_rds_database" {
+    value = module.database_layer.aurora_rds_cluster_database
+}
+
+# output "aurora_rds_instance_endpoint" {
+#     value = module.database_layer.aurora_rds_instance_endpoint
+# }
+
+output "aurora_rds_cluster_endpoint" {
+    value = module.database_layer.aurora_rds_cluster_endpoint
+}
+
+# ELASTICACHE LAYER
+output "elasticache_primary_endpoint" {
+    value = module.cache_layer.elasticache_primary_endpoint
+}
+
+output "elasticache_reader_endpoint" {
+    value = module.cache_layer.elasticache_reader_endpoint
+}
+
+# output "elasticache_configure_endpoint" {
+#     value = module.cache_layer.elasticache_configure_endpoint
+# }
+
+# S3 LAYER
+output "s3_domain_name" {
+    value = module.storage_layer.web_static_domain_name
+}
+
+output "bucket_arns" {
+    value = module.storage_layer.bucket_arns
+}
+
+
+# FRONTEND LAYER
 # output "frontent_lb_dns_name" {
 #     value = module.front_layer.load_balance_dns
 # }
@@ -72,6 +78,7 @@ output "bucket_arns" {
 # output "app_lb_dns_name" {
 #     value = module.app_layer.load_balance_dns
 # }
+
 resource "local_file" "ansible_vars" {
     filename    = "../ansible/app/group_vars/app_role/main.yml"
     content     = <<EOF
