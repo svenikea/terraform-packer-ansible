@@ -1,9 +1,9 @@
 resource "aws_s3_bucket" "app_bucket" {
     count               = length(var.bucket_list)
-    bucket              = "${var.project}-${var.bucket_list[count.index]}-${var.environment}"
+    bucket              = "${var.project}-${var.bucket_list[count.index]}-${var.environment}-${local.timestamp_filtered}"
     force_destroy       = true
     tags = {
-        Name            = "${var.project}-${var.bucket_list[count.index]}-${var.environment}"
+        Name            = "${var.project}-${var.bucket_list[count.index]}-${var.environment}-${local.timestamp_filtered}"
         Env             = var.environment
     }
 }
