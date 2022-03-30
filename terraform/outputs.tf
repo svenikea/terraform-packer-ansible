@@ -92,3 +92,7 @@ s3_domain: ${module.storage_layer.web_static_domain_name}
 EOF 
 }
 
+# EFS LAYER
+output "efs_mount_target_dns_name" {
+    value = module.efs_layer.efs_mount_target_dns_name
+}

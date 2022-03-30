@@ -19,6 +19,16 @@ module "iam_layer" {
     bucket_arns             = module.storage_layer.bucket_arns
 }   
 
+# EFS Layer 
+module "efs_layer" {
+    source                  = "./modules/efs_layer"
+    environment             = var.environment
+    project                 = var.project    
+    private_subnets         = module.network_layer.private_subnets
+    efs_performance_mode    = var.efs_performance_mode
+    efs_throughput_mode     = var.efs_throughput_mode
+}
+
 # storage layer
 module "storage_layer" {
     source                  = "./modules/storage_layer"

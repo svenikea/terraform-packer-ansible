@@ -158,3 +158,13 @@ variable "bucket_list" {
     type        = list
     description = "A list of S3 buckets"
 }
+
+variable "efs_performance_mode" {
+    type = string
+    description = "EFS Performance Mode"
+}
+
+variable "efs_throughput_mode" {
+    type = string
+    description = "EFS Throughput Mode"   
+}
