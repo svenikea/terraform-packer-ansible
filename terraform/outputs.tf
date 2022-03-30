@@ -86,9 +86,9 @@ aurora_user: ${var.aurora_user}
 aurora_password: ${module.database_layer.aurora_password}
 aurora_database: ${module.database_layer.aurora_rds_cluster_database}
 aurora_endpoint: ${module.database_layer.aurora_rds_cluster_endpoint}
-#elasticache_primary_endpoint: ${module.cache_layer.elasticache_primary_endpoint}
-#elasticache_reader_endpoint: ${module.cache_layer.elasticache_reader_endpoint}
-s3_domain: ${module.storage_layer.web_static_domain_name}
+elasticache_primary_endpoint: ${module.cache_layer.elasticache_primary_endpoint}
+elasticache_reader_endpoint: ${module.cache_layer.elasticache_reader_endpoint}
+s3_domain_name: ${jsonencode(split(",",(join(",",module.storage_layer.web_static_domain_name))))}
 EOF 
 }
 
