@@ -88,6 +88,11 @@ variable "aurora_parameter_group" {
     description = "Aurora Parameter Group"
 }
 
+variable "replicas_per_node_group" {
+    type        = number
+    description = "Replicas Per Elasticache Node"
+}
+
 
 variable "aurora_user" {
     type        = string 

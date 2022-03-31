@@ -9,6 +9,7 @@ module "network_layer" {
     private_subnet_number   = var.private_subnet_number
     private_cidr_blocks     = var.private_cidr_blocks
     eip_number              = var.eip_number
+    region                  = var.region
 }
 
 # iam layer
@@ -77,6 +78,7 @@ module "cache_layer" {
     elasticache_paragroup   = var.elasticache_parameter_group
     vpc_id                  = module.network_layer.vpc_id
     elasticache_sg          = module.security_layer.elasticache_sg
+    replicas_per_node_group = var.replicas_per_node_group
 }
 
 #front layer

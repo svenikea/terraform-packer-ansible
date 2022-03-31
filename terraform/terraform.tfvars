@@ -53,7 +53,7 @@ aurora_parameter_group  = [
         value   = "50"
     }
 ]
-
+replicas_per_node_group         = 1
 node_class                      = "t3.small"
 cache_engine                    = "redis"
 cache_version                   = "6.x"

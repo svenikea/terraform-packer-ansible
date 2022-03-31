@@ -9,3 +9,4 @@ variable "elasticache_paragroup" {}
 variable "vpc_id" {}
 variable "cache_family" {}
 variable "elasticache_sg" {}
+variable "replicas_per_node_group" {}

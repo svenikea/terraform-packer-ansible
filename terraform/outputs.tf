@@ -48,17 +48,17 @@ output "aurora_rds_cluster_endpoint" {
 }
 
 # ELASTICACHE LAYER
-output "elasticache_primary_endpoint" {
-    value = module.cache_layer.elasticache_primary_endpoint
-}
-
-output "elasticache_reader_endpoint" {
-    value = module.cache_layer.elasticache_reader_endpoint
-}
-
-# output "elasticache_configure_endpoint" {
-#     value = module.cache_layer.elasticache_configure_endpoint
+# output "elasticache_primary_endpoint" {
+#     value = module.cache_layer.elasticache_primary_endpoint
 # }
+
+# output "elasticache_reader_endpoint" {
+#     value = module.cache_layer.elasticache_reader_endpoint
+# }
+
+output "elasticache_configure_endpoint" {
+    value = module.cache_layer.elasticache_endpoint
+}
 
 # S3 LAYER
 output "s3_domain_name" {
@@ -86,8 +86,7 @@ aurora_user: ${var.aurora_user}
 aurora_password: ${module.database_layer.aurora_password}
 aurora_database: ${module.database_layer.aurora_rds_cluster_database}
 aurora_endpoint: ${module.database_layer.aurora_rds_cluster_endpoint}
-elasticache_primary_endpoint: ${module.cache_layer.elasticache_primary_endpoint}
-elasticache_reader_endpoint: ${module.cache_layer.elasticache_reader_endpoint}
+elasticache_endpoint: ${module.cache_layer.elasticache_endpoint}
 s3_domain_name: ${jsonencode(split(",",(join(",",module.storage_layer.web_static_domain_name))))}
 EOF 
 }
@@ -96,3 +95,4 @@ EOF
 output "efs_mount_target_dns_name" {
     value = module.efs_layer.efs_mount_target_dns_name
 }
+
