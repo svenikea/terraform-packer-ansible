@@ -1,11 +1,20 @@
 # Layer Definition
 resource "aws_security_group" "app_sg" {
-    name                        = "${var.project}-app-${var.environment}-sg"
+    name                        = "${var.project}-app-sg-${var.environment}"
     vpc_id                      = var.vpc_id
     description                 = "APP SG"
     tags = {
         Name = "${var.project}-app-${var.environment}-sg"
     }
+}
+
+resource "aws_security_group" "efs_sg" {
+  name                          = "${var.project}-efs-sg-${var.environment}"
+  vpc_id                        = var.vpc_id
+  description                   = "EFS SG"
+  tags = {
+      Name  = "${var.project}-efs-sg-${var.environment}" 
+  }
 }
 
 resource "aws_security_group" "elasticache_sg" {
@@ -94,6 +103,15 @@ resource "aws_security_group_rule" "aurora_inbound_3306_from_app" {
     source_security_group_id    = aws_security_group.app_sg.id
 }
 
+resource "aws_security_group_rule" "efs_ingress_from_app" {
+    type                        = "ingress"
+    protocol                    = "tcp"
+    from_port                   = 2049
+    to_port                     = 2049
+    security_group_id           = aws_security_group.efs_sg.id
+    source_security_group_id    = aws_security_group.app_sg.id
+}
+
 resource "aws_security_group_rule" "aurora_inbound_3306_from_bastion" {
     type                        = "ingress"
     from_port                   = 3306
@@ -171,7 +189,7 @@ resource "aws_security_group_rule" "alb_egress_to_webserver" {
     to_port                     = 80
     protocol                    = "tcp"
     security_group_id           = aws_security_group.alb_sg.id
-    source_security_group_id    =aws_security_group.app_sg.id
+    source_security_group_id    = aws_security_group.app_sg.id
 }
 
 resource "aws_security_group_rule" "aurora_outbound_all" {
@@ -201,6 +219,16 @@ resource "aws_security_group_rule" "app_egress_elasticache" {
     protocol                    = "tcp"
     security_group_id           = aws_security_group.app_sg.id
     source_security_group_id    = aws_security_group.elasticache_sg.id
+}
+
+resource "aws_security_group_rule" "app_egress_efs" {
+    type                        = "egress"
+    description                 = "Outbound to EFS"
+    from_port                   = 2049
+    to_port                     = 2049
+    protocol                    = "tcp"
+    security_group_id           = aws_security_group.app_sg.id
+    source_security_group_id    = aws_security_group.efs_sg.id  
 }
 
 resource "aws_security_group_rule" "app_egress_internet_http" {

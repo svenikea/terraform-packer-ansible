@@ -17,3 +17,7 @@ output "aurora_sg" {
 output "elasticache_sg" {
     value = aws_security_group.elasticache_sg.id
 }
+
+output "efs_sg" {
+    value = aws_security_group.efs_sg.id
+}

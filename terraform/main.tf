@@ -28,6 +28,7 @@ module "efs_layer" {
     private_subnets         = module.network_layer.private_subnets
     efs_performance_mode    = var.efs_performance_mode
     efs_throughput_mode     = var.efs_throughput_mode
+    efs_sg                  = module.security_layer.efs_sg
 }
 
 # storage layer

@@ -12,4 +12,5 @@ resource "aws_efs_mount_target" "path" {
     count                       = length(var.private_subnets)
     file_system_id              = aws_efs_file_system.efs_content.id
     subnet_id                   = var.private_subnets[count.index]
+    security_groups             = [var.efs_sg]
 }
