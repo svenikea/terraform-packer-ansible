@@ -71,9 +71,9 @@ output "bucket_arns" {
 
 
 # FRONTEND LAYER
-# output "frontent_lb_dns_name" {
-#     value = module.front_layer.load_balance_dns
-# }
+output "frontent_lb_dns_name" {
+    value = module.front_layer.load_balance_dns
+}
 
 # output "app_lb_dns_name" {
 #     value = module.app_layer.load_balance_dns
@@ -88,6 +88,9 @@ aurora_database: ${module.database_layer.aurora_rds_cluster_database}
 aurora_endpoint: ${module.database_layer.aurora_rds_cluster_endpoint}
 elasticache_endpoint: ${module.cache_layer.elasticache_endpoint}
 s3_domain_name: ${jsonencode(split(",",(join(",",module.storage_layer.web_static_domain_name))))}
+efs_dns_name: ${module.efs_layer.efs_dns_name}
+iam_access_id: 
+iam_secret_access_key: 
 EOF 
 }
 

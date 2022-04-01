@@ -1,5 +1,11 @@
 all: init apply_a ami apply_b
 
+apply_efs:
+	cd ./terraform && terraform apply -target module.efs_layer --auto-approve && cd -
+
+destroy_efs:
+	cd ./terraform && terraform destroy -target module.efs_layer --auto-approve && cd -
+
 test_s3: 
 	cd ./terraform && terraform apply -target module.storage_layer --auto-approve && cd -
 
