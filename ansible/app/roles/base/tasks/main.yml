@@ -1,7 +1,7 @@
 - name: Create {{ deploy_user }} user 
   user:
     name: "{{ deploy_user }}"
-    group: sudo
+    group: "{{ deploy_group }}"
     state: present
     shell: /bin/bash
     append: yes
@@ -19,21 +19,31 @@
     name: "{{ item }}"
     state: present
     update_cache: yes
-  loop: "{{ base_packages }}"
+  loop: "{{ base_apt_packages }}"
+  when: ansible_facts['distribution'] == "Ubuntu"
+
+- name: Installing base packages 
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ base_yum_packages }}"
+  when: ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS"
 
 - name: Copying chrony template
   template:
     src: chrony.j2
-    dest: /etc/chrony/chrony.conf
+    dest: "{{ chrony_path }}"
     owner: root
     group: root
     mode: "644"
 
-- name: Restart Chrony 
+- name: Start services
   service:
-    name: chrony
-    state: restarted
+    name: "{{ item }}"
+    state: started
     enabled: yes
+  loop: "{{ service_name }}"
 
 - name: Set timezone to {{ time_zone }}
   timezone:

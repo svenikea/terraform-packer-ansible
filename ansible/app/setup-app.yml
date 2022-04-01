@@ -4,5 +4,6 @@
   roles:
     - base
     - nginx
+    - efs
     - php
     - wordpress
