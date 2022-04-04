@@ -16,6 +16,10 @@ resource "aws_route_table" "private_route" {
         cidr_block              = "0.0.0.0/0"
         gateway_id              = aws_nat_gateway.my_nat.*.id[count.index]
     }
+    route {
+        cidr_block              = "${var.public_ip}/32"
+        gateway_id              = aws_internet_gateway.my_igw.id
+    }
     tags = {
         Name                    = "${var.project}-private-route-${var.environment}-${count.index+1}"
     }

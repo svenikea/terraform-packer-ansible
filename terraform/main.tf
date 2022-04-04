@@ -10,6 +10,7 @@ module "network_layer" {
     private_cidr_blocks     = var.private_cidr_blocks
     eip_number              = var.eip_number
     region                  = var.region
+    public_ip               = var.public_ip
 }
 
 # iam layer

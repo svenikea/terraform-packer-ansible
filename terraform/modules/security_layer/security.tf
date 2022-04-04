@@ -17,6 +17,15 @@ resource "aws_security_group" "efs_sg" {
   }
 }
 
+resource "aws_security_group" "packer_sg" {
+    name                          = "${var.project}-packer-sg-${var.environment}"
+    vpc_id                        = var.vpc_id
+    description                   = "Packer SG"
+    tags = {
+        Name  = "${var.project}-packer-${var.environment}-sg" 
+  }
+}
+
 resource "aws_security_group" "elasticache_sg" {
     vpc_id                      = var.vpc_id 
     name                        = "${var.project}-elasticache-sg-${var.environment}"
@@ -98,7 +107,6 @@ resource "aws_security_group_rule" "aurora_inbound_3306_from_app" {
     from_port                   = 3306
     to_port                     = 3306
     protocol                    = "tcp"
-    #cidr_blocks                 = ["0.0.0.0/0"]
     security_group_id           = aws_security_group.aurora_sg.id
     source_security_group_id    = aws_security_group.app_sg.id
 }
@@ -112,12 +120,29 @@ resource "aws_security_group_rule" "efs_ingress_from_app" {
     source_security_group_id    = aws_security_group.app_sg.id
 }
 
+resource "aws_security_group_rule" "efs_ingress_from_packer" {
+    type                        = "ingress"
+    protocol                    = "tcp"
+    from_port                   = 2049
+    to_port                     = 2049
+    security_group_id           = aws_security_group.efs_sg.id
+    source_security_group_id    = aws_security_group.packer_sg.id
+}
+
+resource "aws_security_group_rule" "packer_ingress_ssh" {
+    type                        = "ingress"
+    protocol                    = "tcp"
+    from_port                   = 22
+    to_port                     = 22
+    security_group_id           = aws_security_group.packer_sg.id
+    cidr_blocks                 = ["0.0.0.0/0"]
+}
+
 resource "aws_security_group_rule" "aurora_inbound_3306_from_bastion" {
     type                        = "ingress"
     from_port                   = 3306
     to_port                     = 3306
     protocol                    = "tcp"
-    # cidr_blocks                 = ["0.0.0.0/0"]
     security_group_id           = aws_security_group.aurora_sg.id
     source_security_group_id    = aws_security_group.bastion_sg.id
 }
@@ -229,6 +254,36 @@ resource "aws_security_group_rule" "app_egress_efs" {
     protocol                    = "tcp"
     security_group_id           = aws_security_group.app_sg.id
     source_security_group_id    = aws_security_group.efs_sg.id  
+}
+
+resource "aws_security_group_rule" "packer_egress_efs" {
+    type                        = "egress"
+    description                 = "Outbound to EFS"
+    from_port                   = 2049
+    to_port                     = 2049
+    protocol                    = "tcp"
+    security_group_id           = aws_security_group.packer_sg.id
+    source_security_group_id    = aws_security_group.efs_sg.id  
+}
+
+resource "aws_security_group_rule" "packer_egress_port_http" {
+    type                        = "egress"
+    description                 = "Outbound to Internet"
+    from_port                   = 80
+    to_port                     = 80
+    security_group_id           = aws_security_group.packer_sg.id
+    protocol                    = "tcp"
+    cidr_blocks                 = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "packer_egress_port_https" {
+    type                        = "egress"
+    description                 = "Outbound to Internet"
+    from_port                   = 443
+    to_port                     = 443
+    security_group_id           = aws_security_group.packer_sg.id
+    protocol                    = "tcp"
+    cidr_blocks                 = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "app_egress_internet_http" {

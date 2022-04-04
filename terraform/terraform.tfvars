@@ -53,6 +53,7 @@ aurora_parameter_group  = [
         value   = "50"
     }
 ]
+
 replicas_per_node_group         = 1
 node_class                      = "t3.small"
 cache_engine                    = "redis"
@@ -69,12 +70,11 @@ elasticache_parameter_group     = [
     },
     {
         name    = "cluster-enabled"
-        value   = "yes"
+        value   = "no"
     }
 ]
 backup_retention_period         = 1
-app_port                        = 5000
-instance_volume_size            = 40
+instance_volume_size            = 30
 instance_volume_type            = "gp3"
 instance_keypair_name           = "aws-key"
 bastion_instance_number         = 1

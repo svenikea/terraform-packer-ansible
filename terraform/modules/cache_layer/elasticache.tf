@@ -1,25 +1,17 @@
 resource "aws_elasticache_replication_group" "cache_replica_group" {
     automatic_failover_enabled              = true
     multi_az_enabled                        = true
-    #preferred_cache_cluster_azs             = var.private_subnets
     subnet_group_name                       = aws_elasticache_subnet_group.cache_subnet.name
     replication_group_id                    = "${var.project}-elasticache-replica-group-${var.environment}"
     description                             = "Redis Cache"
     engine                                  = var.cache_engine
     engine_version                          = var.cache_version
     node_type                               = "cache.${var.node_class}"
-    #num_cache_clusters                      = var.cluster_number
+    num_cache_clusters                      = var.cluster_number
     parameter_group_name                    = aws_elasticache_parameter_group.custom_paragroup.name
     security_group_ids                      = [var.elasticache_sg]
     port                                    = 6379
-    num_node_groups                         = var.cluster_number
-    replicas_per_node_group                 = var.replicas_per_node_group
 }
-
-# resource "aws_elasticache_cluster" "cache_cluster" {
-#     cluster_id                              = "${var.project}-elasticache-cluster-${var.environment}"
-#     replication_group_id                    = aws_elasticache_replication_group.cache_replica_group.id
-# }
 
 resource "aws_elasticache_parameter_group" "custom_paragroup" {
     name                                    = "${var.project}-parameter-group-${var.environment}"

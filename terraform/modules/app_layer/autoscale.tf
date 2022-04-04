@@ -17,7 +17,6 @@ resource "aws_launch_configuration" "app_launch_config" {
 resource "aws_autoscaling_group" "autoscale_app" {
     name                        = "${var.project}-auto-scale-app-group-${var.environment}"
     vpc_zone_identifier         = var.private_subnets
-    #target_group_arns          = [aws_lb_target_group.lab_architect_alb_tgp_front.arn]
     launch_configuration        = aws_launch_configuration.app_launch_config.name 
     min_size                    = var.min_scale_size
     max_size                    = var.max_scale_size

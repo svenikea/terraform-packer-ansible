@@ -13,6 +13,22 @@
             "owners"                                : ["{{user `ubuntu_owner_id`}}"],
             "most_recent"                           : true
         },
+        "vpc_filter" : {
+            "filters" : {
+                "tag:Name"                          : "{{user `vpc_name`}}"
+            }
+        },
+        "subnet_filter" : {
+            "filters": {
+                "tag:Name"                         : "{{user `subnet_name`}}"
+              }
+        },
+        "associate_public_ip_address"              : true,
+        "security_group_filter": {
+            "filters": {
+              "tag:Name"                            : "{{user `sg_name`}}"
+            }
+        },
         "instance_type"                             : "{{user `ami_instance_type`}}",
         "region"                                    : "{{user `region`}}",
         "ssh_username"                              : "{{user `app_ssh_user`}}",
@@ -39,7 +55,8 @@
             "type"                                  : "ansible-local",
             "playbook_file"                         : "../ansible/app/setup-app.yml",
             "role_paths" : [
-                "../ansible/app/roles/bastion/",
+                "../ansible/app/roles/base/",
+                "../ansible/app/roles/efs/",
                 "../ansible/app/roles/nginx",
                 "../ansible/app/roles/wordpress",
                 "../ansible/app/roles/php"

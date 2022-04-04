@@ -7,6 +7,6 @@
   mount:
     name: "{{ efs_mount_path }}"
     src: "{{ efs_dns_name }}:/"
-    fstype: ntfs4
-    opts: nfsvers:4.1
+    fstype: nfs4
+    opts: nfsvers=4.1
     state: mounted

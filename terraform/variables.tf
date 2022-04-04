@@ -13,6 +13,8 @@ variable "vpc_cidr_block" {
     description = "CIDR Block of VPC"
 }
 
+variable "public_ip" {} 
+
 variable "public_subnet_number" {
     type        = string
     description = "Name of public subnets"

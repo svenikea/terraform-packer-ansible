@@ -125,6 +125,14 @@ resource "aws_network_acl" "my_private_acl" {
         protocol        = "tcp"
         rule_no         = 160
         action          = "allow"
+        cidr_block      = "${var.public_ip}/32"
+        from_port       = 22
+        to_port         = 22
+    }
+    ingress {
+        protocol        = "tcp"
+        rule_no         = 170
+        action          = "allow"
         cidr_block      = "0.0.0.0/0"
         from_port       = 1024
         to_port         = 65535
