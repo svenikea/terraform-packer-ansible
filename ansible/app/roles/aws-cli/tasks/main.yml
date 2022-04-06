@@ -1,0 +1,20 @@
+- name: Download and Unpack AWS CLI
+  unarchive:
+    src: "{{ url_aws_cli }}"
+    dest: "/home/{{ deploy_user }}/"
+    validate_certs: yes
+    remote_src: yes
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"
+    mode: "755"
+
+- name: Install AWS CLI
+  command: "/home/{{ deploy_user }}/aws/install"
+  register: install_status
+
+- name: Check AWS CLI Version
+  command: "/usr/local/bin/aws --version"
+  when: install_status is changed
+
+  
+

@@ -45,6 +45,12 @@
     enabled: yes
   loop: "{{ service_name }}"
 
+- name: Remove /etc/localtime
+  file:
+    path: /etc/localtime
+    state: absent
+  when: ansible_facts['distribution'] == "CentOS"
+
 - name: Set timezone to {{ time_zone }}
   timezone:
     name: "{{ time_zone }}"
