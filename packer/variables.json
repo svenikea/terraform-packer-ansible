@@ -19,5 +19,6 @@
     "encrypt"                   : "false",
     "vpc_name"                  : "*-vpc-*",
     "subnet_name"               : "*-private-1-*",
-    "sg_name"                   : "*-packer-*-sg"
+    "sg_name"                   : "*-packer-*-sg",
+    "instance_profile"          : "wordpress-instance-profile-lab"
 }
