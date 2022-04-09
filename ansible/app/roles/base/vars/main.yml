@@ -58,4 +58,4 @@ chrony_path: "{{ '/etc/chrony/chrony.conf' if ansible_facts['distribution'] == '
 service_name:
   - "{{ 'chrony' if ansible_facts['distribution'] == 'Ubuntu' else 'chronyd' }}"
   - fail2ban
-time_zone: America/Chicago
+time_zone: "America/New_York"

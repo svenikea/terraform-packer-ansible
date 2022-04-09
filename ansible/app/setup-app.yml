@@ -3,6 +3,8 @@
   gather_facts: yes
   roles:
     - base
+    - aws-cli
+    - cloudwatch-metric
     - nginx
     - efs
     - php
