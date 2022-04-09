@@ -111,11 +111,6 @@ variable "backup_retention_period" {
     description = "Backup rentation perioud"
 }
 
-variable "app_port" {
-    type        = number
-    description = "APP port"
-}
-
 variable "bastion_instance_number" {
     type        = number
     description = "A number of bastion instances" 

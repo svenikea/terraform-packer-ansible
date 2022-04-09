@@ -110,7 +110,6 @@ module "app_layer" {
     instance_type           = var.instance_type
     app_sg                  = module.security_layer.app_sg
     frontend_lb_target_arn  = module.front_layer.frontend_lb_target_arn
-    app_port                = var.app_port
     min_scale_size          = var.min_scale_size
     max_scale_size          = var.max_scale_size
     private_subnets         = module.network_layer.private_subnets
