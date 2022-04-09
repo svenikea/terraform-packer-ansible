@@ -1,10 +1,10 @@
 - hosts: app_role
   become: yes
   gather_facts: yes
-  remote_user: test
   roles:
     - base
     - aws-cli
+    - cloudwatch-metric
     - nginx
     - efs
     - php

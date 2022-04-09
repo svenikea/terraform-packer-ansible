@@ -1,6 +1,7 @@
 [bastion_role]
-
+Bastion_Server ansible_connection=local
 [app_role]
+App_Server ansible_connection=local
 
 [dev_env:children]
 bastion_role

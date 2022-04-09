@@ -1,0 +1,5 @@
+- name: Start Cloudwatch Agent
+  service:
+    name: amazon-cloudwatch-agent
+    state: started
+    enabled: yes

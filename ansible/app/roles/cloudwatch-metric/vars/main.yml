@@ -1,0 +1,1 @@
+cloudwatch_package: "{{ 'amazon-cloudwatch-agent' if ansible_facts['distribution'] == 'Amazon' else 'https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb' }}"
