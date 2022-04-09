@@ -45,12 +45,16 @@
             "type"                                  : "ansible-local",
             "playbook_file"                         : "../ansible/app/setup-bastion.yml",
             "role_paths" : [
-                "../ansible/app/roles/base/"
+                "../ansible/app/roles/base/",
+                "../ansible/app/roles/aws-cli/",
+                "../ansible/app/roles/cloudwatch-metric/"
+
             ],
             "inventory_groups"                      : [
                 "bastion_role",
                 "ev_env"
             ],
+            "inventory_file"                        : "../ansible/app/inventory/dev",
             "group_vars"                            : "../ansible/app/group_vars/"
         },
         {
