@@ -4,8 +4,9 @@
   roles:
     - base
     - aws-cli
-    - cloudwatch-metric
     - nginx
     - efs
     - php
     - wordpress
+    - cloudwatch-log
+    - cloudwatch-metric

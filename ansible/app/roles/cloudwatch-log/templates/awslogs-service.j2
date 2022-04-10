@@ -1,0 +1,15 @@
+[Unit]
+Description=Service for CloudWatch Logs agent
+After=network-online.target
+After=syslog.target
+
+[Service]
+Type=forking
+Restart=on-failure
+KillMode=control-group
+PIDFile=/var/awslogs/state/awslogs.pid
+RestartSec=10s
+ExecStart=/etc/init.d/awslogs start
+
+[Install]
+WantedBy=multi-user.target
