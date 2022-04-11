@@ -5,3 +5,4 @@
     - base
     - aws-cli
     - cloudwatch-metric
+    - cloudwatch-log

@@ -60,6 +60,7 @@
                 "../ansible/app/roles/efs/",
                 "../ansible/app/roles/aws-cli/",
                 "../ansible/app/roles/cloudwatch-metric/",
+                "../ansible/app/roles/cloudwatch-log/",
                 "../ansible/app/roles/nginx",
                 "../ansible/app/roles/wordpress",
                 "../ansible/app/roles/php"

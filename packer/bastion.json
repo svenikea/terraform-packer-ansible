@@ -47,7 +47,8 @@
             "role_paths" : [
                 "../ansible/app/roles/base/",
                 "../ansible/app/roles/aws-cli/",
-                "../ansible/app/roles/cloudwatch-metric/"
+                "../ansible/app/roles/cloudwatch-metric/",
+                "../ansible/app/roles/cloudwatch-log"
 
             ],
             "inventory_groups"                      : [
