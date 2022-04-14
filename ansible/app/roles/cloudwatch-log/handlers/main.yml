@@ -1,5 +1,0 @@
-- name: Enable AWS Logs service 
-  service:
-    name: "{{ 'awslogsd' if ansible_facts['distribution'] == 'Amazon' else 'awslogs' }}"
-    state: stopped
-    enabled: yes

@@ -8,5 +8,4 @@
     - efs
     - php
     - wordpress
-    - cloudwatch-log
-    - cloudwatch-metric
+    - cloudwatch-agent

@@ -65,5 +65,46 @@
                         "InstanceType": "${aws:InstanceType}",
                         "AutoScalingGroupName": "${aws:AutoScalingGroupName}"
                 }
+        },
+        "logs": {
+                "logs_collected": {
+                        "files": {
+                                "collect_list": [
+                                        {% if inventory_hostname in groups['bastion_role'] %}
+                                        {
+                                                "file_path": "/var/log/messages",
+                                                "log_group_name": "Bastion-general-Log",
+                                                "log_stream_name": "Bastion-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"
+                                        },
+                                        {
+                                                "file_path": "/var/log/yum.log",
+                                                "log_group_name": "Bastion-yum-Log",
+                                                "log_stream_name": "Bastion-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"                                               
+                                        }
+                                        {% elif inventory_hostname in groups['app_role'] %}
+                                        {
+                                                "file_path": "{{ app_nginx_access_log }}",
+                                                "log_group_name": "App-nginx-access-Log",
+                                                "log_stream_name": "App-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"
+                                        },
+                                        {
+                                                "file_path": "{{ app_nginx_error_log }}",
+                                                "log_group_name": "App-nginx-error-Log",
+                                                "log_stream_name": "App-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"
+                                        },
+                                        {
+                                                "file_path": "{{ app_wordpress_deug_log }}",
+                                                "log_group_name": "App-wordpress-Log",
+                                                "log_stream_name": "App-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"
+                                        },
+                                        {% endif %}
+                                ]
+                        }
+                }
         }
 }
