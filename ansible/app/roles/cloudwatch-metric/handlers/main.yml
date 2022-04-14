@@ -1,5 +1,5 @@
-- name: Start Cloudwatch Agent
+- name: Enable Cloudwatch Metrics
   service:
     name: amazon-cloudwatch-agent
-    state: started
+    state: stopped
     enabled: yes

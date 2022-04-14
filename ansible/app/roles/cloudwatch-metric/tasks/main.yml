@@ -10,13 +10,10 @@
     state: present
   when: ansible_facts['distribution'] == "Amazon"
 
-- name: Copying CoudWatch config
+- name: Copying CoudWatch metric config
   template:
     src: cloudwatch.j2
     dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
     mode: "644"
     owner: "{{ deploy_user }}"
-  notify: Start Cloudwatch Agent
-
-# - name: debug
-#   debug: msg="{{ lookup('template', './cloudwatch.j2') }}"
+  notify: Enable Cloudwatch Metrics

@@ -49,7 +49,7 @@
   file:
     path: /etc/localtime
     state: absent
-  when: ansible_facts['distribution'] == "CentOS"
+  when: ansible_facts['distribution'] == "CentOS" or ansible_facts['distribution'] == "Amazon"
 
 - name: Set timezone to {{ time_zone }}
   timezone:

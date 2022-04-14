@@ -12,12 +12,7 @@
         mode: "644"
         owner: root
         group: root
-    
-    - name: Start AWS Logs service 
-      service:
-        name: awslogsd
-        state: started 
-        enabled: yes
+      notify: Enable AWS Logs service 
   when: ansible_facts['distribution'] == 'Amazon'
 
 - name: Ubuntu AWS Logs
@@ -44,13 +39,6 @@
       shell: "python awslogs-agent-setup.py -r  {{ aws_region }} -n -c awslogs.conf"
       args:
         chdir: /home/{{ deploy_user }}
-      tags: debug
-
-    - name: Restart CloudWatch Logs
-      service:
-        name: awslogs
-        state: restarted
-        enabled: yes
-
+      notify: Enable AWS Logs service 
   when: ansible_facts['distribution'] == 'Ubuntu'
 

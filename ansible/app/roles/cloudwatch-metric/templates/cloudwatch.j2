@@ -1,6 +1,6 @@
 {
         "agent" :{
-                "metrics_collection_interval": 10,
+                "metrics_collection_interval": 1,
                 "logfile": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log"
         },
         "metrics": {
@@ -11,17 +11,18 @@
                 {% endif %}
                 "metrics_collected": {
                         "mem": {
+                                "metrics_collection_interval": 1,
                                 "measurement": [
                                         "mem_used_percent",
                                          "mem_available",
                                          "mem_available_percent",
-                                         "mem_cached",
                                          "mem_free",
                                          "mem_total",
                                          "mem_used"
                                 ]
                         },
                         "disk": {
+                                "metrics_collection_interval": 1,
                                 "resources": [
                                         "*"
                                 ],
@@ -38,9 +39,23 @@
                                         "nfs4"
                                 ]
                         },
-                        "swap": {
+                        "cpu": {
+                                "metrics_collection_interval": 1,
                                 "measurement": [
-                                        "swap_used_percent"
+                                        "cpu_usage_system",
+                                        "cpu_usage_user",
+                                        "cpu_usage_idle",
+                                        "cpu_usage_iowait"
+                                ]
+                        },
+                        "net": {
+                                "metrics_collection_interval": 1,
+                                "resources": [
+                                        "eth0"
+                                ],
+                                "measurement": [
+                                        "bytes_sent",
+                                        "bytes_recv"
                                 ]
                         }
                 },
