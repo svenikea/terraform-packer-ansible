@@ -9,3 +9,6 @@ chosen_domain:  "{{ sub_domain[0] }}"
 php_version: "php7.4"
 efs_mount_path: "/var/www/{{ chosen_domain }}"
 aws_region: us-east-1
+app_nginx_access_log: "/var/log/nginx/localhost.access.log"
+app_nginx_error_log: "/var/log/nginx/localhost.error.log"
+app_wordpress_deug_log: "{{ efs_mount_path }}/wp-content/debug.log"

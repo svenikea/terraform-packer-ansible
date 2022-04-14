@@ -4,5 +4,4 @@
   roles:
     - base
     - aws-cli
-    - cloudwatch-metric
-    - cloudwatch-log
+    - cloudwatch-agent
