@@ -19,6 +19,7 @@ module "iam_layer" {
     environment             = var.environment
     project                 = var.project 
     bucket_arns             = module.storage_layer.bucket_arns
+    iam_users               = var.iam_users
 }   
 
 # EFS Layer 
@@ -99,7 +100,7 @@ module "front_layer" {
     instance_volume_size    = var.instance_volume_size
     instance_volume_type    = var.instance_volume_type
     instance_keypair_name   = var.instance_keypair_name
-    ec2_iam_role            = module.iam_layer.ec2_iam_role
+    ec2_iam_role            = one([for item in module.iam_layer.ec2_iam_role : item if can(regex("bastion",item))])
 }
 
 module "app_layer" {
@@ -122,5 +123,5 @@ module "app_layer" {
     aurora_database_name    = var.aurora_database_name
     aurora_password         = module.database_layer.aurora_password
     aurora_endpoint         = module.database_layer.aurora_rds_cluster_endpoint
-    ec2_iam_role            = module.iam_layer.ec2_iam_role
+    ec2_iam_role            = one([for item in module.iam_layer.ec2_iam_role : item if can(regex("app",item))])
 }

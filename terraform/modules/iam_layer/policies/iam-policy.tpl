@@ -1,6 +1,7 @@
 {
     "Version": "2012-10-17",
     "Statement": [
+        %{ if iam_user != "bastion_user" }
         {
             "Effect": "Allow",
             "Action": [
@@ -21,6 +22,7 @@
             ],
             "Resource" : ${jsonencode(split(",",sub_bucket_arns))}
         },
+        %{ endif }
         {
             "Effect": "Allow",
             "Action": [

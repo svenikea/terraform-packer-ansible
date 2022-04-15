@@ -87,5 +87,9 @@ bucket_list                     = [
 ]
 efs_performance_mode            = "generalPurpose"
 efs_throughput_mode             = "bursting"
+iam_users                       = [
+    "bastion_user",
+    "app_user"
+]
 
 
