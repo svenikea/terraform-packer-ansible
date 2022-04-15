@@ -170,3 +170,8 @@ variable "efs_throughput_mode" {
     type = string
     description = "EFS Throughput Mode"   
 }
+
+variable "iam_users" {
+    type        = list
+    description = "A list of IAM Users"
+}

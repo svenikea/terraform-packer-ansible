@@ -29,7 +29,7 @@ output "frontent_lb_dns_name" {
     value = module.front_layer.load_balance_dns
 }
 resource "local_file" "ansible_vars" {
-    filename    = "../ansible/app/group_vars/app_role/main.yml"
+    filename    = "../ansible/group_vars/app_role/main.yml"
     content     = <<EOF
 aurora_user: ${var.aurora_user}
 aurora_password: ${module.database_layer.aurora_password}
@@ -38,8 +38,8 @@ aurora_endpoint: ${module.database_layer.aurora_rds_cluster_endpoint}
 elasticache_endpoint: ${module.cache_layer.elasticache_primary_endpoint}
 s3_domain_name: ${jsonencode(split(",",(join(",",module.storage_layer.web_static_domain_name))))}
 efs_dns_name: ${module.efs_layer.efs_dns_name}
-iam_access_id: ***REMOVED***
-iam_secret_access_key: ***REMOVED***
+iam_access_id: ${module.iam_layer.iam_user_access_keys[1]}
+iam_secret_access_key: ${module.iam_layer.iam_user_secrets[1]}
 EOF 
 }
 
@@ -47,4 +47,3 @@ EOF
 output "efs_mount_target_dns_name" {
     value = module.efs_layer.efs_mount_target_dns_name
 }
-
