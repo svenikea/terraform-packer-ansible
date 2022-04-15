@@ -1,7 +1,7 @@
 {
     "builders" :[{
         "type"                                      : "amazon-ebs",
-        "iam_instance_profile"                      : "{{user `instance_profile`}}",
+        "iam_instance_profile"                      : "{{user `app_instance_profile`}}",
         "ami_name"                                  : "{{user `app_ami_name`}}",
         "source_ami_filter" : {
             "filters" : {
@@ -54,22 +54,22 @@
         },
         {
             "type"                                  : "ansible-local",
-            "playbook_file"                         : "../ansible/app/setup-app.yml",
+            "playbook_file"                         : "../ansible/setup-app.yml",
             "role_paths" : [
-                "../ansible/app/roles/base/",
-                "../ansible/app/roles/efs/",
-                "../ansible/app/roles/aws-cli/",
-                "../ansible/app/roles/cloudwatch-agent/",
-                "../ansible/app/roles/nginx",
-                "../ansible/app/roles/wordpress",
-                "../ansible/app/roles/php"
+                "../ansible/roles/base/",
+                "../ansible/roles/efs/",
+                "../ansible/roles/aws-cli/",
+                "../ansible/roles/cloudwatch-agent/",
+                "../ansible/roles/nginx",
+                "../ansible/roles/wordpress",
+                "../ansible/roles/php"
             ],
             "inventory_groups"                      : [
                 "app_role",
                 "ev_env"
             ],
-            "inventory_file"                        : "../ansible/app/inventory/dev",
-            "group_vars"                            : "../ansible/app/group_vars/"
+            "inventory_file"                        : "../ansible/inventory/dev",
+            "group_vars"                            : "../ansible/group_vars/"
         },
         {
             "type"                                  : "shell",
