@@ -20,5 +20,6 @@
     "vpc_name"                  : "*-vpc-*",
     "subnet_name"               : "*-private-1-*",
     "sg_name"                   : "*-packer-*-sg",
-    "instance_profile"          : "wordpress-instance-profile-lab"
+    "app_instance_profile"      : "wordpress-app_user-lab",
+    "bastion_instance_profile"  : "wordpress-bastion_user-lab"
 }
