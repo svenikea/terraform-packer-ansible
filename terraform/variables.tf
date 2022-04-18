@@ -13,7 +13,9 @@ variable "vpc_cidr_block" {
     description = "CIDR Block of VPC"
 }
 
-variable "public_ip" {} 
+variable "public_ip" {
+    sensitive = true
+} 
 
 variable "public_subnet_number" {
     type        = string

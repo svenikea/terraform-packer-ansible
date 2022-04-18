@@ -1,5 +1,4 @@
 {
-    "timestamp"                 : "202203152033",
     "region"                    : "us-east-1",
     "ami_instance_type"         : "t2.micro",
     "app_ssh_user"              : "ubuntu",
@@ -7,8 +6,8 @@
     "block_size"                : "30",
     "block_type"                : "gp3",
     "iops_number"               : "3000",
-    "app_ami_name"              : "app-ami-{{user `timestamp`}}-gp3",
-    "bastion_ami_name"          : "bastion-ami-{{user `timestamp`}}-gp3",
+    "app_ami_name"              : "app-ami-gold",
+    "bastion_ami_name"          : "bastion-ami-gold",
     "ubuntu_owner_id"           : "099720109477",
     "amazon_onwer_id"           : "amazon",
     "ubuntu_root_block_name"    : "/dev/sda1",

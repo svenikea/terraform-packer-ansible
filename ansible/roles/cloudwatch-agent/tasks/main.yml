@@ -10,7 +10,7 @@
     state: present
   when: ansible_facts['distribution'] == "Amazon"
 
-- name: Copying CoudWatch metric config
+- name: Copying CoudWatch config
   template:
     src: cloudwatch.j2
     dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json

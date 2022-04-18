@@ -1,6 +1,6 @@
 resource "aws_rds_cluster_instance" "aurora_instance" {
     count                   = var.instance_number
-    identifier              = "${var.project}-aurora-${var.environment}-${count.index}"
+    identifier              = "${var.project}-aurora-${var.environment}-${count.index+1}"
     cluster_identifier      = aws_rds_cluster.aurora_cluster.id
     instance_class          = "db.${var.instance_class}"
     engine                  = aws_rds_cluster.aurora_cluster.engine

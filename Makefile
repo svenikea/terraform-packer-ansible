@@ -1,4 +1,4 @@
-all: init apply_a ami apply_b
+all: init remove_public_ip apply_network apply_b
 
 ami:
 	cd ./packer && packer build \
@@ -32,6 +32,10 @@ apply_s3:
 	cd ./terraform && terraform apply \
 	-target module.storage_layer \
 	--auto-approve && cd -
+
+remove_public_ip:
+	cd ./terraform/modules/network_layer &&\
+	sed -i '19,22 s/^/#/' private_subnets.tf && cd -
 
 apply_a:
 	cd ./terraform && terraform apply \

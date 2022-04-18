@@ -10,17 +10,7 @@
                 "s3:PutObject",
                 "s3:DeleteObject"
             ],
-            "Resource" : ${jsonencode(split(",",top_bucket_arns))}
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:List*",
-                "s3:Get*",
-                "s3:PutObject",
-                "s3:DeleteObject"
-            ],
-            "Resource" : ${jsonencode(split(",",sub_bucket_arns))}
+            "Resource" : ${jsonencode(concat(split(",",top_bucket_arns),split(",",sub_bucket_arns)))}
         },
         %{ endif }
         {
