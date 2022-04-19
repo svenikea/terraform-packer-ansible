@@ -1,4 +1,4 @@
-all: init remove_public_ip apply_network apply_b
+all: init apply_a ami remove_public_ip apply_network apply_b
 
 ami:
 	cd ./packer && packer build \
