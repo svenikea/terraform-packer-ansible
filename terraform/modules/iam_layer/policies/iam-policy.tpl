@@ -19,6 +19,7 @@
                 "cloudwatch:PutMetricData",
                 "ec2:DescribeVolumes",
                 "ec2:DescribeTags",
+                "ec2:CreateTags",
                 "logs:PutLogEvents",
                 "logs:DescribeLogStreams",
                 "logs:DescribeLogGroups",

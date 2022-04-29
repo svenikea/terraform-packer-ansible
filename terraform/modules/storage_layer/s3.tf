@@ -6,9 +6,6 @@ resource "aws_s3_bucket" "s3_buckets" {
         Name                = "${var.project}-${var.bucket_list[count.index]}-${var.environment}-${local.timestamp_filtered}"
         Env                 = var.environment
     }
-    versioning {
-        enabled             = true
-    }
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "s3_lifecycle" {
@@ -40,4 +37,12 @@ resource "aws_s3_bucket_acl" "web_static_acl" {
     count                   = length(var.bucket_list)
     bucket                  = aws_s3_bucket.s3_buckets.*.id[count.index]
     acl                     = "private"
+}
+
+resource "aws_s3_bucket_versioning" "buckets_versioning" {
+    count                   = length(var.bucket_list)
+    bucket                  = aws_s3_bucket.s3_buckets.*.id[count.index]
+    versioning_configuration {
+        status              = var.s3_versioning
+    }
 }

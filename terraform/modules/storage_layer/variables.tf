@@ -1,6 +1,7 @@
 variable "environment" {}
 variable "project" {}
 variable "bucket_list" {}
+variable "s3_versioning" {}
 
 locals {
   timestamp = "${timestamp()}"

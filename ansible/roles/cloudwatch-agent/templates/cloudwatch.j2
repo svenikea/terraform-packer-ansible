@@ -78,6 +78,18 @@
                                                 "timestamp_format": "%H: %M: %S%y%b%-d"
                                         },
                                         {
+                                                "file_path": "{{ sys_log }}",
+                                                "log_group_name": "Bastion-Sys-Log",
+                                                "log_stream_name": "Bastion-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"
+                                        },    
+                                        {
+                                                "file_path": "{{ auth_log }}",
+                                                "log_group_name": "Bastion-Auth-Log",
+                                                "log_stream_name": "Bastion-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"
+                                        },                                  
+                                        {
                                                 "file_path": "/var/log/yum.log",
                                                 "log_group_name": "Bastion-yum-Log",
                                                 "log_stream_name": "Bastion-{hostname}",
@@ -90,6 +102,18 @@
                                                 "log_stream_name": "App-{hostname}",
                                                 "timestamp_format": "%H: %M: %S%y%b%-d"
                                         },
+                                        {
+                                                "file_path": "{{ sys_log }}",
+                                                "log_group_name": "App-Sys-Log",
+                                                "log_stream_name": "App-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"
+                                        },    
+                                        {
+                                                "file_path": "{{ auth_log }}",
+                                                "log_group_name": "Appn-Auth-Log",
+                                                "log_stream_name": "App-{hostname}",
+                                                "timestamp_format": "%H: %M: %S%y%b%-d"
+                                        }, 
                                         {
                                                 "file_path": "{{ app_nginx_error_log }}",
                                                 "log_group_name": "App-nginx-error-Log",

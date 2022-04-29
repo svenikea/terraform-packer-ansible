@@ -5,6 +5,8 @@ data "template_file" "role_policy_template" {
         top_bucket_arns = "${join(",",var.bucket_arns)}"
         sub_bucket_arns = "${join("/*,",var.bucket_arns)}/*"
         iam_user        = "${element(var.iam_users,count.index)}"
+        region          = var.region
+        account_id      = var.account_id
     }
 }
 

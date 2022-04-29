@@ -9,7 +9,8 @@
                 "name"                              : "{{user `bastion_ami_location`}}",
                 "image-type"                        : "machine",
                 "hypervisor"                        : "xen",
-                "block-device-mapping.volume-type"  : "gp2"
+                "block-device-mapping.volume-type"  : "gp2",
+                "architecture"                      : "x86_64"
             },
             "owners"                                : ["{{user `amazon_onwer_id`}}"],
             "most_recent"                           : true
@@ -20,7 +21,6 @@
         "launch_block_device_mappings"  : {
             "delete_on_termination"                 : "{{user `delete_termination`}}",
             "device_name"                           : "{{user `amazon_root_block_name`}}",
-            "volume_size"                           : "{{user `block_size`}}",
             "volume_type"                           : "{{user `block_type`}}",
             "encrypted"                             : "{{user `encrypt`}}",
             "iops"                                  : "{{user `iops_number`}}"

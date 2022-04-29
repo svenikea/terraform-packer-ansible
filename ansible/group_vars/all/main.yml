@@ -11,4 +11,6 @@ efs_mount_path: "/var/www/{{ chosen_domain }}"
 aws_region: us-east-1
 app_nginx_access_log: "/var/log/nginx/localhost.access.log"
 app_nginx_error_log: "/var/log/nginx/localhost.error.log"
-app_wordpress_deug_log: "{{ efs_mount_path }}/wp-content/debug.log"
+app_wordpress_debug_log: "{{ efs_mount_path }}/wp-content/debug.log"
+sys_log: "/var/log/syslog"
+auth_log: "/var/log/auth.log"

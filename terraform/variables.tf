@@ -118,29 +118,69 @@ variable "bastion_instance_number" {
     description = "A number of bastion instances" 
 }   
 
-variable "min_scale_size" {
+variable "autoscale_min_scale_size" {
     type        = number
     description = "Min EC2 numbers"
 }
 
-variable "max_scale_size" {
+variable "autoscale_max_scale_size" {
     type        = number
     description = "Max EC2 numbers"
 }
 
-variable "app_cpu_target" {
+variable "autoscale_termination_policy" {
+    type        = string
+    description = "AutoScale Termination Policy"
+}
+
+variable "autoscale_health_check_type" {
+    type        = string
+    description = "AutoScale Health Check Type"
+}
+
+variable "ebs_delete_protection" {
+    type        = bool
+    description = "EBS Delete On Termination"
+}
+
+variable "ebs_encyption" {
+    type        = bool
+    description = "EBS Encryption"
+}
+
+variable "autoscale_target_policy" {
+    type        = string
+    description = "AutoScale Target Policy"
+}
+
+variable "alb_cpu_target" {
     type        = number
     description = "App Average CPU Utilization target"
 }
 
-variable "instance_volume_size" {
+variable "autoscale_health_check_grace_period" {
+    type        = number 
+    description = "App AutoScale Health Check Grace Period"
+}      
+
+variable "ebs_volume_size" {
     type        = number
     description = "Instance Volume Size"
 }
 
-variable "instance_volume_type" {
+variable "account_id" {
+    type        = number
+    description = "AWS Account ID"
+}   
+
+variable "ebs_volume_type" {
     type        = string
     description = "Instance Volume Type"
+}
+
+variable "ebs_iops" {
+    type        = number
+    description = "EBS iOPS"
 }
 
 variable "instance_keypair_name" {
@@ -163,13 +203,18 @@ variable "bucket_list" {
     description = "A list of S3 buckets"
 }
 
+variable "s3_versioning" {
+    type        = string
+    description = "S3 Bucket Versioning"
+}
+
 variable "efs_performance_mode" {
-    type = string
+    type        = string
     description = "EFS Performance Mode"
 }
 
 variable "efs_throughput_mode" {
-    type = string
+    type        = string
     description = "EFS Throughput Mode"   
 }
 

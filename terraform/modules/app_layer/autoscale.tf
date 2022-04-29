@@ -4,31 +4,32 @@ resource "aws_launch_configuration" "app_launch_config" {
     instance_type               = var.instance_type
     key_name                    = var.instance_keypair_name
     root_block_device {
-        volume_type             = var.instance_volume_type
-        volume_size             = var.instance_volume_size
-        delete_on_termination   = true
-        encrypted               = false
-        iops                    = 3000
+        volume_type             = var.ebs_volume_type
+        volume_size             = var.ebs_volume_size
+        delete_on_termination   = var.ebs_delete_protection
+        encrypted               = var.ebs_encyption
+        iops                    = var.ebs_iops
     }
     security_groups             = [var.app_sg]
     iam_instance_profile        = var.ec2_iam_role
+    user_data                   = local.app_user_data
 }
 
 resource "aws_autoscaling_group" "autoscale_app" {
     name                        = "${var.project}-auto-scale-app-group-${var.environment}"
     vpc_zone_identifier         = var.private_subnets
     launch_configuration        = aws_launch_configuration.app_launch_config.name 
-    min_size                    = var.min_scale_size
-    max_size                    = var.max_scale_size
-    desired_capacity            = var.min_scale_size
-    termination_policies        = ["NewestInstance"]
-    health_check_type           = "ELB"
-    health_check_grace_period   = 300
-    tag {
-        key                     = "Name"
-        value                   = "${var.project}-auto-scale-app-group-${var.environment}"
-        propagate_at_launch     = true
-    }
+    min_size                    = var.autoscale_min_scale_size
+    max_size                    = var.autoscale_max_scale_size
+    desired_capacity            = var.autoscale_min_scale_size
+    termination_policies        = [var.autoscale_termination_policy]
+    health_check_type           = var.autoscale_health_check_type
+    health_check_grace_period   = var.autoscale_health_check_grace_period
+    # tag {
+    #     key                     = "Name"
+    #     value                   = "${var.project}-auto-scale-app-group-${var.environment}"
+    #     propagate_at_launch     = true
+    # }
     tag {
         key                     = "ServerType"
         value                   = "Backend"
@@ -52,8 +53,8 @@ resource "aws_autoscaling_policy" "scale_policty" {
     policy_type                 = "TargetTrackingScaling"
     target_tracking_configuration {
         predefined_metric_specification {
-            predefined_metric_type = "ASGAverageCPUUtilization" 
+            predefined_metric_type = var.autoscale_target_policy
         } 
-        target_value            = var.app_cpu_target
+        target_value            = var.alb_cpu_target
     }
 }

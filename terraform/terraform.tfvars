@@ -1,28 +1,28 @@
-# NETWORK LAYER
-region                          = "us-east-1"
-project                         = "wordpress"
-environment                     = "lab"
-vpc_cidr_block                  = "10.0.0.0/16"
-public_subnet_number            = 2
-eip_number                      = 2
-public_cidr_blocks              = [
+region                              = "us-east-1"
+account_id                          = 228653419636
+project                             = "wordpress"
+environment                         = "lab"
+vpc_cidr_block                      = "10.0.0.0/16"
+public_subnet_number                = 2
+eip_number                          = 2
+public_cidr_blocks                  = [
     "10.0.1.0/24",
     "10.0.2.0/24"
 ]
 
-private_subnet_number           = 2
-private_cidr_blocks             = [
+private_subnet_number               = 2
+private_cidr_blocks                 = [
     "10.0.3.0/24",
     "10.0.4.0/24"
 ]
 
-instance_number                 = 2
-instance_class                  = "t3.small"
-instance_type                   = "t2.micro"
-database_engine                 = "mysql"
-database_version                = "5.7.12"
-aurora_user                     = "admin"
-aurora_database_name            = "aurora"
+instance_number                     = 2
+instance_class                      = "t3.small"
+instance_type                       = "t2.micro"
+database_engine                     = "mysql"
+database_version                    = "5.7.12"
+aurora_user                         = "admin"
+aurora_database_name                = "aurora"
 aurora_parameter_group  = [
     {
         name    = "log_output"
@@ -54,12 +54,12 @@ aurora_parameter_group  = [
     }
 ]
 
-replicas_per_node_group         = 1
-node_class                      = "t3.small"
-cache_engine                    = "redis"
-cache_version                   = "6.x"
-cache_family                    = "redis6.x"
-elasticache_parameter_group     = [
+replicas_per_node_group             = 1
+node_class                          = "t3.small"
+cache_engine                        = "redis"
+cache_version                       = "6.x"
+cache_family                        = "redis6.x"
+elasticache_parameter_group         = [
     {
         name    = "activedefrag"
         value   = "yes"
@@ -73,21 +73,29 @@ elasticache_parameter_group     = [
         value   = "no"
     }
 ]
-backup_retention_period         = 1
-instance_volume_size            = 30
-instance_volume_type            = "gp3"
-instance_keypair_name           = "aws-key"
-bastion_instance_number         = 1
-min_scale_size                  = 2
-max_scale_size                  = 4
-app_cpu_target                  = 40.0
-bucket_list                     = [
+backup_retention_period             = 1
+ebs_volume_size                     = 30
+ebs_volume_type                     = "gp3"
+ebs_delete_protection               = true
+ebs_encyption                       = true
+instance_keypair_name               = "aws-key"
+bastion_instance_number             = 1
+ebs_iops                            = 3000
+autoscale_min_scale_size            = 2
+autoscale_max_scale_size            = 4
+autoscale_termination_policy        = "NewestInstance"
+autoscale_target_policy             = "ASGAverageCPUUtilization"
+autoscale_health_check_type         = "ELB"
+alb_cpu_target                      = 40.0
+autoscale_health_check_grace_period = 300
+bucket_list                         = [
     "app-log",
     "app-static-file"
 ]
-efs_performance_mode            = "generalPurpose"
-efs_throughput_mode             = "bursting"
-iam_users                       = [
+s3_versioning                       = "Enabled"
+efs_performance_mode                = "generalPurpose"
+efs_throughput_mode                 = "bursting"
+iam_users                           = [
     "bastion_user",
     "app_user"
 ]

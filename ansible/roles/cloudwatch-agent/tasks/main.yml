@@ -15,5 +15,5 @@
     src: cloudwatch.j2
     dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
     mode: "644"
-    owner: "{{ deploy_user }}"
-  notify: Enable Cloudwatch Metrics
+  notify: Enable Cloudwatch Agent
+  tags: debug

@@ -10,25 +10,40 @@ variable "public_subnets" {}
 variable "ec2_iam_role" {}
 # INSTANCE LAYER
 variable "instance_type" {}
-variable "instance_volume_size" {}
-variable "instance_volume_type" {}
+variable "ebs_volume_size" {}
+variable "ebs_volume_type" {}
+variable "ebs_delete_protection" {}
+variable "ebs_encyption" {}
 variable "instance_keypair_name" {}
 variable "bastion_instance_number" {}
 variable "bastion_sg" {}
 variable "alb_sg" {}
+variable "ebs_iops" {}
 
-locals {    
-    webserver_user_data = <<-EOF
-                #!/bin/sh
-                amazon-linux-extras enable nginx1 
-                yum clean metadata
-                yum -y install httpd php telnet lsof curl wget bind-utils unzip -y
-                cd /var/www/html
-                wget https://us-west-2-aws-training.s3.amazonaws.com/awsu-spl/spl03-working-elb/static/examplefiles-elb.zip
-                unzip examplefiles-elb.zip
-                systemctl start httpd
-                systemctl enable httpd
-                EOF
+data "aws_ami" "bastion_instance_data"{
+    most_recent                 = true
+    owners                      = ["amazon"]
+    filter {
+        name                    = "name"
+        values                  = ["amzn2-ami-*"]
+    }
+    filter {
+        name                    = "architecture"
+        values                  = ["x86_64"]
+    }
+    filter {
+        name                    = "virtualization-type"
+        values                  = ["hvm"]
+    }
+    filter {
+        name                    = "hypervisor"
+        values                  = ["xen"]
+    }
+    filter {
+        name                    = "image-type"
+        values                  = ["machine"]
+    }
 }
+
 
 

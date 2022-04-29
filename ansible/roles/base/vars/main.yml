@@ -33,6 +33,7 @@ base_apt_packages:
   - git
   - acl
   - htop
+  - ec2-instance-connect
 
 base_yum_packages:
   - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -53,6 +54,7 @@ base_yum_packages:
   - acl
   - git
   - htop
+  - ec2-instance-connect
 
 chrony_path: "{{ '/etc/chrony/chrony.conf' if ansible_facts['distribution'] == 'Ubuntu' else '/etc/chrony.conf' }}"
 service_name:

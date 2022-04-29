@@ -9,7 +9,8 @@
                 "name"                              : "{{user `app_ami_location`}}",
                 "image-type"                        : "machine",
                 "hypervisor"                        : "xen",
-                "block-device-mapping.volume-type"  : "gp2"
+                "block-device-mapping.volume-type"  : "gp2",
+                "architecture"                      : "x86_64"
             },
             "owners"                                : ["{{user `ubuntu_owner_id`}}"],
             "most_recent"                           : true
@@ -64,10 +65,7 @@
                 "../ansible/roles/wordpress",
                 "../ansible/roles/php"
             ],
-            "inventory_groups"                      : [
-                "app_role",
-                "ev_env"
-            ],
+            "inventory_groups"                      : "app_role",
             "inventory_file"                        : "../ansible/inventory/dev",
             "group_vars"                            : "../ansible/group_vars/"
         },
