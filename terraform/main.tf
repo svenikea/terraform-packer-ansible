@@ -42,6 +42,8 @@ module "storage_layer" {
     project                             = var.project
     bucket_list                         = var.bucket_list
     s3_versioning                       = var.s3_versioning
+    region                              = var.region
+    vpc_id                              = module.network_layer.vpc_id
 }
 
 # security layer

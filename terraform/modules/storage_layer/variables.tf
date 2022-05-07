@@ -1,5 +1,7 @@
 variable "environment" {}
 variable "project" {}
+variable "vpc_id" {}
+variable "region" {}
 variable "bucket_list" {}
 variable "s3_versioning" {}
 
