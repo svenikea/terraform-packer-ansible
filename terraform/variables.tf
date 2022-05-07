@@ -57,6 +57,16 @@ variable "database_engine" {
     description = "Aurora engine"
 }
 
+variable "random_string_length" {
+    type        = number
+    description = "Random String Length"
+}
+
+variable "special_string" {
+    type        = bool
+    description = "Special String"
+}
+
 variable "database_version" {
     type        = string
     description = "Aurora version"

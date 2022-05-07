@@ -62,12 +62,14 @@ module "database_layer" {
     aurora_engine                       = var.database_engine
     engine_version                      = var.database_version
     aurora_user                         = var.aurora_user
+    random_string_length                = var.random_string_length
     aurora_database_name                = var.aurora_database_name
     aurora_sg                           = module.security_layer.aurora_sg
     aurora_vpc_id                       = module.network_layer.vpc_id
     private_subnets                     = module.network_layer.private_subnets
     backup_retention_period             = var.backup_retention_period
     aurora_parameter_group              = var.aurora_parameter_group
+    special_string                      = var.special_string
 }
 
 # cache layer

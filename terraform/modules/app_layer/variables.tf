@@ -31,10 +31,10 @@ variable "ebs_iops" {}
 variable "autoscale_health_check_grace_period" {}
 data "aws_ami" "app_instance_data"{
     most_recent = true
-    owners      = ["amazon"]
+    owners      = ["self"]
     filter {
         name    = "name"
-        values  = ["amzn2-ami-*"]
+        values  = ["app-ami-*"]
     }
     filter {
         name    = "architecture"

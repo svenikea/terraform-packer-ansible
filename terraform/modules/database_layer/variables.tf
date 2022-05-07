@@ -21,3 +21,5 @@ variable "backup_retention_period" {}
 
 variable "aurora_database_name" {}
 variable "aurora_sg" {}
+variable "random_string_length" {}
+variable "special_string" {}

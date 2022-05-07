@@ -22,10 +22,10 @@ variable "ebs_iops" {}
 
 data "aws_ami" "bastion_instance_data"{
     most_recent                 = true
-    owners                      = ["amazon"]
+    owners                      = ["self"]
     filter {
         name                    = "name"
-        values                  = ["amzn2-ami-*"]
+        values                  = ["bastion-ami-*"]
     }
     filter {
         name                    = "architecture"

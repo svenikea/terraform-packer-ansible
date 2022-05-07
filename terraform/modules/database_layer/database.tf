@@ -10,8 +10,8 @@ resource "aws_rds_cluster_instance" "aurora_instance" {
 }
 
 resource "random_string" "aurora_password" {
-    length                  = 19
-    special                 = false
+    length                  = var.random_string_length
+    special                 = var.special_string
 }
 
 resource "aws_db_subnet_group" "aurora_subnet" {

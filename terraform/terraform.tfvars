@@ -73,6 +73,8 @@ elasticache_parameter_group         = [
         value   = "no"
     }
 ]
+special_string                      = false
+random_string_length                = 19
 backup_retention_period             = 1
 ebs_volume_size                     = 30
 ebs_volume_type                     = "gp3"
