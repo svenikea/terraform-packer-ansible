@@ -28,15 +28,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "s3_lifecycle" {
 resource "aws_s3_bucket_public_access_block" "block_s3_public_access" {
     count                   = length(var.bucket_list)
     bucket                  = aws_s3_bucket.s3_buckets.*.id[count.index]
-    block_public_acls       = true
-    block_public_policy     = true
-    restrict_public_buckets = true
+    block_public_acls       = var.bucket_list[count.index] == var.bucket_list[0] ? true : false
+    block_public_policy     = var.bucket_list[count.index] == var.bucket_list[0] ? true : false
+    restrict_public_buckets = var.bucket_list[count.index] == var.bucket_list[0] ? true : false
 }
 
 resource "aws_s3_bucket_acl" "web_static_acl" {
     count                   = length(var.bucket_list)
     bucket                  = aws_s3_bucket.s3_buckets.*.id[count.index]
-    acl                     = "private"
+    acl                     = var.bucket_list[count.index] == var.bucket_list[0] ? "private" : "public-read"
 }
 
 resource "aws_s3_bucket_versioning" "buckets_versioning" {
