@@ -1,6 +1,6 @@
 # PROJECT LAYER
 variable "project" {}
-variable "environment" {}
+variable "env" {}
 variable "region" {}
 
 # NETWORK LAYER
@@ -15,5 +15,5 @@ variable "elastic_ips" {}
 variable "public_ip" {}
 data "aws_availability_zones" "filtered_zones" {
     state           = "available"
-    exclude_names   = ["${var.region}-atl-1a"]
+    exclude_names   = ["${var.region}-atl-1a","${var.region}-bos-1a"]
 }

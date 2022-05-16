@@ -25,3 +25,11 @@ output "public_route_table_name" {
 output "private_route_table_name" {
     value = aws_route_table.private_route.*.tags.Name
 }
+
+output "public_route_table_id" {
+    value = aws_route_table.public_route.*.id
+}
+
+output "private_route_table_id" {
+    value = aws_route_table.private_route.*.id
+}

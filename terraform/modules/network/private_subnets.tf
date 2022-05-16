@@ -5,7 +5,7 @@ resource "aws_subnet" "private_subnet" {
     map_public_ip_on_launch     = false
     availability_zone           = data.aws_availability_zones.filtered_zones.names[count.index]
     tags = {
-        Name                    = "${var.project}-private-subnet-${count.index+1}-${var.environment}"
+        Name                    = "${var.project}-private-subnet-${count.index+1}-${var.env}"
     }
 }
 
@@ -21,7 +21,7 @@ resource "aws_route_table" "private_route" {
         gateway_id              = aws_internet_gateway.my_igw.id
     }
     tags = {
-        Name                    = "${var.project}-route-private-${var.environment}-${count.index+1}"
+        Name                    = "${var.project}-route-private-${var.env}-${count.index+1}"
     }
 }
 

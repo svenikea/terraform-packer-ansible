@@ -24,7 +24,7 @@ resource "aws_network_acl" "my_public_acl" {
         }
     }
     tags = {
-        Name                = "${var.project}-public-acl-${var.environment}"
+        Name                = "${var.project}-public-acl-${var.env}"
     }
 }
 
@@ -56,6 +56,6 @@ resource "aws_network_acl" "my_private_acl" {
     }
     
     tags = {
-        Name            = "${var.project}-private-acl-${var.environment}"
+        Name            = "${var.project}-private-acl-${var.env}"
     }
 }

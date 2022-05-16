@@ -1,8 +1,8 @@
-module "network_layer" {
+module "network" {
     source                      = "../modules/network"
 
     project                     = var.project
-    environment                 = var.environment 
+    env                         = var.env 
     region                      = var.region
 
     vpc_cidr_block              = var.vpc_cidr_block
