@@ -4,7 +4,7 @@
     "app_ssh_user"              : "ubuntu",
     "bastion_ssh_user"          : "ec2-user",
     "block_size"                : "10",
-    "block_type"                : "gp2",
+    "block_type"                : "gp3",
     "iops_number"               : "3000",
     "app_ami_name"              : "app-ami-gold",
     "bastion_ami_name"          : "bastion-ami-gold",
@@ -17,8 +17,8 @@
     "delete_termination"        : "true",
     "encrypt"                   : "false",
     "vpc_name"                  : "*-vpc-*",
-    "subnet_name"               : "*-private-1-*",
-    "sg_name"                   : "*-packer-*-sg",
-    "app_instance_profile"      : "wordpress-app_user-lab",
-    "bastion_instance_profile"  : "wordpress-bastion_user-lab"
+    "subnet_name"               : "*-private-subnet-1-*",
+    "sg_name"                   : "*-bastion-*",
+    "app_instance_profile"      : "wordpress-app-stg",
+    "bastion_instance_profile"  : "wordpress-bastion-stg"
 }

@@ -63,7 +63,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encryption" {
     }
 }       
 
-# resource "aws_s3_bucket_policy" "s3_bucket_policy" {
-#     bucket                  = aws_s3_bucket.s3_buckets.*.bucket[1]
-#     policy                  = var.bucket_policy
-# }
+resource "aws_s3_bucket_policy" "static_bucket_policy" {
+    bucket                  = aws_s3_bucket.s3_buckets.*.bucket[1]
+    policy                  = var.bucket_policy
+}

@@ -5,4 +5,4 @@ variable "region" {}
 
 variable "bucket_names" {}
 variable "s3_versioning" {}
-# variable "bucket_policy" {}
+variable "bucket_policy" {}

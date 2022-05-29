@@ -1,19 +1,51 @@
 all: init pre_build ami post_buid
 
-pre_build: network sg efs s3 iam aurora elasticache
+pre_build: 
+	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
+	-target module.env.module.network \
+	-target module.env.module.bastion_security_group \
+	-target module.env.module.bastion_security_group \
+	-target module.env.module.elasticache_security_group \
+	-target module.env.module.efs_security_group \
+	-target module.env.module.aurora_security_group \
+	-target module.env.module.alb_security_group \
+	-target module.env.module.launch_security_group \
+	-target module.env.module.aurora_security_group_ingress_rule \
+	-target module.env.module.bastion_security_group_ingress_rule \
+	-target module.env.module.elasticache_security_group_ingress_rule \
+	-target module.env.module.efs_security_group_ingress_rule \
+	-target module.env.module.bastion_security_group_ingress_rule \
+	-target module.env.module.alb_security_group_ingress_rule_http \
+	-target module.env.module.alb_security_group_ingress_rule_https \
+	-target module.env.module.launch_security_group_ingress_rule_ssh \
+	-target module.env.module.launch_security_group_ingress_rule_http \
+	-target module.env.module.efs \
+	-target module.env.module.s3 \
+	-target module.env.module.cloudfront \
+	-target module.env.module.iam \
+	-target module.env.module.elasticache \
+	-target module.env.module.aurora \
+	-target module.env.local_file.ansible_vars \
+	--auto-approve && cd -
 
-post_build: bastion alb autoscale launch_config
+post_build: 
+	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
+	-target module.env.module.ec2-bastion \	
+	-target module.env.module.alb \
+	-target module.env.module.autoscale \
+	-target module.env.module.launch_config \
+	--auto-approve && cd -
 
 ami:
-	cd ./packer && packer build \
-	-var-file=variables.json bastion.json && \
-	packer build -var-file=variables.json app.json && cd -
+	cd ./packer/environment/${env} && PACKER_LOG=1 packer build \
+	-var-file=${env}.variables.${type} bastion.${type} && \
+	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} app.${type} && cd -
 
 init:
 	cd ./terraform/environment/${env} && terraform init && cd -
 
-${state}:
-	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars && cd -
+plan:
+	cd ./terraform/environment/${env} && terraform plan -var-file ${env}_env.tfvars && cd -
 
 list_state:
 	cd ./terraform/environment/${env} && terraform state list cd -
@@ -83,15 +115,9 @@ ansible_vars:
 	-target module.env.local_file.ansible_vars \
 	--auto-approve && cd -
 
-s3_policy:
-	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
-	-target module.env.s3_bucket_policy \
-	--auto-approve && cd -
-
 iam:
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.iam \
-	-target module.env.module.s3 \
 	--auto-approve && cd -
 
 cloudfront:
@@ -99,9 +125,10 @@ cloudfront:
 	-target module.env.module.cloudfront \
 	--auto-approve && cd -
 
-s3: 
+s3_with_cdn: 
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.s3 \
+	-target module.env.module.cloudfront \
 	--auto-approve && cd -
 
 remove_public_ip:

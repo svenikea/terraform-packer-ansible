@@ -34,7 +34,7 @@
     "provisioners" : [
         {
             "type"                                  : "shell",
-            "script"                                : "./scripts/install.sh"
+            "script"                                : "../../scripts/install.sh"
         },
         {
             "type"                                  : "file",
@@ -43,23 +43,22 @@
         },
         {
             "type"                                  : "ansible-local",
-            "playbook_file"                         : "../ansible/setup-bastion.yml",
+            "playbook_file"                         : "../../../ansible/setup-bastion.yml",
             "role_paths" : [
-                "../ansible/roles/base/",
-                "../ansible/roles/aws-cli/",
-                "../ansible/roles/cloudwatch-agent/"
-
+                "../../../ansible/roles/base/",
+                "../../../ansible/roles/aws-cli/",
+                "../../../ansible/roles/cloudwatch-agent/"
             ],
             "inventory_groups"                      : [
                 "bastion_role",
                 "ev_env"
             ],
-            "inventory_file"                        : "../ansible/inventory/dev",
-            "group_vars"                            : "../ansible/group_vars/"
+            "inventory_file"                        : "../../../ansible/inventory/dev",
+            "group_vars"                            : "../../../ansible/group_vars/"
         },
         {
             "type"                                  : "shell",
-            "script"                                : "./scripts/clean.sh"
+            "script"                                : "../../scripts/clean.sh"
         }
     ]
 }

@@ -1,9 +1,9 @@
 data "aws_ami" "bastion_instance_data"{
     most_recent                 = true
-    owners                      = ["amazon"]
+    owners                      = ["self"]
     filter {
         name                    = "name"
-        values                  = ["amzn2-ami-*"]
+        values                  = ["bastion-*"]
     }
     filter {
         name                    = "architecture"
@@ -44,20 +44,20 @@ data "template_file" "iam_policy_template" {
 }
 
 data "template_file" "s3_bucket_policy_template" {
-    template            = file("${path.module}/policy-templates/s3_bucket_policy.tpl")
+    template            = file("${path.module}/policy-templates/cloudfront_to_s3_policy.tpl")
     vars = {
-        top_bucket_arns = "${join(",",module.s3.bucket_arns)}"
-        sub_bucket_arns = "${join("/*,",module.s3.bucket_arns)}/*"
+        top_bucket_arns = "${module.s3.static_bucket_arn}"
+        sub_bucket_arns = "${module.s3.static_bucket_arn}/*"
         cloudfront_arn  = "${module.cloudfront.cloudfront_origin_identity_arn}"
     }
 }
 
 data "aws_ami" "launch_ami_data"{
     most_recent                             = true
-    owners                                  = ["amazon"]
+    owners                                  = ["self"]
     filter {
         name                                = "name"
-        values                              = ["amzn2-ami-*"]
+        values                              = ["app-*"]
     }
     filter {
         name                                = "architecture"

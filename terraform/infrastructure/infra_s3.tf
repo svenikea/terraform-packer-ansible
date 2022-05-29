@@ -8,5 +8,5 @@ module "s3" {
     bucket_names    = var.bucket_names 
     vpc_id          = module.network.vpc_id
     s3_versioning   = var.s3_versioning
-    # bucket_policy   = data.template_file.s3_bucket_policy_template.rendered
+    bucket_policy   = data.template_file.s3_bucket_policy_template.rendered
 }

@@ -51,27 +51,27 @@
     "provisioners" : [
         {
             "type"                                  : "shell",
-            "script"                                : "./scripts/install.sh"
+            "script"                                : "../../scripts/install.sh"
         },
         {
             "type"                                  : "ansible-local",
-            "playbook_file"                         : "../ansible/setup-app.yml",
+            "playbook_file"                         : "../../../ansible/setup-app.yml",
             "role_paths" : [
-                "../ansible/roles/base/",
-                "../ansible/roles/efs/",
-                "../ansible/roles/aws-cli/",
-                "../ansible/roles/cloudwatch-agent/",
-                "../ansible/roles/nginx",
-                "../ansible/roles/wordpress",
-                "../ansible/roles/php"
+                "../../../ansible/roles/base/",
+                "../../../ansible/roles/efs/",
+                "../../../ansible/roles/aws-cli/",
+                "../../../ansible/roles/cloudwatch-agent/",
+                "../../../ansible/roles/nginx",
+                "../../../ansible/roles/wordpress",
+                "../../../ansible/roles/php"
             ],
             "inventory_groups"                      : "app_role",
-            "inventory_file"                        : "../ansible/inventory/dev",
-            "group_vars"                            : "../ansible/group_vars/"
+            "inventory_file"                        : "../../../ansible/inventory/dev",
+            "group_vars"                            : "../../../ansible/group_vars/"
         },
         {
             "type"                                  : "shell",
-            "script"                                : "./scripts/clean.sh"
+            "script"                                : "../../scripts/clean.sh"
         }
     ]
 }

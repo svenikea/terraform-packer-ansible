@@ -3,11 +3,11 @@
     "Statement": [
         {
             "Effect": "Allow",
-            "Resource": ${jsonencode(concat(split(",",top_bucket_arns),split(",",sub_bucket_arns)))}
+            "Resource": ${jsonencode(concat(split(",",top_bucket_arns),split(",",sub_bucket_arns)))},
             "Principal": {
                 "AWS": "${cloudfront_arn}"
             },
-            "Action": "s3:GetObbject"
+            "Action": "s3:GetObject"
         }
     ]
 }
