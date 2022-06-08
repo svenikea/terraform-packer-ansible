@@ -3,7 +3,7 @@
     name: nginx
     state: present
 
-- name: "{{ chosen_domain }} Nginx Folders"
+- name: "{{ route53_domain }} Nginx Folders"
   file:
     path: "{{ item }}"
     state: directory
@@ -20,6 +20,14 @@
     group: root
     mode: "644"
   loop: "{{ nginx_configs }}"
+
+- name: "Enabling site {{ route53_domain }}"
+  file:
+    src: "/etc/nginx/sites-available/{{ route53_domain}}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ route53_domain}}.conf"
+    owner: root
+    group: root
+    state: link
 
 - name: Remove The Defaut Website
   file:

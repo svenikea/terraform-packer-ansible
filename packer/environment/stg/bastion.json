@@ -38,7 +38,7 @@
         },
         {
             "type"                                  : "file",
-            "source"                                : "./keypairs/aws-key.pem",
+            "source"                                : "../../keypairs/aws-key.pem",
             "destination"                           : "/home/{{user `bastion_ssh_user`}}/aws-key.pem"
         },
         {

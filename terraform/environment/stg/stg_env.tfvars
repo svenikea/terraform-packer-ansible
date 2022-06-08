@@ -82,3 +82,5 @@ aurora_parameter_group  = [
         value   = "50"
     }
 ]
+
+route53_domain                      = "<YOUR ROUTE53 DOMAIN HERE>"

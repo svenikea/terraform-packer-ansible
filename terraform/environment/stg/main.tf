@@ -74,4 +74,10 @@ module "env" {
     aurora_random_string_length                 = var.aurora_random_string_length
     aurora_master_user                          = var.aurora_master_user
     aurora_database_name                        = var.aurora_database_name
+
+    # Route 53
+
+    route53_domain                              = var.route53_domain
+
+    # Cloudfront 
 }

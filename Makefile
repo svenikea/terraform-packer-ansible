@@ -3,8 +3,10 @@ all: init pre_build ami post_buid
 pre_build: 
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.network \
+	-target module.env.module.custom_managed_cache_policy \
 	-target module.env.module.bastion_security_group \
-	-target module.env.module.bastion_security_group \
+	-target module.env.module.acm \
+	-target module.env.module.route53 \
 	-target module.env.module.elasticache_security_group \
 	-target module.env.module.efs_security_group \
 	-target module.env.module.aurora_security_group \
@@ -21,7 +23,10 @@ pre_build:
 	-target module.env.module.launch_security_group_ingress_rule_http \
 	-target module.env.module.efs \
 	-target module.env.module.s3 \
-	-target module.env.module.cloudfront \
+	-target module.env.module.s3_cloudfront \
+	-target module.env.module.custom_managed_cache_policy \
+	-target module.env.module.custom_header_passed \
+	-target module.env.module.custom_header_passed_nocache \
 	-target module.env.module.iam \
 	-target module.env.module.elasticache \
 	-target module.env.module.aurora \
@@ -30,15 +35,15 @@ pre_build:
 
 post_build: 
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
-	-target module.env.module.ec2-bastion \	
+	-target module.env.module.ec2-bastion \
 	-target module.env.module.alb \
 	-target module.env.module.autoscale \
 	-target module.env.module.launch_config \
 	--auto-approve && cd -
 
 ami:
-	cd ./packer/environment/${env} && PACKER_LOG=1 packer build \
-	-var-file=${env}.variables.${type} bastion.${type} && \
+	cd ./packer/environment/${env} && \
+	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} bastion.${type} && cd - && \
 	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} app.${type} && cd -
 
 init:
@@ -78,6 +83,16 @@ alb:
 launch_config:
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.launch_config \
+	--auto-approve && cd -
+
+acm:
+	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
+	-target module.env.module.acm \
+	--auto-approve && cd -
+
+route53:
+	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
+	-target module.env.module.route53 \
 	--auto-approve && cd -
 
 autoscale:
@@ -120,15 +135,15 @@ iam:
 	-target module.env.module.iam \
 	--auto-approve && cd -
 
-cloudfront:
+s3_cloudfront:
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
-	-target module.env.module.cloudfront \
+	-target module.env.module.s3_cloudfront \
 	--auto-approve && cd -
 
 s3_with_cdn: 
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.s3 \
-	-target module.env.module.cloudfront \
+	-target module.env.module.s3_cloudfront \
 	--auto-approve && cd -
 
 remove_public_ip:
