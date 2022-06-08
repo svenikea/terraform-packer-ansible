@@ -10,6 +10,8 @@ variable "elastic_ips" {}
 variable "public_ip" {}
 variable "ec2_instance_connect_ip_prefix" {}
 
+variable "route53_domain" {}
+
 variable "instance_type" {}
 variable "delete_termination" {}
 variable "encrypted" {}

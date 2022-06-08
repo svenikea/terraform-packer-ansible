@@ -2,8 +2,8 @@ resource "aws_cloudfront_distribution" "cloudfront_to_s3" {
     enabled                             = true
 
     origin {
-        domain_name                     = var.s3_bucket_dns_name
-        origin_id                       = var.s3_bucket_dns_name
+        domain_name                     = var.domain_name
+        origin_id                       = var.origin_id
         s3_origin_config {
             origin_access_identity      = aws_cloudfront_origin_access_identity.cloudfront_oai.cloudfront_access_identity_path
         }
@@ -12,7 +12,7 @@ resource "aws_cloudfront_distribution" "cloudfront_to_s3" {
     default_cache_behavior {
         allowed_methods                 = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
         cached_methods                  = ["GET", "HEAD", "OPTIONS"]
-        target_origin_id                = var.s3_bucket_dns_name
+        target_origin_id                = var.origin_id
         viewer_protocol_policy          = "redirect-to-https"
     
         forwarded_values {

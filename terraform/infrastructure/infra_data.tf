@@ -48,7 +48,7 @@ data "template_file" "s3_bucket_policy_template" {
     vars = {
         top_bucket_arns = "${module.s3.static_bucket_arn}"
         sub_bucket_arns = "${module.s3.static_bucket_arn}/*"
-        cloudfront_arn  = "${module.cloudfront.cloudfront_origin_identity_arn}"
+        cloudfront_arn  = "${module.s3_cloudfront.cloudfront_origin_identity_arn}"
     }
 }
 
@@ -75,4 +75,9 @@ data "aws_ami" "launch_ami_data"{
         name                                = "image-type"
         values                              = ["machine"]
     }
+}
+
+data "aws_route53_zone" "current_zone" {
+  name         = "${var.route53_domain}"
+  private_zone = false
 }

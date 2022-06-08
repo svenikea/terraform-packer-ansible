@@ -3,7 +3,7 @@
     name: nginx
     state: present
 
-- name: "{{ chosen_domain }} Nginx Folders"
+- name: "{{ route53_domain }} Nginx Folders"
   file:
     path: "{{ item }}"
     state: directory

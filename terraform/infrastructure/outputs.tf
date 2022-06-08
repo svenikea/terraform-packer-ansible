@@ -10,5 +10,6 @@ efs_dns_name: ${module.efs.efs_dns_name}
 s3_domain_name: ${jsonencode(split(",",(join(",",module.s3.web_static_domain_name))))}
 iam_access_id: ${module.iam.iam_user_access_keys[1]}
 iam_secret_access_key: ${module.iam.iam_user_secrets[1]}
+route53_domain: ${var.route53_domain}
 EOF 
 }
