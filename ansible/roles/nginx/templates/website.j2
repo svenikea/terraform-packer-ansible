@@ -1,14 +1,14 @@
-server {
-    listen 80;
-    listen [::]:80;
-    server_name {{ route53_domain }}
-    return 301 https://{{ route53_domain}}$request_uri
-}
+# server {
+#     listen 80;
+#     listen [::]:80;
+#     server_name {{ route53_domain }};
+#     return 301 https://{{ route53_domain}}$request_uri;
+# }
 
 server {
-    # listen      80;
-    # listen      [::]:80;
-    # server_name localhost;
+    listen      80;
+    listen      [::]:80;
+    server_name {{ route53_domain }};
     set         $base {{ efs_mount_path }};
     root        $base;
 

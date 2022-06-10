@@ -83,4 +83,4 @@ aurora_parameter_group  = [
     }
 ]
 
-route53_domain                      = "cmcloudlab1777.info"
+route53_domain                      = "<YOUR ROUTE53 DOMAIN HERE>"

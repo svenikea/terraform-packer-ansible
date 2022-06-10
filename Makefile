@@ -43,6 +43,7 @@ post_build:
 
 ami:
 	cd ./packer/environment/${env} && \
+	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} bastion.${type} && cd - && \
 	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} app.${type} && cd -
 
 init:
