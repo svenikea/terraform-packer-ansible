@@ -21,6 +21,8 @@ base_apt_packages:
   - libssl-dev
   - libffi-dev
   - libyaml-dev
+  - certbot
+  - python3-certbot-nginx
   - libsqlite3-dev
   - redis
   - sqlite3

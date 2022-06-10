@@ -61,6 +61,7 @@
                 "../../../ansible/roles/efs/",
                 "../../../ansible/roles/aws-cli/",
                 "../../../ansible/roles/cloudwatch-agent/",
+                "../../../ansible/roles/letsencrypt",
                 "../../../ansible/roles/nginx",
                 "../../../ansible/roles/wordpress",
                 "../../../ansible/roles/php"

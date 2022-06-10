@@ -33,5 +33,5 @@
   file:
     path: /etc/nginx/sites-enabled/default
     state: absent
-  notify: Start Nginx Service
+  # notify: Start Nginx Service
 

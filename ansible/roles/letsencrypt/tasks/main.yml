@@ -1,0 +1,3 @@
+- name: "Lets encrypt domain {{ route53_domain }}"
+  command: "certbot --nginx -d  {{ route53_domain }} -m {{ certbot_mail_address }} --agree-tos --noninteractive --no-redirect"
+  notify: Start Nginx Service
