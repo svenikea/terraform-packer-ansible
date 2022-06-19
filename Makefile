@@ -6,7 +6,8 @@ pre_build:
 	-target module.env.module.custom_managed_cache_policy \
 	-target module.env.module.bastion_security_group \
 	-target module.env.module.acm \
-	-target module.env.module.route53 \
+	-target module.env.module.main_site_route53_record \
+	-target module.env.module.route53_acm \
 	-target module.env.module.elasticache_security_group \
 	-target module.env.module.efs_security_group \
 	-target module.env.module.aurora_security_group \
@@ -24,6 +25,7 @@ pre_build:
 	-target module.env.module.efs \
 	-target module.env.module.s3 \
 	-target module.env.module.s3_cloudfront \
+	-target module.env.module.main_site_cloudfront \
 	-target module.env.module.custom_managed_cache_policy \
 	-target module.env.module.custom_header_passed \
 	-target module.env.module.custom_header_passed_nocache \
@@ -138,6 +140,11 @@ iam:
 s3_cloudfront:
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.s3_cloudfront \
+	--auto-approve && cd -
+
+main_site_cloudfront:
+	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
+	-target module.env.module.main_site_cloudfront \
 	--auto-approve && cd -
 
 s3_with_cdn: 

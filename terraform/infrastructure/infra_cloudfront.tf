@@ -3,8 +3,17 @@ module "s3_cloudfront" {
 
     env                                     = var.env
 
-    domain_name                             = module.s3.web_static_domain_name[1]
-    origin_id                               = module.s3.web_static_domain_name[1]
+    s3_domain_name                          = module.s3.web_static_domain_name[1]
+    s3_origin_id                            = module.s3.web_static_domain_name[1]
+}
+
+module "main_site_cloudfront" {
+    source                                  = "../modules/cloudfront"
+
+    env                                     = var.env
+
+    main_site_dns                           = module.alb.alb_endpoint
+    main_site_id                            = module.alb.alb_endpoint
 }
 
 module "custom_managed_cache_policy" {

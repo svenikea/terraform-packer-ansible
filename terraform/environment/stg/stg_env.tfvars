@@ -48,7 +48,7 @@ aurora_instance_number              = 2
 aurora_backup_retention_period      = 1
 aurora_instance_class               = "t3.small"
 aurora_engine                       = "mysql"
-aurora_engine_version               = "5.7.12"
+aurora_engine_version               = "5.7"
 aurora_random_string_length         = 12
 aurora_master_user                  = "admin"
 aurora_database_name                = "aurora"
@@ -84,3 +84,6 @@ aurora_parameter_group  = [
 ]
 
 route53_domain                      = "<YOUR ROUTE53 DOMAIN HERE>"
+route_ttl                           = 30
+sub_domain                          = "cdn"
+route53_type                        = "CNAME"
