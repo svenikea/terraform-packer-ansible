@@ -44,6 +44,6 @@ variable "aurora_master_user" {}
 variable "aurora_database_name" {}
 
 variable "route53_domain" {}
-variable "route_ttl" {}
+variable "route53_ttl" {}
 variable "sub_domain" {}
 variable "route53_type" {} 

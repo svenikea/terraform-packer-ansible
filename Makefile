@@ -6,7 +6,6 @@ pre_build:
 	-target module.env.module.custom_managed_cache_policy \
 	-target module.env.module.bastion_security_group \
 	-target module.env.module.acm \
-	-target module.env.module.main_site_route53_record \
 	-target module.env.module.route53_acm \
 	-target module.env.module.elasticache_security_group \
 	-target module.env.module.efs_security_group \
@@ -25,7 +24,6 @@ pre_build:
 	-target module.env.module.efs \
 	-target module.env.module.s3 \
 	-target module.env.module.s3_cloudfront \
-	-target module.env.module.main_site_cloudfront \
 	-target module.env.module.custom_managed_cache_policy \
 	-target module.env.module.custom_header_passed \
 	-target module.env.module.custom_header_passed_nocache \
@@ -39,14 +37,16 @@ post_build:
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.ec2-bastion \
 	-target module.env.module.alb \
+	-target module.env.module.main_site_route53_record \
+	-target module.env.module.main_site_cloudfront \
 	-target module.env.module.autoscale \
 	-target module.env.module.launch_config \
 	--auto-approve && cd -
 
 ami:
 	cd ./packer/environment/${env} && \
-	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} bastion.${type} && cd - && \
-	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} app.${type} && cd -
+	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} bastion.${type} && \
+	PACKER_LOG=1 packer build -var-file=${env}.variables.${type} app.${type} && cd - \
 
 init:
 	cd ./terraform/environment/${env} && terraform init && cd -

@@ -1,5 +1,9 @@
 project                             = "wordpress"
 env                                 = "stg"
+route53_domain                      = "<YOUR ROUTE53 DOMAIN HERE>"
+route53_ttl                         = 30
+sub_domain                          = "cdn"
+route53_type                        = "CNAME"
 region                              = "us-east-1"
 
 vpc_cidr_block                      = "10.0.0.0/16"
@@ -82,8 +86,3 @@ aurora_parameter_group  = [
         value   = "50"
     }
 ]
-
-route53_domain                      = "<YOUR ROUTE53 DOMAIN HERE>"
-route_ttl                           = 30
-sub_domain                          = "cdn"
-route53_type                        = "CNAME"

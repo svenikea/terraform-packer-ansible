@@ -8,7 +8,7 @@ module "s3_cloudfront" {
 }
 
 module "main_site_cloudfront" {
-    source                                  = "../modules/cloudfront"
+    source                                  = "../modules/cloudfront_main_site"
 
     env                                     = var.env
 
