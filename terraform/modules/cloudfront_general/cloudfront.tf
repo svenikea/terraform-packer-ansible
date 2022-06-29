@@ -7,16 +7,16 @@ resource "aws_cloudfront_distribution" "cdn" {
     wait_for_deployment     = true
 
     dynamic "origin" {
-        for_each            = var.domain_name
+        for_each            = var.origins
         content {
             domain_name     = origin.value.domain_name
-            origin_id       = origin.value.domain_name
-            dynamic "s3_origin_config" {
-                for_each    = origin.value.create_s3_oai != false ? origin.value.create_s3_oai : 0
-                content {
-                    origin_access_identity = aws_cloudfront_origin_access_identity.cloudfront_oai.cloudfront_access_identity_path
-                }
-            }
+            origin_id       = origin.value.target_id
+            # dynamic "s3_origin_config" {
+            #     for_each    = origin.value.create_s3_oai != false ? origin.value.create_s3_oai : 0
+            #     content {
+            #         origin_access_identity = aws_cloudfront_origin_access_identity.cloudfront_oai.cloudfront_access_identity_path
+            #     }
+            # }
             custom_origin_config {
                 http_port              = 80
                 https_port             = 443
@@ -28,9 +28,8 @@ resource "aws_cloudfront_distribution" "cdn" {
     default_cache_behavior {
         allowed_methods                 = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
         cached_methods                  = ["GET", "HEAD", "OPTIONS"]
-        target_origin_id                = "cdn"
         viewer_protocol_policy          = "redirect-to-https"
-
+        target_origin_id                = var.target_id
         forwarded_values {
             query_string                    = false
             cookies {
@@ -43,15 +42,15 @@ resource "aws_cloudfront_distribution" "cdn" {
         content {
             path_pattern     = ordered_cache_behavior.value.path
             allowed_methods  = ordered_cache_behavior.value.allowed_methods
-            cached_methods   = ordered_cache_behavior.value.cache_methods
-            target_origin_id = "cdn"
+            cached_methods   = ordered_cache_behavior.value.cached_methods
+            target_origin_id = ordered_cache_behavior.value.target_id
 
             forwarded_values {
             query_string = ordered_cache_behavior.value.query_Strng
             headers      = ordered_cache_behavior.value.headers
 
-                cookies {
-                    forward = "none"
+            cookies {
+                    forward = ordered_cache_behavior.value.cookies
                 }
             }
 
@@ -59,7 +58,7 @@ resource "aws_cloudfront_distribution" "cdn" {
             default_ttl            = 86400
             max_ttl                = 31536000
             compress               = true
-            viewer_protocol_policy = "redirect-to-https"
+            viewer_protocol_policy = ordered_cache_behavior.value.viewer_protocol_policy
         }
     }
     restrictions {
@@ -69,7 +68,8 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
 
     viewer_certificate {
-        cloudfront_default_certificate  = true
+        acm_certificate_arn = var.acm_arm
+        ssl_support_method = "sni-only"
     }
 
     tags = {
