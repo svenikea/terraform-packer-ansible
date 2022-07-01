@@ -4,24 +4,27 @@ resource "aws_cloudfront_distribution" "cdn" {
     is_ipv6_enabled         = true
     price_class             = var.price_class
     retain_on_delete        = false
-    wait_for_deployment     = true
+    wait_for_deployment     = false
 
     dynamic "origin" {
         for_each            = var.origins
         content {
             domain_name     = origin.value.domain_name
             origin_id       = origin.value.target_id
-            # dynamic "s3_origin_config" {
-            #     for_each    = origin.value.create_s3_oai != false ? origin.value.create_s3_oai : 0
-            #     content {
-            #         origin_access_identity = aws_cloudfront_origin_access_identity.cloudfront_oai.cloudfront_access_identity_path
-            #     }
-            # }
-            custom_origin_config {
-                http_port              = 80
-                https_port             = 443
-                origin_protocol_policy = origin.value.protocol_policy
-                origin_ssl_protocols   = ["TLSv1.2"]
+            dynamic "s3_origin_config" {
+                for_each    = origin.value.s3_origin == true ? ["${origin.value.domain_name}"] : []
+                content {
+                    origin_access_identity = aws_cloudfront_origin_access_identity.cloudfront_oai.cloudfront_access_identity_path
+                }
+            }
+            dynamic "custom_origin_config" {
+                for_each    = origin.value.custom_origin == true ? ["${origin.value.domain_name}"] : []
+                content {
+                    http_port              = 80
+                    https_port             = 443
+                    origin_protocol_policy = origin.value.protocol_policy
+                    origin_ssl_protocols   = ["TLSv1.2"]
+                }
             }
         } 
     }
@@ -68,7 +71,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
 
     viewer_certificate {
-        acm_certificate_arn = var.acm_arm
+        acm_certificate_arn = var.acm_arn
         ssl_support_method = "sni-only"
     }
 
