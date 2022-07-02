@@ -5,3 +5,7 @@ output "target_group_arn" {
 output "alb_endpoint" {
     value = aws_lb.elb.dns_name
 }
+
+output "alb_zone_id" {
+    value = aws_lb.elb.zone_id
+}

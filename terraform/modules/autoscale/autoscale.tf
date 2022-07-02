@@ -8,11 +8,11 @@ resource "aws_autoscaling_group" "autoscale_app" {
     termination_policies        = [var.autoscale_termination_policy]
     health_check_type           = var.autoscale_health_check_type
     health_check_grace_period   = var.autoscale_health_check_grace_period
-    tag {
-        key                     = "Name"
-        value                   = "${var.project}-auto-scale-app-group-${var.env}"
-        propagate_at_launch     = true
-    }
+    # tag {
+    #     key                     = "Name"
+    #     value                   = "${var.project}-auto-scale-app-group-${var.env}"
+    #     propagate_at_launch     = true
+    # }
     tag {
         key                     = "ServerType"
         value                   = "Backend"

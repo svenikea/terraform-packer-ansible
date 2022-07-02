@@ -1,3 +1,3 @@
 variable "env" {}
-variable "origin_id" {}
-variable "domain_name" {}
+variable "s3_origin_id" {}
+variable "s3_domain_name" {}
