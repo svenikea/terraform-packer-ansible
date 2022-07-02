@@ -10,7 +10,7 @@ variable "elastic_ips" {}
 variable "public_ip" {}
 variable "ec2_instance_connect_ip_prefix" {}
 
-variable "route53_domain" {}
+variable "route53_zone" {}
 
 variable "instance_type" {}
 variable "delete_termination" {}
@@ -55,5 +55,3 @@ variable "aurora_master_user" {}
 variable "aurora_database_name" {}
 
 variable "route53_ttl" {}
-variable "sub_domain" {}
-variable "route53_type" {}

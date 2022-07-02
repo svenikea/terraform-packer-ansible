@@ -1,21 +1,3 @@
-module "s3_cloudfront" {
-    source                                  = "../modules/cloudfront"
-
-    env                                     = var.env
-
-    s3_domain_name                          = module.s3.web_static_domain_name[1]
-    s3_origin_id                            = module.s3.web_static_domain_name[1]
-}
-
-module "main_site_cloudfront" {
-    source                                  = "../modules/cloudfront_main_site"
-
-    env                                     = var.env
-
-    main_site_dns                           = module.alb.alb_endpoint
-    main_site_id                            = module.alb.alb_endpoint
-}
-
 module "custom_managed_cache_policy" {
     source                                  = "../modules/cloudfront_cache_policy"
     
@@ -63,30 +45,30 @@ module "custom_header_passed_nocache" {
     header_behavior                         = "allViewer"
 }
 
-module "general_cloudfront" {
+module "cloudfront" {
     source                                  = "../modules/cloudfront_general"
     
     env                                     = "stg"
     target_id                               = local.cdn_alb_target_id 
-    acm_arm                                 = module.acm.acm_arm
+    acm_arn                                 = module.cdn_acm.acm_arn
     price_class                             = "PriceClass_All"
-    cloudfront_aliases                      = ["cdn.${var.route53_domain}"]
+    cloudfront_aliases                      = ["cdn.${var.route53_zone}"]
     origins                                 = [
         {
-            domain_name                     = "cdn.${var.route53_domain}",
+            domain_name                     = "${module.alb.alb_endpoint}",
             target_id                       = "${local.cdn_alb_target_id}",
+            # create_s3_oai = false
+            protocol_policy                 = "http-only"
+            s3_origin                       = false 
+            custom_origin                   = true
+        },
+        {
+            domain_name                     = "${module.s3.web_static_domain_name[1]}",
+            target_id                       = "${local.cdn_s3_target_id}",
             # create_s3_oai = false
             protocol_policy                 = "http-only"
             s3_origin                       = true
             custom_origin                   = false
-        },
-        {
-            domain_name                     = "s3.${var.route53_domain}",
-            target_id                       = "${local.cdn_s3_target_id}",
-            # create_s3_oai = false
-            protocol_policy                 = "http-only"
-            s3_origin                       = false
-            custom_origin                   = true
         }
          
     ]
