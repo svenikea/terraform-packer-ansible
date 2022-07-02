@@ -43,4 +43,5 @@ variable "aurora_random_string_length" {}
 variable "aurora_master_user" {}
 variable "aurora_database_name" {}
 
-variable "route53_domain" {}
+variable "route53_zone" {}
+variable "route53_ttl" {}

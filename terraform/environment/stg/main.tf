@@ -77,7 +77,6 @@ module "env" {
 
     # Route 53
 
-    route53_domain                              = var.route53_domain
-
-    # Cloudfront 
+    route53_zone                                = var.route53_zone
+    route53_ttl                                 = var.route53_ttl
 }
