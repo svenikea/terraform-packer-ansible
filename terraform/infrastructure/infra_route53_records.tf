@@ -17,3 +17,13 @@ module "main_site_route53_record" {
     record_type                     = "A"
     zone_id                         = "${module.alb.alb_zone_id}"
 }
+
+module "main_site_redirect_wwww_route53_record" {
+    source                          = "../modules/route53_alias_records"
+
+    route53_zone_id                 = data.aws_route53_zone.current_zone.zone_id
+    dns_record                      = module.alb.alb_endpoint
+    name                            = "www.${var.route53_zone}"
+    record_type                     = "A"
+    zone_id                         = "${module.alb.alb_zone_id}"
+}
