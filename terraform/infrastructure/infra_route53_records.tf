@@ -4,7 +4,7 @@ module "cdn_route53_record" {
     route53_zone_id                 = data.aws_route53_zone.current_zone.zone_id
     dns_record                      = module.cloudfront.cloudfront_dns
     name                            = "cdn.${var.route53_zone}"
-    record_type                     = "A"
+    record_type                     = "CNAME"
     zone_id                         = "${module.cloudfront.cloudfront_zone_id}"
 }
 

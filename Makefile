@@ -3,14 +3,9 @@ all: clean init pre_build ami post_build
 pre_build: 
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.network \
-	-target module.env.module.custom_managed_cache_policy \
 	-target module.env.module.bastion_security_group \
 	-target module.env.module.elasticache_security_group \
 	-target module.env.module.efs_security_group \
-	-target module.env.module.cdn_acm \
-	-target module.env.module.cdn_route53_acm \
-	-target module.env.module.main_stie_route53_acm \
-	-target module.env.module.main_site_acm \
 	-target module.env.module.aurora_security_group \
 	-target module.env.module.alb_security_group \
 	-target module.env.module.launch_security_group \
@@ -24,11 +19,6 @@ pre_build:
 	-target module.env.module.launch_security_group_ingress_rule_ssh \
 	-target module.env.module.launch_security_group_ingress_rule_http \
 	-target module.env.module.efs \
-	-target module.env.module.s3 \
-	-target module.env.module.custom_managed_cache_policy \
-	-target module.env.module.custom_header_passed \
-	-target module.env.module.custom_header_passed_nocache \
-	-target module.env.module.iam \
 	-target module.env.module.elasticache \
 	-target module.env.module.aurora \
 	-target module.env.local_file.ansible_vars \
@@ -42,6 +32,12 @@ post_build:
 	-target module.env.module.main_site_route53_record \
 	-target module.env.module.main_site_redirect_wwww_route53_record \
 	-target module.env.module.autoscale \
+	-target module.env.module.iam \
+	-target module.env.module.s3 \
+	-target module.env.module.cdn_acm \
+	-target module.env.module.cdn_route53_acm \
+	-target module.env.module.main_stie_route53_acm \
+	-target module.env.module.main_site_acm \
 	-target module.env.module.cloudfront \
 	-target module.env.module.launch_config \
 	--auto-approve && cd -
