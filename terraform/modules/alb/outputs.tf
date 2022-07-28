@@ -9,3 +9,7 @@ output "alb_endpoint" {
 output "alb_zone_id" {
     value = aws_lb.elb.zone_id
 }
+
+output "alb_arn" {
+    value = aws_lb.elb.arn
+}

@@ -33,6 +33,8 @@ post_build:
 	-target module.env.module.main_site_redirect_wwww_route53_record \
 	-target module.env.module.autoscale \
 	-target module.env.module.iam \
+	-target module.env.module.alb_http_listener \
+	-target module.env.module.alb_https_listener \
 	-target module.env.module.s3 \
 	-target module.env.module.cdn_acm \
 	-target module.env.module.cdn_route53_acm \
