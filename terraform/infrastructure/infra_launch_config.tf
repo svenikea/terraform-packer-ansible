@@ -45,12 +45,12 @@ module "launch_config" {
     delete_termination                      = var.delete_termination
     encrypted                               = var.encrypted
     iops                                    = var.iops
-    launch_data                             = local.launch_user_data
+    launch_data                             = "${data.template_file.launch_data.rendered}"
 }
 
-locals {
-    launch_user_data = <<-EOF
-                #!/bin/sh
-                aws ec2 create-tags --region us-east-1 --resources $(curl http://169.254.169.254/latest/meta-data/instance-id) --tags Key=Name,Value=$(curl http://169.254.169.254/latest/meta-data/local-hostname)-$(curl http://169.254.169.254/latest/meta-data/instance-type)
-                EOF
-}
+# locals {
+#     launch_user_data = <<-EOF
+#                 #!/bin/sh
+#                 aws ec2 create-tags --region us-east-1 --resources $(curl http://169.254.169.254/latest/meta-data/instance-id) --tags Key=Name,Value=$(curl http://169.254.169.254/latest/meta-data/local-hostname)-$(curl http://169.254.169.254/latest/meta-data/instance-type)
+#                 EOF
+# }

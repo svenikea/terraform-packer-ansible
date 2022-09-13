@@ -10,8 +10,8 @@
     extra_opts: [--strip-components=1]
 
 - name: WordPress Config
-  template:
-    src: wp-config.j2
+  copy:
+    src: "{{ efs_mount_path }}/wp-config-sample.php"
     dest: "{{ efs_mount_path }}/wp-config.php"
     owner: www-data
     group: www-data

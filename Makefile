@@ -1,5 +1,11 @@
 all: clean init pre_build ami post_build
 
+new_all: clean init ami all_module
+
+all_module:
+	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
+	--auto-approve && cd -
+
 pre_build: 
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.network \
