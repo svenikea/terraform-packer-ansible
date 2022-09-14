@@ -85,7 +85,7 @@ data "aws_route53_zone" "current_zone" {
 data "template_file" "launch_data" {
     template            = file("${path.module}/policy-templates/user_data.tpl")
     vars                = {
-        efs_mount_dns   = "${module.efs.efs_mount_target_dns_name}"
+        efs_mount_dns   = "${module.efs.efs_dns_name}"
         rds_database    = "${module.aurora.aurora_rds_cluster_database}"
         rds_username    = "${var.aurora_master_user}"
         rds_password    = "${module.aurora.aurora_password}"
