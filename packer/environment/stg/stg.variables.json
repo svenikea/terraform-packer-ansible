@@ -16,8 +16,6 @@
     "bastion_ami_location"      : "amzn2-ami-hvm-*",
     "delete_termination"        : "true",
     "encrypt"                   : "false",
-    "vpc_name"                  : "*-vpc-*",
-    "subnet_name"               : "*-private-subnet-1-*",
     "sg_name"                   : "*-bastion-*",
     "app_instance_profile"      : "wordpress-app-stg",
     "bastion_instance_profile"  : "wordpress-bastion-stg"

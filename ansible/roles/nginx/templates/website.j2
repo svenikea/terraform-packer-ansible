@@ -1,14 +1,6 @@
-#server {
-#    listen 80;
-#    listen [::]:80;
-#    server_name {{ route53_domain }};
-#    return 301 https://{{ route53_domain}}$request_uri;
-#}
-
 server {
     listen      80;
     listen      [::]:80;
-#    server_name {{ route53_domain }};\
     server_name localhost;
     set         $base {{ efs_mount_path }};
     root        $base;
@@ -17,8 +9,8 @@ server {
     include     nginxconfig.io/security.conf;
 
     # logging
-    access_log  /var/log/nginx/{{ route53_domain}}.access.log;
-    error_log   /var/log/nginx/{{ route53_domain}}.error.log warn;
+    access_log  /var/log/nginx/localhost.access.log;
+    error_log   /var/log/nginx/localhost.error.log warn;
 
     # index.php
     index       index.php;
