@@ -90,5 +90,8 @@ data "template_file" "launch_data" {
         rds_username    = "${var.aurora_master_user}"
         rds_password    = "${module.aurora.aurora_password}"
         rds_endpoint    = "${module.aurora.aurora_rds_cluster_endpoint}"
+        redis_endpoint  = "${module.elasticache.elasticache_primary_endpoint}"
+        access_id       = "${module.iam.iam_user_access_keys[1]}"
+        access_secret   = "${module.iam.iam_user_secrets[1]}"
     }
 }
