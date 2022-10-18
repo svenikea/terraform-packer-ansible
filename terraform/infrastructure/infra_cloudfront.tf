@@ -12,7 +12,7 @@ module "cloudfront" {
     
     env                                     = "${var.env}"
     target_id                               = local.cdn_alb_target_id 
-    acm_arn                                 = module.cdn_acm.acm_arn
+    acm_arn                                 = module.main_site_acm.acm_arn
     price_class                             = "PriceClass_All"
     cloudfront_aliases                      = ["cdn.${var.route53_zone}"]
     origins                                 = [
@@ -20,18 +20,18 @@ module "cloudfront" {
             domain_name                     = "${var.route53_zone}",
             target_id                       = "${local.cdn_alb_target_id}",
             # create_s3_oai = false
-            protocol_policy                 = "http-only"
+            protocol_policy                 = "https-only"
             s3_origin                       = false 
             custom_origin                   = true
-        },
-        {
-            domain_name                     = "${module.s3.web_static_domain_name[1]}",
-            target_id                       = "${local.cdn_s3_target_id}",
-            # create_s3_oai = false
-            protocol_policy                 = "http-only"
-            s3_origin                       = true
-            custom_origin                   = false
         }
+        # {
+        #     domain_name                     = "${module.s3.web_static_domain_name[1]}",
+        #     target_id                       = "${local.cdn_s3_target_id}",
+        #     # create_s3_oai = false
+        #     protocol_policy                 = "https-only"
+        #     s3_origin                       = true
+        #     custom_origin                   = false
+        # }
          
     ]
     cloudfront_behavior                     = [
@@ -118,6 +118,6 @@ module "cloudfront" {
 }
 
 locals {
-    cdn_alb_target_id                       = "AppTargetID"
+    cdn_alb_target_id                       = "ALBTargetID"
     cdn_s3_target_id                        = "S3TargetID"
 }

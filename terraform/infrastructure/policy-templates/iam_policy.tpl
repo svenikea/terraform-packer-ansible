@@ -3,14 +3,53 @@
     "Statement": [
         %{ if iam_user != "bastion_user" }
         {
+            "Sid": "BcketWritePolicy",
             "Effect": "Allow",
             "Action": [
-                "s3:List*",
-                "s3:Get*",
                 "s3:PutObject",
                 "s3:DeleteObject"
             ],
             "Resource" : ${jsonencode(concat(split(",",top_bucket_arns),split(",",sub_bucket_arns)))}
+        },
+        {
+            "Sid": "CloudfrontPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "cloudfront:List*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ListBUcketsPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "s3:List*",
+                "s3-object-lambda:Get*",
+                "s3-object-lambda:List*",
+                "s3:Get*"
+            ],
+            "Resource" : "*"
+
+        },
+        {
+            "Sid": "ChangeBucketPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutAccessPointPolicyForObjectLambda",
+                "s3:PutBucketPublicAccessBlock",
+                "s3:PutMultiRegionAccessPointPolicy",
+                "s3:DeleteBucketPolicy",
+                "s3:BypassGovernanceRetention",
+                "s3:ObjectOwnerOverrideToBucketOwner",
+                "s3:DeleteAccessPointPolicyForObjectLambda",
+                "s3:PutObjectVersionAcl",
+                "s3:PutBucketAcl",
+                "s3:PutBucketPolicy",
+                "s3:DeleteAccessPointPolicy",
+                "s3:PutAccessPointPolicy",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": ${jsonencode(split(",",top_bucket_arns))}
         },
         %{ endif }
         {

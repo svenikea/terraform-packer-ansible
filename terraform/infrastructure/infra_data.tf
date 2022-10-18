@@ -93,5 +93,6 @@ data "template_file" "launch_data" {
         redis_endpoint  = "${module.elasticache.elasticache_primary_endpoint}"
         access_id       = "${module.iam.iam_user_access_keys[1]}"
         access_secret   = "${module.iam.iam_user_secrets[1]}"
+        site_url        = "${var.route53_zone}"
     }
 }

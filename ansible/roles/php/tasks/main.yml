@@ -12,16 +12,12 @@
     state: present
   loop: "{{ php_packages }}"
   
-- name: Change PHP-FPM Upload Size
-  lineinfile:  
-    path: /etc/php/{{ php_version[-3:] }}/fpm/php.ini
-    regexp: "{{ item.replace }}"
-    line: "{{ item.with }}"
-    state: present
-  loop:
-    - { replace : "post_max_size =", with : "post_max_size = 100M" }
-    - { replace : "upload_max_filesize =", with : "upload_max_filesize = 100M" }
-    - { replace : "max_input_time =", with : "max_input_time = 300" }
-    - { replace : "max_execution_time =", with : "max_execution_time = 300" }
+- name: Upload new php config file
+  template:
+    src: php.j2  
+    dest: /etc/php/{{ php_version[-3:] }}/fpm/php.ini
+    owner: root 
+    group: root
+    mode: "644"
   notify: Start PHP-FPM Service
 

@@ -50,8 +50,8 @@ post_build:
 
 ami:
 	cd ./packer/environment/${env} && \
-	packer build -var-file=${env}.variables.${type} bastion.${type} && \
-	packer build -var-file=${env}.variables.${type} app.${type} && cd - \
+	packer build -var-file=${env}.variables.${type} app.${type} && \
+	packer build -var-file=${env}.variables.${type} bastion.${type} && cd - \
 
 init:
 	cd ./terraform/environment/${env} && terraform init && cd -
@@ -82,6 +82,11 @@ sg:
 	-target module.env.module.launch_security_group_ingress_rule_http \
 	--auto-approve && cd -
 
+s3: 
+	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
+	-target module.env.module.s3 \
+	--auto-approve && cd -
+
 alb:
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
 	-target module.env.module.alb \
@@ -94,7 +99,8 @@ launch_config:
 
 acm:
 	cd ./terraform/environment/${env} && terraform ${state} -var-file ${env}_env.tfvars \
-	-target module.env.module.acm \
+	-target module.env.module.main_site_acm \
+	# -target module.env.module.main_stie_route53_acm \
 	--auto-approve && cd -
 
 route53:

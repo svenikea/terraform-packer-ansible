@@ -2,7 +2,7 @@ server {
     listen      80;
     listen      [::]:80;
     server_name localhost;
-    set         $base {{ efs_mount_path }};
+    set         $base {{ nginx_root_path }};
     root        $base;
 
     # security
@@ -18,10 +18,12 @@ server {
     # additional config
     include     nginxconfig.io/general.conf;
     include     nginxconfig.io/wordpress.conf;
+    include     nginxconfig.io/w3tc.conf;
 
     # handle .php
     location ~ \.php$ {
         fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
         include      nginxconfig.io/php_fastcgi.conf;
+        
     }
 }
