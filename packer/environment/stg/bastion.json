@@ -1,7 +1,6 @@
 {
     "builders" :[{
         "type"                                      : "amazon-ebs",
-        "iam_instance_profile"                      : "{{user `instance_profile`}}",
         "ami_name"                                  : "{{user `bastion_ami_name`}}",
         "source_ami_filter" : {
             "filters" : {
@@ -54,7 +53,11 @@
                 "ev_env"
             ],
             "inventory_file"                        : "../../../ansible/inventory/dev",
-            "group_vars"                            : "../../../ansible/group_vars/"
+            "group_vars"                            : "../../../ansible/group_vars/",
+            "extra_arguments": [
+                "-e",
+                "'ansible_python_interpreter=/usr/bin/python3'"
+              ]
         },
         {
             "type"                                  : "shell",

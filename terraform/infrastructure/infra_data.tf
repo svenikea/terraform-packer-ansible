@@ -81,3 +81,18 @@ data "aws_route53_zone" "current_zone" {
   name         = "${var.route53_zone}"
   private_zone = false
 }
+
+data "template_file" "launch_data" {
+    template            = file("${path.module}/policy-templates/user_data.tpl")
+    vars                = {
+        efs_mount_dns   = "${module.efs.efs_dns_name}"
+        rds_database    = "${module.aurora.aurora_rds_cluster_database}"
+        rds_username    = "${var.aurora_master_user}"
+        rds_password    = "${module.aurora.aurora_password}"
+        rds_endpoint    = "${module.aurora.aurora_rds_cluster_endpoint}"
+        redis_endpoint  = "${module.elasticache.elasticache_primary_endpoint}"
+        access_id       = "${module.iam.iam_user_access_keys[1]}"
+        access_secret   = "${module.iam.iam_user_secrets[1]}"
+        site_url        = "${var.route53_zone}"
+    }
+}

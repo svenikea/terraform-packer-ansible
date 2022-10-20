@@ -1,41 +1,3 @@
-module "custom_managed_cache_policy" {
-    source                                  = "../modules/cloudfront_cache_policy"
-    
-    cache_policy_name                       = "Custom-Managed-Cache-Policy"
-    cookie_behavior                         = "all"
-    header_behavior                         = "whitelist"
-    query_string_behavior                   = "all"
-    header_items                            = ["Origin", "Referer", "Host"]
-}
-
-module "custom_header_passed" {
-    source                                  = "../modules/cloudfront_origin_request_policy"
-
-    origin_request_policy_name              = "Custom-headers-passed"
-    cookie_behavior                         = "whitelist"
-    query_string_behavior                   = "all"
-    header_behavior                         = "whitelist"
-    cookie_items                            = [
-        "cookiescomment_author_*", 
-        "comment_author_email_*",
-        "wordpress_test_cookie",
-        "comment_author_url_*",
-        "wordpress_*",
-        "wordpress_logged_in_*",
-        "PHPSESSID",
-        "wordpress_sec_*",
-        "wp-settings-*"
-    ]
-    header_items                            = [
-        "Origin",
-        "Host",
-        "Referer",
-        "CloudFront-Is-Tablet-Viewer",
-        "CloudFront-Is-Mobile-Viewer",
-        "CloudFront-Is-Desktop-Viewer"
-    ]
-}
-
 module "custom_header_passed_nocache" {
     source                                  = "../modules/cloudfront_origin_request_policy"
 
@@ -48,28 +10,28 @@ module "custom_header_passed_nocache" {
 module "cloudfront" {
     source                                  = "../modules/cloudfront_general"
     
-    env                                     = "stg"
+    env                                     = "${var.env}"
     target_id                               = local.cdn_alb_target_id 
-    acm_arn                                 = module.cdn_acm.acm_arn
+    acm_arn                                 = module.main_site_acm.acm_arn
     price_class                             = "PriceClass_All"
     cloudfront_aliases                      = ["cdn.${var.route53_zone}"]
     origins                                 = [
         {
-            domain_name                     = "${module.alb.alb_endpoint}",
+            domain_name                     = "${var.route53_zone}",
             target_id                       = "${local.cdn_alb_target_id}",
             # create_s3_oai = false
-            protocol_policy                 = "http-only"
+            protocol_policy                 = "https-only"
             s3_origin                       = false 
             custom_origin                   = true
-        },
-        {
-            domain_name                     = "${module.s3.web_static_domain_name[1]}",
-            target_id                       = "${local.cdn_s3_target_id}",
-            # create_s3_oai = false
-            protocol_policy                 = "http-only"
-            s3_origin                       = true
-            custom_origin                   = false
         }
+        # {
+        #     domain_name                     = "${module.s3.web_static_domain_name[1]}",
+        #     target_id                       = "${local.cdn_s3_target_id}",
+        #     # create_s3_oai = false
+        #     protocol_policy                 = "https-only"
+        #     s3_origin                       = true
+        #     custom_origin                   = false
+        # }
          
     ]
     cloudfront_behavior                     = [
@@ -79,9 +41,11 @@ module "cloudfront" {
             cached_methods                  = ["GET", "HEAD", "OPTIONS"],
             query_Strng                     = true,
             viewer_protocol_policy          = "redirect-to-https",
-            headers                         = ["Origin", "Host", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            headers                         = ["Host", "Origin"],
             target_id                       = "${local.cdn_alb_target_id}",
-            cookies                         = "all"
+            cookies                         = "whitelist",
+            whitelist_names                 = ["comment_author_*", "comment_author_email_*", "comment_author_url_*", "wordpress_*", "wordpress_logged_in_*", "wordpress_test_cookie", "wp-settings-*"]
+
         },
         {
             path                            = "/wp-login.php*",
@@ -89,9 +53,11 @@ module "cloudfront" {
             cached_methods                  = ["GET", "HEAD", "OPTIONS"],
             query_Strng                     = true,
             viewer_protocol_policy          = "redirect-to-https",
-            headers                         = ["*"],
+            headers                         = ["Host", "Origin"],
             target_id                       = "${local.cdn_alb_target_id}",
-            cookies                         = "all"
+            cookies                         = "whitelist",
+            whitelist_names                 = ["comment_author_*", "comment_author_email_*", "comment_author_url_*", "wordpress_*", "wordpress_logged_in_*", "wordpress_test_cookie", "wp-settings-*"]
+
         },
         {
             path                            = "/wp-content/*",
@@ -99,9 +65,10 @@ module "cloudfront" {
             cached_methods                  = ["GET", "HEAD"],
             query_Strng                     = false,
             viewer_protocol_policy          = "redirect-to-https",
-            headers                         = ["Host", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            headers                         = ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             target_id                       = "${local.cdn_alb_target_id}",
-            cookies                         = "all"
+            cookies                         = "none",
+            whitelist_names                 = null
         },
         {
             path                            = "/wp-includes/*",
@@ -109,9 +76,10 @@ module "cloudfront" {
             cached_methods                  = ["GET", "HEAD"],
             query_Strng                     = false,
             viewer_protocol_policy          = "redirect-to-https",
-            headers                         = ["Host", "Referer", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            headers                         = ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             target_id                       = "${local.cdn_alb_target_id}",
-            cookies                         = "none"
+            cookies                         = "none",
+            whitelist_names                 = null
         },
         {
             path                            = "/about-us/*",
@@ -121,7 +89,8 @@ module "cloudfront" {
             viewer_protocol_policy          = "redirect-to-https",
             headers                         = ["Host", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             target_id                       = "${local.cdn_alb_target_id}",
-            cookies                         = "none"
+            cookies                         = "none",
+            whitelist_names                 = null
         },
         {
             path                            = "/wp-json/*",
@@ -131,7 +100,8 @@ module "cloudfront" {
             viewer_protocol_policy          = "redirect-to-https",
             headers                         = ["Host", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             target_id                       = "${local.cdn_alb_target_id}",
-            cookies                         = "none"
+            cookies                         = "none",
+            whitelist_names                 = null
         },
         {
             path                            = "/?w3tc_minify*",
@@ -141,12 +111,13 @@ module "cloudfront" {
             viewer_protocol_policy          = "redirect-to-https",
             headers                         = ["Host", "Referer", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             target_id                       = "${local.cdn_alb_target_id}",
-            cookies                         = "none"
+            cookies                         = "none",
+            whitelist_names                 = null
         }
     ]
 }
 
 locals {
-    cdn_alb_target_id                       = "AppTargetID"
+    cdn_alb_target_id                       = "ALBTargetID"
     cdn_s3_target_id                        = "S3TargetID"
 }

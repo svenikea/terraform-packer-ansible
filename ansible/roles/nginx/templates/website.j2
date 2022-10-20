@@ -1,24 +1,16 @@
-#server {
-#    listen 80;
-#    listen [::]:80;
-#    server_name {{ route53_domain }};
-#    return 301 https://{{ route53_domain}}$request_uri;
-#}
-
 server {
     listen      80;
     listen      [::]:80;
-#    server_name {{ route53_domain }};\
     server_name localhost;
-    set         $base {{ efs_mount_path }};
+    set         $base {{ nginx_root_path }};
     root        $base;
 
     # security
     include     nginxconfig.io/security.conf;
 
     # logging
-    access_log  /var/log/nginx/{{ route53_domain}}.access.log;
-    error_log   /var/log/nginx/{{ route53_domain}}.error.log warn;
+    access_log  /var/log/nginx/localhost.access.log;
+    error_log   /var/log/nginx/localhost.error.log warn;
 
     # index.php
     index       index.php;
@@ -26,10 +18,12 @@ server {
     # additional config
     include     nginxconfig.io/general.conf;
     include     nginxconfig.io/wordpress.conf;
+    include     nginxconfig.io/w3tc.conf;
 
     # handle .php
     location ~ \.php$ {
         fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
         include      nginxconfig.io/php_fastcgi.conf;
+        
     }
 }

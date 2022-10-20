@@ -37,4 +37,5 @@ module "alb" {
     vpc_id                                  = module.network.vpc_id
     security_group_id                       = module.alb_security_group.sg_id
     subnet_ids                              = module.network.public_subnets
+    acm_arn                                 = module.main_site_acm.acm_arn
 }

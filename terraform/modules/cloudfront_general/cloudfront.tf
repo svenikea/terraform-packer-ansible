@@ -36,7 +36,8 @@ resource "aws_cloudfront_distribution" "cdn" {
         forwarded_values {
             query_string                    = false
             cookies {
-                forward                     = "none"
+                forward                     = "whitelist"
+                whitelisted_names           = ["comment_author_*", "comment_author_email_*", "comment_author_url_*", "wordpress_*", "wordpress_logged_in_*", "wordpress_test_cookie", "wp-settings-*"]
             } 
         }
     }
@@ -53,7 +54,8 @@ resource "aws_cloudfront_distribution" "cdn" {
             headers      = ordered_cache_behavior.value.headers
 
             cookies {
-                    forward = ordered_cache_behavior.value.cookies
+                    forward             = ordered_cache_behavior.value.cookies
+                    whitelisted_names   = ordered_cache_behavior.value.whitelist_names
                 }
             }
 
