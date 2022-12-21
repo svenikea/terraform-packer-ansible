@@ -1,5 +1,11 @@
 all: clean init pre_build ami post_build
 
+remote_state:
+	cd terraform/environment && terragrunt run-all init --terragrunt-include-dir "backend" && terragrunt run-all apply --terragrunt-include-dir "backend" && cd -
+
+master_resource:
+	cd terraform/environment && terragrunt run-all init --terragrunt-include-dir "shared_resource" && terragrunt run-all apply --terragrunt-include-dir "shared_resource" && cd -
+
 new_all: clean init ami all_module
 
 all_module:

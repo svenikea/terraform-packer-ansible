@@ -1,9 +1,9 @@
 output "vpc_id" {
-    value = aws_vpc.my_vpc.id
+    value = aws_vpc.custom_vpc[0].id
 }
 
 output "igw_id" {
-    value = aws_internet_gateway.my_igw.id
+    value = aws_internet_gateway.internet_gateway.id
 }
 
 output "private_subnets" {
@@ -14,8 +14,8 @@ output "public_subnets" {
     value = aws_subnet.public_subnet.*.id
 }
 
-output "nat_gateway_public_ip" {
-    value = aws_nat_gateway.my_nat.*.id
+output "nat_gateway_ids" {
+    value = var.private_subnets != null && var.new_elastic_ip == true ? aws_nat_gateway.nat_gateway.*.id : null
 }
 
 output "public_route_table_name" {

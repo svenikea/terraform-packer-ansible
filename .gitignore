@@ -1,1 +1,12 @@
 **/.DS_Store
+
+# Ignore dot terraform files and folders
+
+*.lock.hcl
+*.terraform
+*.vscode
+keys/**
+certificates/**
+*.tfstate
+*.tfstate.backup
+backend.tf

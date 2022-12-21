@@ -1,27 +1,34 @@
-resource "aws_internet_gateway" "my_igw" {
-    vpc_id          = aws_vpc.my_vpc.id
+resource "aws_internet_gateway" "internet_gateway" {
+    vpc_id                  = aws_vpc.custom_vpc[0].id
     tags = {
-        Name        = "${var.project}-igw-${var.env}"
+        Name                = "${var.project}-igw"
+        Terraform           = true
+        Environment         = var.env
     }
 }
 
-resource "aws_eip" "nat_eip" {
-  count             = var.elastic_ips
-  depends_on = [
-    aws_internet_gateway.my_igw
+resource "aws_eip" "elastic_ip" {
+  count                     = var.private_subnets != null && var.new_elastic_ip == true ? length(var.private_subnets) : 0
+  depends_on                = [
+    aws_internet_gateway.internet_gateway,
+    aws_subnet.private_subnet
   ]
-  vpc               = true
+  vpc                       = true
   tags = {
-    Name            = "${var.project}-eip-${var.env}-${count.index+1}" 
+    Name                    = "${var.project}" 
+    Terraform               = true
+    Environment             = var.env
   }
 }
 
-resource "aws_nat_gateway" "my_nat" {
-  connectivity_type = "public"
-  count             = length(var.public_subnets)
-  subnet_id         = aws_subnet.public_subnet.*.id[count.index]
-  allocation_id     = aws_eip.nat_eip.*.id[count.index]
+resource "aws_nat_gateway" "nat_gateway" {
+  connectivity_type       = "public"
+  count                   = var.new_elastic_ip != false ? length(var.public_subnets) : 0
+  subnet_id               = aws_subnet.public_subnet.*.id[count.index]
+  allocation_id           = aws_eip.elastic_ip.*.id[count.index]
   tags = {
-      Name          = "${var.project}-nat-gateway-${var.env}-${count.index+1}"
+    Name                  = "${var.project}-nat-gateway"
+    Terraform             = true
+    Environment           = var.env
   }
 }

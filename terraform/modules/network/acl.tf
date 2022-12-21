@@ -1,8 +1,9 @@
-resource "aws_network_acl" "my_public_acl" {
-    vpc_id                  = aws_vpc.my_vpc.id
+resource "aws_network_acl" "public_acl" {
+    depends_on              = [aws_subnet.public_subnet]
+    vpc_id                  = aws_vpc.custom_vpc[0].id
     subnet_ids              = aws_subnet.public_subnet.*.id
     dynamic "ingress" {
-        for_each            = var.public_subnet_acl_ingress
+        for_each            = var.public_subnet_acl_ingress != null ? var.public_subnet_acl_ingress : local.default_acl
             content {
                 protocol    = ingress.value.protocol
                 rule_no     = ingress.value.rule_no
@@ -12,8 +13,9 @@ resource "aws_network_acl" "my_public_acl" {
                 to_port     = ingress.value.to_port
             }
     }
+    
     dynamic "egress" {
-        for_each            = var.public_subnet_acl_egress
+        for_each            = var.public_subnet_acl_egress != null ? var.public_subnet_acl_egress : local.default_acl
         content {
                 protocol    = egress.value.protocol
                 rule_no     = egress.value.rule_no
@@ -24,15 +26,18 @@ resource "aws_network_acl" "my_public_acl" {
         }
     }
     tags = {
-        Name                = "${var.project}-public-acl-${var.env}"
+        Name                = "${var.project}-public-acl"
+        Terraform           = true
+        Environment         = var.env
     }
 }
 
-resource "aws_network_acl" "my_private_acl" {
-    vpc_id                  = aws_vpc.my_vpc.id
+resource "aws_network_acl" "private_acl" {
+    vpc_id                  = aws_vpc.custom_vpc[0].id
     subnet_ids              = aws_subnet.private_subnet.*.id
+    depends_on              = [aws_subnet.private_subnet]
     dynamic "ingress" {
-        for_each            = var.private_subnet_acl_ingress
+        for_each            = var.private_subnet_acl_ingress != null ? var.private_subnet_acl_ingress : local.default_acl
             content {
                 protocol    = ingress.value.protocol
                 rule_no     = ingress.value.rule_no
@@ -44,7 +49,7 @@ resource "aws_network_acl" "my_private_acl" {
     }
 
     dynamic "egress" {
-        for_each            = var.private_subnet_acl_egress
+        for_each            = var.private_subnet_acl_egress != null ? var.private_subnet_acl_egress : local.default_acl
             content {
                 protocol    = egress.value.protocol
                 rule_no     = egress.value.rule_no
@@ -56,6 +61,8 @@ resource "aws_network_acl" "my_private_acl" {
     }
     
     tags = {
-        Name            = "${var.project}-private-acl-${var.env}"
+        Name                = "${var.project}-private-acl"
+        Terraform           = true
+        Environment         = var.env
     }
 }
