@@ -1,6 +1,16 @@
 variable "project" {}
 variable "region" {}
+variable "env" {}
 variable "public_ip" {}
-variable "vpc_cidr_block" { default = "10.0.0.0/16" }
-variable "public_subnets" { default = ["10.0.1.0/24", "10.0.2.0/24"] }
-variable "private_subnets" { default = ["10.0.3.0/24", "10.0.4.0/24"] }
+variable "vpc_cidr_block" {}
+variable "public_subnets" {}
+variable "private_subnets" {}
+locals {
+    service_ip      = data.aws_ip_ranges.service_ip.cidr_blocks
+    company_ips     = ["${var.public_ip}/32"]
+    combined_ips    = concat(local.company_ips, local.service_ip)
+}
+variable "devops_group_name" {}
+variable "develop_iam_users" {}
+variable "develop_group_name" {}
+variable "devops_iam_users" {}

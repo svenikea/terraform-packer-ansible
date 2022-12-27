@@ -8,7 +8,8 @@ resource "aws_internet_gateway" "internet_gateway" {
 }
 
 resource "aws_eip" "elastic_ip" {
-  count                     = var.private_subnets != null && var.new_elastic_ip == true ? length(var.private_subnets) : 0
+  #count                     = var.private_subnets != null && var.new_elastic_ip == true ? length(var.private_subnets) : 0
+  for_each                  = var.private_subnets != null && var.new_elastic_ip == true ? toset(var.private_subnets) : []
   depends_on                = [
     aws_internet_gateway.internet_gateway,
     aws_subnet.private_subnet
@@ -23,12 +24,13 @@ resource "aws_eip" "elastic_ip" {
 
 resource "aws_nat_gateway" "nat_gateway" {
   connectivity_type       = "public"
-  count                   = var.new_elastic_ip != false ? length(var.public_subnets) : 0
-  subnet_id               = aws_subnet.public_subnet.*.id[count.index]
-  allocation_id           = aws_eip.elastic_ip.*.id[count.index]
+  for_each                = var.new_elastic_ip != false ? aws_subnet.public_subnet : {}
+  subnet_id               = each.value.id
+  allocation_id           = [ for elastic_ip in aws_eip.elastic_ip : elastic_ip.id ][index([for subnet in aws_subnet.public_subnet : subnet.id], each.value.id)]
   tags = {
     Name                  = "${var.project}-nat-gateway"
     Terraform             = true
     Environment           = var.env
   }
+  depends_on              = [aws_eip.elastic_ip]
 }

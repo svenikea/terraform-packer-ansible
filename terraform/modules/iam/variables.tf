@@ -1,8 +1,13 @@
-variable "project" {}
-variable "env" {}
-variable "region" {}
-variable "account_id" {}
-
+variable "project" { default = null }
+variable "env" { default = null }
+variable "role_name" { default = null }
+variable "assume_role_policy" { default = null }
+variable "attach_policies" { default = null }
+variable "instance_profile" { default = null }
+variable "inline_role_policies" { default = null }
+variable "attach_role_policies" { default = null }
+variable "group_name" { default = null }
 variable "iam_users" { default = null }
-variable "role_policy" {}
-variable "assume_role_policy" {}
+variable "attach_group_policies" { default = null }
+variable "inline_group_policies" { default = null }
+variable "new_roles" { default = true }

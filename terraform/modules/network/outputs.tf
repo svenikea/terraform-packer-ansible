@@ -7,29 +7,25 @@ output "igw_id" {
 }
 
 output "private_subnets" {
-    value = aws_subnet.private_subnet.*.id
+    value = [for subnet in aws_subnet.private_subnet : subnet.id]
 }
 
 output "public_subnets" {
-    value = aws_subnet.public_subnet.*.id
+    value = [for subnet in aws_subnet.public_subnet : subnet.id]
 }
 
-output "nat_gateway_ids" {
-    value = var.private_subnets != null && var.new_elastic_ip == true ? aws_nat_gateway.nat_gateway.*.id : null
-}
+# output "eip" {
+#     value = [for elastic_ip in aws_eip.elastic_ip : elastic_ip.id ]
+# }
 
-output "public_route_table_name" {
-    value = aws_route_table.public_route.*.tags.Name
-}
+# output "nat_gateway_ids" {
+#     value = var.private_subnets != null && var.new_elastic_ip == true ? aws_nat_gateway.nat_gateway.*.id : null
+# }
 
-output "private_route_table_name" {
-    value = aws_route_table.private_route.*.tags.Name
-}
+# output "public_route_table_name" {
+#     value = aws_route_table.public_route.*.tags.Name
+# }
 
-output "public_route_table_id" {
-    value = aws_route_table.public_route.*.id
-}
-
-output "private_route_table_id" {
-    value = aws_route_table.private_route.*.id
-}
+# output "private_route_table_name" {
+#     value = aws_route_table.private_route.*.tags.Name
+# }

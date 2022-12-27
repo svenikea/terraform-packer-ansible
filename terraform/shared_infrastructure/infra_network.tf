@@ -1,7 +1,7 @@
 module "network" {
     source              = "../modules/network"
     project             = var.project
-    env                 = "shared"
+    env                 = var.env
     region              = var.region
     vpc_cidr_block      = var.vpc_cidr_block
     public_subnets      = var.public_subnets
@@ -14,12 +14,12 @@ module "network" {
             gateway_id  = module.network.igw_id
         }
     ]
-    private_routes      = [
-        {
-            cidr_block  = "${var.public_ip}/32"
-            gateway_id  = module.network.igw_id
-        }
-    ]
+    # private_routes      = [
+    #     {
+    #         cidr_block  = "${var.public_ip}/32"
+    #         gateway_id  = module.network.igw_id
+    #     }
+    # ]
     public_subnet_acl_ingress   = [
         {
             protocol            = "tcp"
@@ -126,8 +126,8 @@ module "network" {
             rule_no             = 140
             action              = "allow"
             cidr_block          = "${var.vpc_cidr_block}"
-            from_port           = 6379
-            to_port             = 6379
+            from_port           = 11211
+            to_port             = 11211
         },
         {
             protocol            = "tcp"

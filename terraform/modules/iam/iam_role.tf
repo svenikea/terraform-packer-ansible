@@ -1,13 +1,25 @@
 resource "aws_iam_role" "iam_role" {
-    count                   = var.iam_users != null ? length(var.iam_users) : 0
-    name                    = "${var.project}-${var.iam_users[count.index]}-${var.env}"
-    assume_role_policy      = var.assume_role_policy.*.rendered[count.index]
-    description             = "${var.project}-iam-role-${var.env}"
+    count                   = var.new_roles == true ? 1 : 0
+    name                    = "${var.project}-${var.env}-${var.role_name}"
+    assume_role_policy      = var.assume_role_policy
+    description             = "${var.project}-${var.env}-${var.role_name}"
+
+    tags = {
+        Name                = var.project
+        Environment         = var.env
+        Terraform           = true
+    }
 }
 
-resource "aws_iam_role_policy" "iam_role_policy" {
-    count                   = var.iam_users != null ? length(var.iam_users) : 0
-    name                    = "${var.project}-${var.iam_users[count.index]}-${var.env}"
-    role                    = aws_iam_role.iam_role.*.id[count.index]
-    policy                  = var.role_policy.*.rendered[count.index]
+resource "aws_iam_role_policy_attachment" "attach_role_policies" {
+    count                   = var.attach_role_policies != null ? length(var.attach_role_policies) : 0
+    role                    = aws_iam_role.iam_role[0].name
+    policy_arn              = var.attach_role_policies[count.index]
+}
+
+resource "aws_iam_role_policy" "inline_role_policies" {
+    count                   = var.inline_role_policies != null ? 1 : 0
+    name                    = "${var.project}-${var.role_name}-${var.env}"
+    role                    = aws_iam_role.iam_role[0].id
+    policy                  = var.inline_role_policies
 }

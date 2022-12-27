@@ -17,10 +17,10 @@ EOF
 locals {
     region              = "us-east-1"
     backend_dynamodb    = "terraform-app-state-locks"
-    random_number       = "87498723909"
+    random_number       = "87498723999"
     backend_s3          = "terraform-state-${local.random_number}"
-    project             = "PHPApp"
-    project_domain      = "cmcloudlab0654.info"
+    project             = ""
+    project_domain      = ""
 }
 
 inputs = {
@@ -29,5 +29,9 @@ inputs = {
     backend_s3          = "${local.backend_s3}"
     backend_dynamodb    = "${local.backend_dynamodb}"
     project_domain      = "${local.project_domain}"
+    develop_iam_users   = ["developer_1", "developer_2"]
+    devops_iam_users    = ["devops_1", "devops_2"]
+    develop_group_name  = "develops"
+    devops_group_name   = "devops"
     public_ip           = run_cmd("/usr/bin/dig", "+short", "myip.opendns.com", "@resolver1.opendns.com")
 }

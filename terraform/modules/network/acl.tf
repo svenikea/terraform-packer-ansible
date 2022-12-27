@@ -1,7 +1,8 @@
 resource "aws_network_acl" "public_acl" {
     depends_on              = [aws_subnet.public_subnet]
     vpc_id                  = aws_vpc.custom_vpc[0].id
-    subnet_ids              = aws_subnet.public_subnet.*.id
+    #subnet_ids              = aws_subnet.public_subnet
+    subnet_ids              = [for subnet in aws_subnet.public_subnet : subnet.id]
     dynamic "ingress" {
         for_each            = var.public_subnet_acl_ingress != null ? var.public_subnet_acl_ingress : local.default_acl
             content {
@@ -34,7 +35,7 @@ resource "aws_network_acl" "public_acl" {
 
 resource "aws_network_acl" "private_acl" {
     vpc_id                  = aws_vpc.custom_vpc[0].id
-    subnet_ids              = aws_subnet.private_subnet.*.id
+    subnet_ids              = [for subnet in aws_subnet.private_subnet : subnet.id]
     depends_on              = [aws_subnet.private_subnet]
     dynamic "ingress" {
         for_each            = var.private_subnet_acl_ingress != null ? var.private_subnet_acl_ingress : local.default_acl
