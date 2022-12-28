@@ -6,5 +6,5 @@ output "service_role" {
 }
 
 output "iam_users" {
-    value = var.iam_users != null ? aws_iam_user.iam_users.*.name : null
+    value = var.iam_users != null ? [for iam_user in aws_iam_user.iam_users : iam_user.name] : null
 }
