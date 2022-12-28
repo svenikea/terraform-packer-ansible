@@ -1,6 +1,6 @@
 module "shared_wordpress_storage" {
     source                  = "../modules/s3"
-    bucket_name             = "${var.project}-wordpress-storage"
+    bucket_names            = "${var.project}-wordpress-storage"
     project                 = var.project
     env                     = var.env
     object_key              = "uploads"
