@@ -12,22 +12,14 @@ module "bastion" {
 }
 
 module "bastion_security_group" {
-    source                              = "../modules/security_group_name"
+    source                              = "../modules/security_group"
     vpc_id                              = data.aws_vpc.vpc_data.id
     project                             = var.project
     sg_name                             = "bastion"
     env                                 = var.env
-}
-
-module "bastion_security_group_ingress_rule" {
-    source                              = "../modules/security_group_ingress"
-
     port                                = 22
-
-    security_group_id                   = module.bastion_security_group.id
     ipv4_cidr_blocks                    = local.combined_ips
 }
-
 
 module "bastion_role" {
     source                              = "../modules/iam"
