@@ -15,8 +15,8 @@ variable "private_subnets" { default = null }
 variable "nat_gateway" { default = false }
 variable "new_elastic_ip" { default = false }
 variable "vpc_cidr_block" { default = null }
-variable "private_routes" { default = null }
-variable "public_routes" { default = null }
+variable "additional_private_routes" { default = null }
+variable "additional_public_routes" { default = null }
 variable "endpoint_service" { default = null }
 
 locals {

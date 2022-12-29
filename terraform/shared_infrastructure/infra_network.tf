@@ -8,16 +8,19 @@ module "network" {
     private_subnets     = var.private_subnets
     new_elastic_ip      = true
     nat_gateway         = true
-    public_routes       = [
-        {
-            cidr_block  = "0.0.0.0/0"
-            gateway_id  = module.network.igw_id
-        }
-    ]
-    # private_routes      = [
+    # additional_public_routes       = [
     #     {
-    #         cidr_block  = "${var.public_ip}/32"
-    #         gateway_id  = module.network.igw_id
+    #         cidr_block        = "0.0.0.0/0"
+    #         destination_id    = module.network.igw_id
+    #         type              = "gateway"
+    #     }
+    # ]
+    # Uncomment this to allow direct connection to the private subnet
+    # additional_private_routes      = [
+    #     {
+    #         cidr_block        = "${var.public_ip}/32"
+    #         destination_id    = module.network.igw_id
+    #         type              = "gateway"
     #     }
     # ]
     public_subnet_acl_ingress   = [

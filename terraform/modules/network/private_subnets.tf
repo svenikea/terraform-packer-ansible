@@ -17,15 +17,16 @@ resource "aws_route_table" "private_route" {
     vpc_id                      = aws_vpc.custom_vpc[0].id 
     for_each                    = toset(var.private_subnets)
     dynamic "route" {
-        for_each                = var.private_routes != null ? toset(var.private_routes) : []
+        for_each                = var.additional_private_routes != null ? toset(var.additional_private_routes) : []
         content {
             cidr_block          = route.value.cidr_block
-            gateway_id          = route.value.gateway_id
+            gateway_id          = route.value.type == "gateway" ? route.value.destination_id : null
+            nat_gateway_id      = route.value.type == "nat" ? route.value.destination_id : null   
         }
     }
     route {
-        cidr_block              = "0.0.0.0/0"
-        gateway_id              = [for gateway in aws_nat_gateway.nat_gateway : gateway.id ][index(var.private_subnets, "${each.value}")]
+        cidr_block              = var.new_elastic_ip != false ? "0.0.0.0/0" : null
+        nat_gateway_id          = var.new_elastic_ip != false ? [for gateway in aws_nat_gateway.nat_gateway : gateway.id ][index(var.private_subnets, "${each.value}")] : null
     }
     tags = {
         Name                    = "${var.project}-private-route-${index(var.private_subnets, "${each.value}") + 1}"

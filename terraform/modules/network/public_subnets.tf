@@ -18,11 +18,16 @@ resource "aws_route_table" "public_route" {
     vpc_id                      = aws_vpc.custom_vpc[0].id
     for_each                    = toset(var.public_subnets)
     dynamic "route" {
-        for_each                = var.public_routes != null ? toset(var.public_routes) : []
+        for_each                = var.additional_public_routes != null ? toset(var.additional_public_routes) : []
         content {
             cidr_block          = route.value.cidr_block
-            gateway_id          = route.value.gateway_id
+            gateway_id          = route.value.type == "gateway" ? route.value.destination_id : null
+            nat_gateway_id      = route.value.type == "nat" ? route.value.destination_id : null  
         }
+    }
+    route {
+        cidr_block              = "0.0.0.0/0"
+        gateway_id              = aws_internet_gateway.internet_gateway.id
     }
     tags = {
         Name                    = "${var.project}-public-route-${index(var.public_subnets, "${each.value}") + 1}"
