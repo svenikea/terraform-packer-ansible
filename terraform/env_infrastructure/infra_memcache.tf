@@ -17,6 +17,8 @@ module "memcache" {
     elasticache_sg                      = [module.memcache_security_group.id]
     node_family                         = var.node_family
     node_engine                         = var.node_engine
+    region                              = var.region
+    az_mode                             = var.az_mode
     node_version                        = var.node_version
     node_type                           = var.node_type
     num_cache_nodes                     = var.num_cache_nodes
