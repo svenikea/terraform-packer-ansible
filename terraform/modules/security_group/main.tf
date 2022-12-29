@@ -36,11 +36,11 @@ resource "aws_security_group_rule" "ipv4_ingress" {
 }
 
 resource "aws_security_group_rule" "sg_id_ingress" {
-    count                       = var.source_security_groups != null ? 1 : 0
+    count                       = var.source_security_groups != null ? length(var.source_security_groups) : 0
     type                        = "ingress"
     protocol                    = "tcp"
     from_port                   = var.port
     to_port                     = var.port
-    source_security_group_id    = var.source_security_groups
+    source_security_group_id    = var.source_security_groups[count.index]
     security_group_id           = var.source_security_groups != null ? aws_security_group.security_group_name.id : null
 }
