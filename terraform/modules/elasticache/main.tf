@@ -1,23 +1,28 @@
-resource "aws_elasticache_replication_group" "elasticache_replica_group" {
-    automatic_failover_enabled              = true
-    multi_az_enabled                        = true
-    subnet_group_name                       = aws_elasticache_subnet_group.elasticache_subnet.name
-    replication_group_id                    = "${var.project}-elasticache-replica-group-${var.env}"
-    description                             = "Redis Cache"
-    engine                                  = var.cache_engine
-    engine_version                          = var.cache_version
-    node_type                               = "cache.${var.node_class}"
-    num_cache_clusters                      = var.elasticache_cluster_number
+resource "aws_elasticache_cluster" "project_elasticache" {
+    cluster_id                              = "${var.project}-memcache-${var.env}"
+    engine                                  = var.node_engine
+    apply_immediately                       = var.apply_immediately
+    engine_version                          = var.node_version
+    node_type                               = var.node_type
+    num_cache_nodes                         = var.num_cache_nodes
+    az_mode                                 = var.az_mode
     parameter_group_name                    = aws_elasticache_parameter_group.custom_paragroup.name
-    security_group_ids                      = [var.elasticache_sg]
-    port                                    = 6379
+    port                                    = 11211
+    #preferred_availability_zones            = random_shuffle.az.result
+    security_group_ids                      = var.elasticache_sg
+    subnet_group_name                       = aws_elasticache_subnet_group.elasticache_subnet.name
 }
+
+# resource "random_shuffle" "az" {
+#   input                                     = data.aws_availability_zones.filtered_zones.names
+#   result_count                              = var.num_cache_nodes
+# }
 
 resource "aws_elasticache_parameter_group" "custom_paragroup" {
     name                                    = "${var.project}-parameter-group-${var.env}"
-    family                                  = var.cache_family
+    family                                  = var.node_family
     dynamic "parameter" {
-        for_each                            = var.elasticache_parameter_group
+        for_each                            = var.memcache_parameter_group != null ? var.memcache_parameter_group : []
         content {
             name                            = parameter.value.name
             value                           = parameter.value.value

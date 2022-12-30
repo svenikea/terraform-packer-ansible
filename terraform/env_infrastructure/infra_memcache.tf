@@ -1,39 +1,26 @@
-module "elasticache_security_group" {
-    source                      = "../modules/security_group_name"
-
-    project                     = var.project
-    env                         = var.env 
-    vpc_id                      = module.network.vpc_id
-
-    sg_name                     = "elasticache"
+module "memcache_security_group" {
+    source                              = "../modules/security_group"
+    vpc_id                              = data.aws_vpc.vpc_data.id
+    project                             = var.project
+    sg_name                             = "memcache"
+    env                                 = var.env
+    port                                = 11211
+    source_security_groups              = data.aws_security_groups.bastion_security_group.ids
 }
 
-module "elasticache_security_group_ingress_rule" {
-    source                      = "../modules/security_group_ingress"
+module "memcache" {
+    source                              = "../modules/elasticache"
 
-    to_port                     = 6379
-    from_port                   = 6379
-
-    security_group_id           = module.elasticache_security_group.sg_id
-    source_security_groups      = [
-        module.bastion_security_group.sg_id,
-        module.launch_security_group.sg_id
-    ]
-}
-
-module "elasticache" {
-    source                      = "../modules/elasticache"
-
-    project                     = var.project
-    env                         = var.env   
-
-    private_subnets             = module.network.private_subnets
-    elasticache_sg              = module.elasticache_security_group.sg_id
-
-    cache_family                = var.cache_family
-    cache_engine                = var.cache_engine
-    cache_version               = var.cache_version
-    node_class                  = var.node_class
-    elasticache_cluster_number  = var.elasticache_cluster_number
-    elasticache_parameter_group = var.elasticache_parameter_group
+    project                             = var.project
+    env                                 = var.env  
+    private_subnets                     = data.aws_subnets.private_subnets.ids
+    elasticache_sg                      = [module.memcache_security_group.id]
+    node_family                         = var.node_family
+    node_engine                         = var.node_engine
+    region                              = var.region
+    az_mode                             = var.az_mode
+    node_version                        = var.node_version
+    node_type                           = var.node_type
+    num_cache_nodes                     = var.num_cache_nodes
+    memcache_parameter_group            = var.memcache_parameter_group
 }

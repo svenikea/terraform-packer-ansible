@@ -1,12 +1,15 @@
 variable "project" {}
 variable "env" {}
+variable "region" {}
 
 variable "elasticache_sg" {}
 variable "private_subnets" {}
 
-variable "cache_family" {}
-variable "cache_engine" {}
-variable "cache_version" {}
-variable "node_class" {}
-variable "elasticache_cluster_number" {}
-variable "elasticache_parameter_group" {}
+variable "node_family" {}
+variable "node_engine" {}
+variable "apply_immediately" { default = true }
+variable "node_version" {}
+variable "az_mode" {}
+variable "node_type" {}
+variable "num_cache_nodes" {}
+variable "memcache_parameter_group" {}
