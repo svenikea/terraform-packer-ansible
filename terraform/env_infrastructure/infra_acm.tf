@@ -1,15 +1,7 @@
-module "main_site_acm" {
-    source                  = "../modules/acm"
-
-    route53_domain          = "${var.route53_zone}"
-    route53_record          = module.main_stie_route53_acm.route53_current_record
-    route53_cname_status    = module.main_stie_route53_acm.route53_current_record
+module "acm" {
+    source              = "../modules/acm"
+    project_domain      = var.env == "stg" ? "${var.env}.${var.project_domain}" : var.env == "prod" ? "${var.project_domain}" : "${var.project_domain}"
+    validation_method   = "DNS"
+    route53_enable      = var.route53_enable
+    new_acm             = var.new_acm  
 }
-
-# module "cdn_acm" {
-#     source                  = "../modules/acm"
-
-#     route53_domain          = "*.${var.route53_zone}"
-#     route53_record          = module.cdn_route53_acm.route53_current_record
-#     route53_cname_status    = module.cdn_route53_acm.route53_current_record
-# }

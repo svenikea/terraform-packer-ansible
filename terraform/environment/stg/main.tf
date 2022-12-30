@@ -20,4 +20,8 @@ module "env" {
             value   = "128"
         }
     ]
+
+    route53_enable                             = true
+    project_domain                             = var.project_domain
+    new_acm                                    = true
 }
