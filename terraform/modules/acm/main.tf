@@ -14,7 +14,7 @@ resource "aws_route53_record" "current_record" {
     name                      = tolist(aws_acm_certificate.domain_certificate[0].domain_validation_options)[0].resource_record_name
     records                   = [tolist(aws_acm_certificate.domain_certificate[0].domain_validation_options)[0].resource_record_value]
     type                      = tolist(aws_acm_certificate.domain_certificate[0].domain_validation_options)[0].resource_record_type
-    zone_id                   = var.route53_enable != false ? var.zone_id : var.new_acm != false ? var.zone_id : "empty"
+    zone_id                   = var.route53_enable != false ? data.aws_route53_zone.current_zone.id : var.new_acm != false ? data.aws_route53_zone.current_zone.id : "empty"
     ttl                       = 60
 }
 
@@ -45,5 +45,5 @@ resource "aws_acm_certificate_validation" "validate_acm" {
 #     records         = var.route53_enable != null ?  [each.value.record] : null
 #     ttl             = var.route53_enable != null ?  60 : null
 #     type            = var.route53_enable != null ?  each.value.type : null
-#     zone_id         = var.route53_enable != null ?  "${var.zone_id}" : null
+#     zone_id         = var.route53_enable != null ?  "${data.aws_route53_zone.current_zone.id}" : null
 # }
