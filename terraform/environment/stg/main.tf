@@ -23,5 +23,6 @@ module "env" {
 
     route53_enable                             = true
     project_domain                             = var.project_domain
+    project_sub_domain                         = "stg"
     new_acm                                    = true
 }

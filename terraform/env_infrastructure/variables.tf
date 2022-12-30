@@ -10,5 +10,6 @@ variable "az_mode" {}
 variable "num_cache_nodes" {}
 variable "memcache_parameter_group" {}
 variable "project_domain" {}
+variable "project_sub_domain" { default = null }
 variable "new_acm" {}
 variable "route53_enable" {}
