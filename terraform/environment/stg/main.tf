@@ -24,6 +24,7 @@ module "env" {
     route53_enable                              = true
     project_domain                              = var.project_domain
     new_acm                                     = true
+    project_sub_domain                          = "stg"
     
     key_name                                    = "${var.project}-shared"
     instance_type                               = "t2.micro"  

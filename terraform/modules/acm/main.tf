@@ -1,6 +1,6 @@
 resource "aws_acm_certificate" "domain_certificate" {
     count                     = var.route53_enable != false ? 1 : var.new_acm != false ? 1 : 0
-    domain_name               = var.project_domain
+    domain_name               = var.project_sub_domain != null ? "${var.project_sub_domain}.${var.project_domain}" : var.project_domain
     validation_method         = var.validation_method
 
     private_key               = var.validation_method == "NONE" ? var.private_key : null
