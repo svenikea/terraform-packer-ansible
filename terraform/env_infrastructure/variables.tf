@@ -13,3 +13,11 @@ variable "project_domain" {}
 variable "project_sub_domain" { default = null }
 variable "new_acm" {}
 variable "route53_enable" {}
+
+variable "key_name" {}            
+variable "instance_type" {}       
+variable "volume_size" {}     
+variable "volume_type" {}     
+variable "delete_on_termination" {}  
+variable "encrypted" {}        
+variable "iops" {}                      

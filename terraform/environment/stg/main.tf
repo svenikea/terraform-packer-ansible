@@ -21,8 +21,15 @@ module "env" {
         }
     ]
 
-    route53_enable                             = true
-    project_domain                             = var.project_domain
-    project_sub_domain                         = "stg"
-    new_acm                                    = true
+    route53_enable                              = true
+    project_domain                              = var.project_domain
+    new_acm                                     = true
+    
+    key_name                                    = "${var.project}-shared"
+    instance_type                               = "t2.micro"  
+    volume_size                                 = "20"
+    volume_type                                 = "gp2"
+    delete_on_termination                       = true
+    encrypted                                   = true
+    iops                                        = "12000"
 }
