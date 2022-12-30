@@ -7,6 +7,7 @@ variable "private_subnets" {}
 
 variable "node_family" {}
 variable "node_engine" {}
+variable "apply_immediately" { default = true }
 variable "node_version" {}
 variable "az_mode" {}
 variable "node_type" {}

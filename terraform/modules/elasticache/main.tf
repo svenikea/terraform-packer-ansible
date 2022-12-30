@@ -1,6 +1,7 @@
 resource "aws_elasticache_cluster" "project_elasticache" {
     cluster_id                              = "${var.project}-memcache-${var.env}"
     engine                                  = var.node_engine
+    apply_immediately                       = var.apply_immediately
     engine_version                          = var.node_version
     node_type                               = var.node_type
     num_cache_nodes                         = var.num_cache_nodes
