@@ -5,7 +5,7 @@ module "memcache_security_group" {
     sg_name                             = "memcache"
     env                                 = var.env
     port                                = 11211
-    source_security_groups              = data.aws_security_groups.bastion_security_group.ids
+    source_security_groups              = concat(data.aws_security_groups.bastion_security_group.ids,[module.launch_template_security_group.id])
 }
 
 module "memcache" {
