@@ -32,4 +32,22 @@ module "env" {
     delete_on_termination                       = true
     encrypted                                   = true
     iops                                        = "12000"
+
+    autoscale_min_scale_size                    = 2
+    autoscale_max_scale_size                    = 4
+    autoscale_termination_policy                = "NewestInstance"
+    autoscale_target_policy                     = "ASGAverageCPUUtilization"
+    autoscale_health_check_type                 = "ELB"
+    alb_cpu_target                              = 40.0
+    autoscale_health_check_grace_period         = 300
+    autoscale_tags                              = [
+        {
+            key                                 = "ServerType"
+            value                               = "Backend"
+        },
+        {
+            key                                 = "Environment"
+            value                               = "stg"
+        }
+    ]
 }
