@@ -21,7 +21,7 @@ resource "aws_elasticache_parameter_group" "custom_paragroup" {
     name                                    = "${var.project}-parameter-group-${var.env}"
     family                                  = var.node_family
     dynamic "parameter" {
-        for_each                            = var.memcache_parameter_group
+        for_each                            = var.memcache_parameter_group != null ? var.memcache_parameter_group : []
         content {
             name                            = parameter.value.name
             value                           = parameter.value.value
