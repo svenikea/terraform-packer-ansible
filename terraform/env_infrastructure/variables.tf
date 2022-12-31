@@ -20,4 +20,14 @@ variable "volume_size" {}
 variable "volume_type" {}     
 variable "delete_on_termination" {}  
 variable "encrypted" {}        
-variable "iops" {}                      
+variable "iops" {}        
+
+variable "autoscale_tags" {}
+variable "autoscale_min_scale_size" {}
+variable "autoscale_max_scale_size" {}
+variable "autoscale_termination_policy" {}
+variable "autoscale_health_check_type" {}
+variable "autoscale_health_check_grace_period" {}
+variable "loadbalance_target_arn" {}
+variable "autoscale_target_policy" {}
+variable "loadbalance_cpu_target" {}

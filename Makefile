@@ -6,6 +6,12 @@ remote_state:
 master_resource:
 	cd terraform/environment && terragrunt run-all init --terragrunt-include-dir "shared_resource" && terragrunt run-all apply --terragrunt-include-dir "shared_resource" && cd -
 
+staging_resource:
+	cd terraform/environment && terragrunt run-all init --terragrunt-include-dir "stg" && terragrunt run-all apply --terragrunt-include-dir "stg" && cd -
+
+plan_staging_resource:
+	cd terraform/environment && terragrunt run-all init --terragrunt-include-dir "stg" && terragrunt run-all plan --terragrunt-include-dir "stg" && cd -
+
 plan_master_resource:
 	cd terraform/environment && terragrunt run-all init --terragrunt-include-dir "shared_resource" && terragrunt run-all plan --terragrunt-include-dir "shared_resource" && cd -
 
