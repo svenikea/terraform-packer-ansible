@@ -15,6 +15,21 @@ data "aws_subnets" "private_subnets" {
   }
 }
 
+data "aws_subnets" "public_subnets" {
+  filter {
+    name                        = "vpc-id"
+    values                      = [data.aws_vpc.vpc_data.id]
+  }  
+  tags = {
+      Tier                      = "Private"
+  }
+}
+
+data "aws_acm_certificate" "issued" {
+  domain   = "${var.issued_domain}"
+  statuses = ["ISSUED"]
+}
+
 data "aws_security_groups" "bastion_security_group" {
     filter {
       name                  = "tag:Name"

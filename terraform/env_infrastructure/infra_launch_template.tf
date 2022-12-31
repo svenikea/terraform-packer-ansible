@@ -3,6 +3,7 @@ module "launch_template" {
     project                             = var.project
     env                                 = var.env
 
+    device_name                         = data.aws_ami.app_instance_data.root_device_name
     key_name                            = var.key_name
     security_groups                     = [module.launch_template_security_group.id]
     instance_type                       = var.instance_type
@@ -24,7 +25,13 @@ module "launch_template_security_group" {
     env                                 = var.env
     port                                = 22
     source_security_groups              = data.aws_security_groups.bastion_security_group.ids
+}
 
+module "launch_template_security_group_http_ingress" {
+    source                              = "../modules/security_group_ingress"
+    port                                = 80
+    source_security_groups              = ["${module.application_loadbalancer_security_group.id}"]
+    security_group_id                   = module.launch_template_security_group.id
 }
 
 module "launch_template_role" {
