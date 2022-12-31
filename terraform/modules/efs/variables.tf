@@ -4,5 +4,5 @@ variable "env" {}
 variable "private_subnets" { default = null }
 
 variable "efs_performance_mode" {}
-variable "efs_sg" {}
+variable "security_groups" {}
 variable "efs_throughput_mode" {}

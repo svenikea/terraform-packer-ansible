@@ -53,4 +53,7 @@ module "env" {
     ]
 
     issued_domain                               = "stg.${var.project_domain}"
+
+    efs_performance_mode                        = "generalPurpose"
+    efs_throughput_mode                         = "bursting"
 }
