@@ -33,6 +33,8 @@ inputs = {
     devops_iam_users    = ["devops_1", "devops_2"]
     develop_group_name  = "develops"
     devops_group_name   = "devops"
+    new_acm             = true
+    route53_enable      = true
     public_ip           = run_cmd("/usr/bin/dig", "+short", "myip.opendns.com", "@resolver1.opendns.com")       # <= For Mac/Linux Users
     #public_ip           = trim(run_cmd("dig", "+short", "myip.opendns.com", "@resolver1.opendns.com"), "\r")   # <= For Windows Users
 }

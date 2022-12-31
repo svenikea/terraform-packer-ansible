@@ -9,3 +9,6 @@ variable "devops_group_name" {}
 variable "devops_iam_users" { type = list(string) }  
 variable "develop_group_name" {}  
 variable "develop_iam_users" { type = list(string) }  
+variable "project_domain" {}
+variable "new_acm" {}
+variable "route53_enable" {}
