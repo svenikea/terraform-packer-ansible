@@ -11,4 +11,7 @@ module "shared_resource" {
     devops_iam_users                = var.devops_iam_users
     develop_group_name              = var.develop_group_name
     develop_iam_users               = var.develop_iam_users
+    project_domain                  = var.project_domain
+    new_acm                         = var.new_acm
+    route53_enable                  = var.route53_enable
 }

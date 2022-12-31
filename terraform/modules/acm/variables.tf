@@ -1,5 +1,5 @@
 variable "project_domain" { default = null }
-variable "project_sub_domain" {}
+variable "project_sub_domain" { default = null }
 variable "validation_method" { default = null }
 variable "certificate_chain" { default = null }
 variable "private_key" { default = null }

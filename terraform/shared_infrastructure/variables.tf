@@ -14,3 +14,6 @@ variable "devops_group_name" {}
 variable "develop_iam_users" {}
 variable "develop_group_name" {}
 variable "devops_iam_users" {}
+variable "project_domain" {}
+variable "route53_enable" {}
+variable "new_acm" {}
