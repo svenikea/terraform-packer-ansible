@@ -1,11 +1,11 @@
 resource "aws_rds_cluster" "aurora_cluster" {
     cluster_identifier      = "aurora-cluster-${var.project}-${var.env}"
-    engine                  = "aurora-${var.aurora_engine}"
-    engine_version          = var.aurora_engine_version
-    master_username         = var.aurora_user
+    engine                  = "aurora-${var.engine}"
+    engine_version          = var.engine_version
+    master_username         = var.master_username
     master_password         = random_string.aurora_password.result
-    database_name           = var.aurora_database_name
-    vpc_security_group_ids  = [var.aurora_sg]
+    database_name           = var.database_name
+    vpc_security_group_ids  = var.vpc_security_group_ids
     db_subnet_group_name    = aws_db_subnet_group.aurora_subnet.id
     skip_final_snapshot     = true
     backup_retention_period = var.backup_retention_period
@@ -13,10 +13,10 @@ resource "aws_rds_cluster" "aurora_cluster" {
 }
 
 resource "aws_rds_cluster_instance" "aurora_instance" {
-    count                   = var.aurora_instance_number
+    count                   = var.instance_number
     identifier              = "${var.project}-aurora-${var.env}-${count.index+1}"
     cluster_identifier      = aws_rds_cluster.aurora_cluster.id
-    instance_class          = "db.${var.aurora_instance_class}"
+    instance_class          = "db.${var.instance_class}"
     engine                  = aws_rds_cluster.aurora_cluster.engine
     engine_version          = aws_rds_cluster.aurora_cluster.engine_version
     db_parameter_group_name = aws_db_parameter_group.aurora_parameter_group.name
@@ -38,9 +38,9 @@ resource "random_string" "aurora_password" {
 
 resource "aws_db_parameter_group" "aurora_parameter_group" {
     name                    = "${var.project}-aurora-pg-${var.env}"
-    family                  = "aurora-${var.aurora_engine}5.7"
+    family                  = "aurora-${var.engine}5.7"
     dynamic "parameter" {
-        for_each            = var.aurora_parameter_group
+        for_each            = var.parameter_group
         content {
             name            = parameter.value.name
             value           = parameter.value.value 
