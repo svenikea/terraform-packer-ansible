@@ -43,12 +43,12 @@ data "aws_security_groups" "bastion_security_group" {
 
 data "aws_ami" "app_instance_data"{
     most_recent                 = true
-    #owners                      = ["self"]
-    owners                      = ["amazon"]
+    owners                      = ["self"]
+    #owners                      = ["amazon"]
     filter {
         name                    = "name"
-        #values                  = ["app-ami-gold"]
-        values                  = ["amzn2-ami-hvm-*"]
+        values                  = ["app-ami-gold"]
+        #values                  = ["amzn2-ami-hvm-*"]
     }
     filter {
         name                    = "architecture"
