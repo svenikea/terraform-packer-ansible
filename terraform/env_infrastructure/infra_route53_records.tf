@@ -5,8 +5,8 @@ module "main_site_route53_record" {
     record_type                 = "A"
     aliases                     = [
         {
-            name                    = module.loadbalance.alb_endpoint
-            endpoint_zone_id        = module.loadbalance.alb_zone_id
+            name                    = module.loadbalance.endpoint
+            endpoint_zone_id        = module.loadbalance.zone_id
         } 
     ]
 }
