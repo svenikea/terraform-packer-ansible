@@ -56,4 +56,44 @@ module "env" {
 
     efs_performance_mode                        = "generalPurpose"
     efs_throughput_mode                         = "bursting"
+
+    instance_class                              = "t3.small"
+    engine                                      = "mysql"
+    instance_number                             = 2
+    engine_version                              = "5.7"
+    backup_retention_period                     = 1
+
+    random_string_length                        = 12
+    master_username                             = "admin"
+    database_name                               = "aurora"
+    parameter_group                             = [
+    {
+        name    = "log_output"
+        value   = "FILE"
+    },
+    {
+        name    = "log_warnings"
+        value   = "2"
+    },
+    {
+        name    = "slow_query_log"
+        value   = "1"
+    },
+    {
+        name    = "log_queries_not_using_indexes"
+        value   = "1"
+    },
+    {
+        name    = "long_query_time"
+        value   = "5"
+    },
+    {
+        name    = "general_log"
+        value   = "1"
+    },
+    {
+        name    = "innodb_lock_wait_timeout"
+        value   = "50"
+    }
+]
 }

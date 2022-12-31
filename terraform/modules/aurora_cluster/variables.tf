@@ -1,15 +1,14 @@
 variable "project" {}
 variable "env" {}
 
-variable "aurora_instance_class" {}
-variable "aurora_instance_number" {}
-variable "aurora_engine" {}
-variable "aurora_engine_version" {}
-variable "aurora_user" {}
+variable "instance_class" {}
+variable "instance_number" {}
+variable "engine" {}
+variable "engine_version" {}
+variable "master_username" {}
 variable "private_subnets" {}
-variable "aurora_parameter_group" {}
-variable "aurora_vpc_id" {}
+variable "parameter_group" {}
 variable "backup_retention_period" {}
-variable "aurora_database_name" {}
-variable "aurora_sg" {}
+variable "database_name" {}
+variable "vpc_security_group_ids" {}
 variable "random_string_length" {}
