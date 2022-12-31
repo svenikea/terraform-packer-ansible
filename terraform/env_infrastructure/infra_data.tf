@@ -191,3 +191,8 @@ data "aws_iam_policy_document" "launch_template_role" {
     }
   }
 }
+
+data "aws_route53_zone" "current_zone" {
+  name         = "${var.project_domain}"
+  private_zone = false
+}
