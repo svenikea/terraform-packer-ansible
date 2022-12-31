@@ -1,5 +1,5 @@
 resource "aws_autoscaling_group" "autoscale_app" {
-    name                        = "${var.project}-autoscale-group-${var.env}"
+    name_prefix                 = "${var.project}-autoscale-group-${var.env}"
     vpc_zone_identifier         = var.private_subnets
     launch_template {
         id                      = var.launch_template_id
@@ -19,11 +19,14 @@ resource "aws_autoscaling_group" "autoscale_app" {
             propagate_at_launch = true
         }
     }
+    lifecycle {
+        create_before_destroy = true
+    }
 }
 
 resource "aws_autoscaling_attachment" "asg_attachment" {
     autoscaling_group_name      = aws_autoscaling_group.autoscale_app.id
-    lb_target_group_arn         = "ss"
+    lb_target_group_arn         = var.loadbalance_target_arn
 }
 
 resource "aws_autoscaling_policy" "scale_policty" {

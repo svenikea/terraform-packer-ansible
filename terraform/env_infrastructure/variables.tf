@@ -28,6 +28,6 @@ variable "autoscale_max_scale_size" {}
 variable "autoscale_termination_policy" {}
 variable "autoscale_health_check_type" {}
 variable "autoscale_health_check_grace_period" {}
-variable "loadbalance_target_arn" {}
 variable "autoscale_target_policy" {}
 variable "loadbalance_cpu_target" {}
+variable "issued_domain" {}

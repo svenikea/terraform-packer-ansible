@@ -15,3 +15,4 @@ variable "image_id" {}
 variable "user_data" { default = null }
 variable "default_version" { default = null }
 variable "update_default_version" { default = null }
+variable "device_name" {}

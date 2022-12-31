@@ -29,10 +29,10 @@ module "env" {
     key_name                                    = "${var.project}-shared"
     instance_type                               = "t2.micro"  
     volume_size                                 = "20"
-    volume_type                                 = "gp2"
+    volume_type                                 = "gp3"
     delete_on_termination                       = true
     encrypted                                   = true
-    iops                                        = "12000"
+    iops                                        = "3000"
 
     autoscale_min_scale_size                    = 2
     autoscale_max_scale_size                    = 4
@@ -51,4 +51,6 @@ module "env" {
             value                               = "stg"
         }
     ]
+
+    issued_domain                               = "stg.${var.project_domain}"
 }

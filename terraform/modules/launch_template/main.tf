@@ -5,7 +5,7 @@ resource "aws_launch_template" "ec2_launch_template" {
     update_default_version      = var.update_default_version != null ? var.update_default_version : null
     default_version             = var.default_version != null ? var.default_version : null
     block_device_mappings {
-      #device_name               = var.device_name
+      device_name               = var.device_name
       ebs {
         volume_size             = var.volume_size
         volume_type             = var.volume_type
