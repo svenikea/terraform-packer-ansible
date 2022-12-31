@@ -12,8 +12,8 @@ module "autoscale" {
     autoscale_termination_policy            = var.autoscale_termination_policy
     autoscale_health_check_type             = var.autoscale_health_check_type
     autoscale_health_check_grace_period     = var.autoscale_health_check_grace_period
-    alb_target_arn                          = module.loadbalance.target_group_arn
+    loadbalance_target_arn                  = module.loadbalance.target_group_arn
     autoscale_target_policy                 = var.autoscale_target_policy
-    alb_cpu_target                          = var.alb_cpu_target
+    loadbalance_cpu_target                  = var.loadbalance_cpu_target
     tags                                    = var.autoscale_tags
 }

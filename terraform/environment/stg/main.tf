@@ -38,7 +38,7 @@ module "env" {
     autoscale_termination_policy                = "NewestInstance"
     autoscale_target_policy                     = "ASGAverageCPUUtilization"
     autoscale_health_check_type                 = "ELB"
-    alb_cpu_target                              = 40.0
+    loadbalance_cpu_target                      = 40.0
     autoscale_health_check_grace_period         = 300
     autoscale_tags                              = [
         {

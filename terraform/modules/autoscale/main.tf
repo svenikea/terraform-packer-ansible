@@ -34,6 +34,6 @@ resource "aws_autoscaling_policy" "scale_policty" {
         predefined_metric_specification {
             predefined_metric_type = var.autoscale_target_policy
         } 
-        target_value            = var.alb_cpu_target
+        target_value            = var.loadbalance_cpu_target
     }
 }
