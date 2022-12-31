@@ -31,3 +31,6 @@ variable "autoscale_health_check_grace_period" {}
 variable "autoscale_target_policy" {}
 variable "loadbalance_cpu_target" {}
 variable "issued_domain" {}
+
+variable "efs_performance_mode" {}
+variable "efs_throughput_mode" {}
