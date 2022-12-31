@@ -25,6 +25,10 @@ data "aws_subnets" "public_subnets" {
   }
 }
 
+data "aws_s3_bucket" "shared_bucket" {
+  bucket = "${var.project}-wordpress-storage-shared"
+}
+
 data "aws_acm_certificate" "issued" {
   domain   = "${var.issued_domain}"
   statuses = ["ISSUED"]

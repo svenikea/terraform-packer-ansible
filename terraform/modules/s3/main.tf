@@ -1,10 +1,10 @@
 resource "aws_s3_bucket" "s3_bucket" {
     count                   = var.bucket_names != null ? 1 : 0
-    bucket                  = "${var.project}-${var.bucket_names}-${var.env}"
+    bucket                  = "${var.bucket_names}-${var.env}"
     force_destroy           = true
     tags = {
         Terraform           = true
-        Name                = "${var.project}-${var.bucket_names}-${var.env}"
+        Name                = "${var.bucket_names}-${var.env}"
         Env                 = var.env
     }
 }
@@ -19,7 +19,7 @@ resource "aws_s3_object" "object_key" {
 resource "aws_s3_bucket_lifecycle_configuration" "s3_lifecycle" {
     bucket                  = aws_s3_bucket.s3_bucket[0].bucket
     rule {
-        id                  = "${var.project}-${var.bucket_names}-${var.env}-lifecycle"
+        id                  = "${var.bucket_names}-${var.env}-lifecycle"
         status              = "Enabled"
         transition {
             days            = 30
