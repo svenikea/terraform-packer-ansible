@@ -34,6 +34,8 @@ module "env" {
     encrypted                                   = true
     iops                                        = "3000"
 
+    idle_timeout                                = 120
+
     autoscale_min_scale_size                    = 2
     autoscale_max_scale_size                    = 4
     autoscale_termination_policy                = "NewestInstance"

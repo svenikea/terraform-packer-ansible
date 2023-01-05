@@ -4,7 +4,7 @@ resource "aws_lb" "application" {
     load_balancer_type          = "application"
     security_groups             = var.security_groups
     subnets                     = var.subnet_ids
-    idle_timeout                = 60
+    idle_timeout                = var.idle_timeout
     # Make sure that the replacement object is created first before deleting
     # lifecycle {
     #     create_before_destroy   = true 

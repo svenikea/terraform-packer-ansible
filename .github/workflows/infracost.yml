@@ -13,7 +13,7 @@ jobs:
       pull-requests: write
 
     env:
-      TF_ROOT: terraform
+      TF_ROOT: terraform/environment
 
     steps:
       - name: Setup Infracost
