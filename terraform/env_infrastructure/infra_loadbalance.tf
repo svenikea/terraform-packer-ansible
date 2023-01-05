@@ -27,6 +27,7 @@ module "loadbalance" {
     env                                     = var.env
     port                                    = "80" 
     protocol                                = "HTTP"
+    idle_timeout                            = var.idle_timeout
     vpc_id                                  = data.aws_vpc.vpc_data.id
     security_groups                         = [module.application_loadbalancer_security_group.id]
     subnet_ids                              = data.aws_subnets.public_subnets.ids

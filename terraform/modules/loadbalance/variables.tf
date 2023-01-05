@@ -12,3 +12,4 @@ variable "protocol" {}
 variable "target_type" { default = "instance" }
 variable "health_check" { default = null }
 variable "loadbalance_listeners" { default = null }
+variable "idle_timeout" { default = 60 }
