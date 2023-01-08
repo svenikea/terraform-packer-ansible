@@ -1,38 +1,33 @@
 # Architecture 
 !["architect"](./images/wordpress-on-aws.png)
 
-# Deploy procedure
-* ### Step 1
-Deploy Networking and database 
+# Tech stack
 
-* ### Step 2
-Build AMI with packer
+* Ansible 
+* Terraform
+* Packer
+* Terragrunt
 
-* ### Step 3
-Deploy EC2, ALB and Autoscale 
+# Deploy the project 
 
-# Terraform commands
-## Apply a specific target 
+* Run the simple `Makefile` command
 
-```bash
-terraform apply -target RESOURCE_TYPE.RESOURCE_NAME --auto-approve
+```
+make all
 ```
 
-## Destroy a specific target 
+> This will produce the following tasks:
+ * Create a custom AMI
+ * Create remote state storage for terraform
+ * Create master resources liek VPC, Subnet, Security groups, etc...
 
-```bash
-terraform destroy -target RESOURCE_TYPE.RESOURCE_NAME --auto-approve
-```
+# Known Issues
 
-## Show All state 
+* The first known issue shared content with EFS like this [issue](https://github.com/aws-samples/aws-refarch-wordpress/issues/68) on github. EFS is for high availability scalable content, EFS is not well suitable for hosting your website, a better solution is to use an S3 Bucket. However, you can get around with this issue by changing the idle timeout of the application loadbalancer and cloudfront configuration as well as using [unison](https://github.com/aws-samples/aws-refarch-wordpress/issues/68#issuecomment-1118835350) 
 
-```bash
-terraform state list
-```
+# Future work
 
-## Show a specific state
-
-```bash
-terraform state show RESOURCE_TYPE.RESOURCE_NAME
-```
+* Design and implement CI/CD Pipeline 
+* Better monitoring with cloudwatch
+* Redesign Packer `HCL` config
 
