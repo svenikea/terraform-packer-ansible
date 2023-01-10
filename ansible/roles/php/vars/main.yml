@@ -1,16 +1,16 @@
 deb_php_packages:
-  - curl
-  - fpm
-  - mysql
-  - curl
-  - gd
-  - intl
-  - mbstring
-  - soap
-  - xml
-  - xmlrpc
-  - zip
-  - redis
+  - -curl
+  - -fpm
+  - -mysql
+  - -curl
+  - -gd
+  - -intl
+  - -mbstring
+  - -soap
+  - -xml
+  - -xmlrpc
+  - -zip
+  - -redis
 
 rpm_php_packages:
   - curl

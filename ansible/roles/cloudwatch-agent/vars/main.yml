@@ -1,3 +1,4 @@
 amazon_cloudwatch_package: "amazon-cloudwatch-agent"
-rpm_cloudwatch_package: "https://s3.amazonaws.com/amazoncloudwatch-agent/{{ ansible_facts['distribution'] }}/amd64/latest/amazon-cloudwatch-agent.rpm"
-deb_cloudwatch_package: "https://s3.amazonaws.com/amazoncloudwatch-agent/{{ ansible_facts['distribution'] }}/amd64/latest/amazon-cloudwatch-agent.deb"
+package_id: "{{  }}"
+rpm_cloudwatch_package: "https://s3.amazonaws.com/amazoncloudwatch-agent/{{ ansible_facts['distribution'] | lower }}/amd64/latest/amazon-cloudwatch-agent.rpm"
+deb_cloudwatch_package: "https://s3.amazonaws.com/amazoncloudwatch-agent/{{ ansible_facts['distribution'] | lower }}/amd64/latest/amazon-cloudwatch-agent.deb"
