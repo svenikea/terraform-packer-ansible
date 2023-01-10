@@ -77,4 +77,4 @@
   ansible.builtin.file:
     path: /etc/nginx/sites-enabled/default
     state: absent
-  notify: Retart Nginx Service
+  notify: Restart Nginx Service
