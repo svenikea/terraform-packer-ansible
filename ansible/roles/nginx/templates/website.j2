@@ -2,7 +2,7 @@ server {
     listen      80;
     listen      [::]:80;
     server_name localhost;
-    set         $base {{ nginx_root_path }};
+    set         $base {{ nginx_folder[0] }};
     root        $base;
 
     # security

@@ -1,5 +1,5 @@
 - name: Start PHP-FPM Service
-  service:
+  ansible.builtin.service:
     name: "{{ php_version }}-fpm"
     state: started
-    enabled: yes
+    enabled: true

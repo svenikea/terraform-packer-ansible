@@ -10,3 +10,5 @@ nginx_configs:
   - { src: "php_fastcgi.j2", dest: "{{ nginx_folder[1] }}/php_fastcgi.conf" }
   - { src: "wordpress.j2", dest: "{{ nginx_folder[1] }}/wordpress.conf" }
   - { src: "w3tc.j2", dest: "{{ nginx_folder[1] }}/w3tc.conf" }
+
+nginx_user: "{{ 'www-data' if ansible_facts['os_family'] == 'Debian' else 'nginx' }}"

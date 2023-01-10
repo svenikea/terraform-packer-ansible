@@ -1,37 +1,21 @@
-- name: Create {{ deploy_user }} user 
-  user:
-    name: "{{ deploy_user }}"
-    group: "{{ deploy_group }}"
-    state: present
-    shell: /bin/bash
-    append: yes
-    create_home: yes
-
-- name: Allow passwordless {{ deploy_user }} 
-  lineinfile:
-    path: /etc/sudoers
-    line: "%{{ deploy_user }} ALL=(ALL:ALL) NOPASSWD: ALL"
-    state: present
-    validate: "/usr/sbin/visudo -cf %s"
-
-- name: Installing base packages 
-  apt:
+- name: Installing base packages
+  when: ansible_facts['os_family'] == "Debian"
+  ansible.builtin.apt:
     name: "{{ item }}"
     state: present
-    update_cache: yes
+    update_cache: true
   loop: "{{ base_apt_packages }}"
-  when: ansible_facts['distribution'] == "Ubuntu"
 
-- name: Installing base packages 
-  yum:
+- name: Installing base packages
+  when: ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS"
+  ansible.builtin.yum:
     name: "{{ item }}"
     state: present
-    update_cache: yes
+    update_cache: true
   loop: "{{ base_yum_packages }}"
-  when: ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS"
 
 - name: Copying chrony template
-  template:
+  ansible.builtin.template:
     src: chrony.j2
     dest: "{{ chrony_path }}"
     owner: root
@@ -39,18 +23,18 @@
     mode: "644"
 
 - name: Start services
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     state: started
-    enabled: yes
+    enabled: true
   loop: "{{ service_name }}"
 
 - name: Remove /etc/localtime
-  file:
+  when: ansible_facts['distribution'] == "CentOS" or ansible_facts['distribution'] == "Amazon"
+  ansible.builtin.file:
     path: /etc/localtime
     state: absent
-  when: ansible_facts['distribution'] == "CentOS" or ansible_facts['distribution'] == "Amazon"
 
 - name: Set timezone to {{ time_zone }}
-  timezone:
+  community.general.system.timezone:
     name: "{{ time_zone }}"
