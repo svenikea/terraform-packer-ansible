@@ -1,19 +1,63 @@
-- name: Installing Nginx
-  apt:
+- name: Instaling Nginx
+  when: ansible_facts['distribution'] == "CentOS" or ansible_facts['distribution'] == "Fedora"
+  ansible.builtin.yum:
     name: nginx
+    update_cache: true
     state: present
 
-- name: "Nginx Folders"
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: www-data 
-    group: www-data 
-    mode: "755"
-  loop: "{{ nginx_folder }}"
+- name: Instaling Nginx
+  when: ansible_facts['distribution'] == "Amazon"
+  block:
+    - name: Installing linux extras
+      ansible.builtin.yum:
+        name: amazon-linux-extras
+        update_cache: true
+        state: present
+
+    - name: Enabling nginx extras
+      ansible.builtin.command: amazon-linux-extras enable nginx1
+      changed_when: false
+
+    - name: Cleaning metadata
+      ansible.builtin.command: yum clean metadata
+      changed_when: false
+
+    - name: Installing Nginx
+      ansible.builtin.yum:
+        name: nginx
+        update_cache: true
+        state: present
+
+    - name: "Nginx Folders"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "755"
+      loop: "{{ nginx_folder }}"
+
+
+- name: Installing Nginx
+  when: ansible_facts['os_family'] == "Debian"
+  block:
+    - name: Install Nginx
+      ansible.builtin.apt:
+        name: nginx
+        update_cache: true
+        state: present
+
+    - name: "Nginx Folders"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: "755"
+      loop: "{{ nginx_folder }}"
 
 - name: Main Nginx Config
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -30,8 +74,7 @@
 #     state: link
 
 - name: Remove The Defaut Website
-  file:
+  ansible.builtin.file:
     path: /etc/nginx/sites-enabled/default
     state: absent
   notify: Retart Nginx Service
-

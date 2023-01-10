@@ -1,19 +1,24 @@
 - name: Installing CloudWatchAgent
-  apt:
-    deb: "{{ cloudwatch_package }}"
+  ansible.builtin.apt:
+    deb: "{{ deb_cloudwatch_package }}"
     state: present
-  when: ansible_facts['distribution'] == "Ubuntu"
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Installing CloudWatchAgent
-  yum:
-    name: "{{ cloudwatch_package }}"
+  ansible.builtin.yum:
+    name: "{{ amazon_cloudwatch_package }}"
     state: present
   when: ansible_facts['distribution'] == "Amazon"
 
+- name: Installing CloudWatchAgent
+  ansible.builtin.yum:
+    name: "{{ rpm_cloudwatch_package }}"
+    state: present
+  when: ansible_facts['os_family'] == "Redhat"
+
 - name: Copying CoudWatch config
-  template:
+  ansible.builtin.template:
     src: cloudwatch.j2
     dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
     mode: "644"
   notify: Enable Cloudwatch Agent
-  tags: debug

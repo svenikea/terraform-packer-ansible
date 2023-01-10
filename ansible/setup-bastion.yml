@@ -1,6 +1,7 @@
-- hosts: bastion_role
-  become: yes
-  gather_facts: yes
+- name: Bastion Ansible
+  hosts: bastion_role
+  become: true
+  gather_facts: true
   roles:
     - base
     - aws-cli

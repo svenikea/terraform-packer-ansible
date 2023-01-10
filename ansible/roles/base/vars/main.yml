@@ -49,8 +49,7 @@ base_yum_packages:
   - unzip
   - telnet
   - logrotate
-  - mysql
-  - vim 
+  - vim
   - redis
   - curl
   - acl

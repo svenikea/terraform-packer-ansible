@@ -1,5 +1,5 @@
 - name: Enable Cloudwatch Agent
-  service:
+  ansible.builtin.service:
     name: amazon-cloudwatch-agent
+    enabled: true
     state: stopped
-    enabled: yes

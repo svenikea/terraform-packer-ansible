@@ -1,11 +1,11 @@
-- hosts: app_role
-  become: yes
-  gather_facts: yes
+- name: Backend Ansible
+  hosts: app_role
+  become: true
+  gather_facts: true
   roles:
     - base
     - aws-cli
     - nginx
     - efs
     - php
-    - wordpress
     - cloudwatch-agent

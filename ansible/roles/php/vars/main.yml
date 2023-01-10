@@ -1,17 +1,27 @@
-php_packages: 
-  - -curl 
-  - -fpm 
-  - -mysql 
-  - -curl 
-  - -gd 
-  - -intl 
-  - -mbstring 
-  - -soap 
-  - -xml 
-  - -xmlrpc 
-  - -zip
-  - -redis
+deb_php_packages:
+  - curl
+  - fpm
+  - mysql
+  - curl
+  - gd
+  - intl
+  - mbstring
+  - soap
+  - xml
+  - xmlrpc
+  - zip
+  - redis
 
-  
-
-
+rpm_php_packages:
+  - curl
+  - fpm
+  - mysqlnd
+  - curl
+  - gd
+  - intl
+  - mbstring
+  - soap
+  - xml
+  - xmlrpc
+  - zip
+  - redis
