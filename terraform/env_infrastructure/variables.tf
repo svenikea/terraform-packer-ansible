@@ -44,3 +44,5 @@ variable "parameter_group" {}
 variable "backup_retention_period" {}
 variable "database_name" {}
 variable "random_string_length" {}
+
+variable "idle_timeout" {}
