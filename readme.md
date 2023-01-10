@@ -30,4 +30,4 @@ make all
 * Design and implement CI/CD Pipeline 
 * Better monitoring with cloudwatch
 * Redesign Packer `HCL` config
-
+* Refractor Ansible code
