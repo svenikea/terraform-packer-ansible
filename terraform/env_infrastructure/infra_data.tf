@@ -47,7 +47,7 @@ data "aws_ami" "app_instance_data"{
     #owners                      = ["amazon"]
     filter {
         name                    = "name"
-        values                  = ["app-ami-gold"]
+        values                  = ["php-ami-gold"]
         #values                  = ["amzn2-ami-hvm-*"]
     }
     filter {
