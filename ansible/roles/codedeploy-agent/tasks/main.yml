@@ -1,0 +1,10 @@
+- name: Get Codedeploy agent from S3
+  ansible.builtin.get_url:
+    uri: https://aws-codedeploy-{{ aws_region }}.s3.{{ aws_region }}.amazonaws.com/latest/install
+    dest: /home/{{ ansible_user }}/install
+    mode: 775
+
+- name: Install Codedeploy
+  ansible.builtin.shell: /home/{{ ansible_user }}/install auto
+  notify: Enable CodeDeploy Agent
+  changed_when: false
