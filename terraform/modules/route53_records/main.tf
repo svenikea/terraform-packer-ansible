@@ -13,6 +13,7 @@ resource "aws_route53_record" "records" {
         evaluate_target_health  = true     
       }
     }
+    set_identifier              = "${var.name}-${var.weighted_routing_policy != null ? "weighted-policy" :  var.latency_routing_policy != null ? "latency-policy" : var.geolocation_routing_policy != null ? "geolocation-policy" : var.failover_routing_policy != null ? "failover-policy" : null}"
     dynamic "weighted_routing_policy" {
         for_each                = var.weighted_routing_policy != null ? var.weighted_routing_policy : []
         content {
