@@ -20,6 +20,7 @@ jobs:
         uses: infracost/actions/setup@v2
         with:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
+          version: 0.10.15
 
       # Checkout the base branch of the pull request (e.g. main/master).
       - name: Checkout base branch
