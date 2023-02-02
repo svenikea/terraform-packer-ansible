@@ -12,3 +12,4 @@ variable "subnet_id" {}
 variable "delete_on_termination" { default = null }
 variable "encrypted" { default = null }
 variable "public_key" {}
+variable "user_data" { default = null }
