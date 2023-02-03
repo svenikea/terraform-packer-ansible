@@ -36,5 +36,6 @@
     state: absent
 
 - name: Set timezone to {{ time_zone }}
-  community.general.system.timezone:
+  community.general.timezone:
     name: "{{ time_zone }}"
+  ignore_errors: "{{ ansible_check_mode }}"
