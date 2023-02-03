@@ -1,0 +1,46 @@
+on: 
+  pull_request:
+    paths:
+      - ansible/**
+jobs:
+  ansible-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout base branch
+        uses: actions/checkout@v3
+        with:
+          ref: '${{ github.event.pull_request.base.ref }}'
+      
+      - name: Run ansible-lint on bastion playbook
+        uses: ansible/ansible-lint-action@main
+        with:
+          path: "ansible/setup-bastion.yml"
+
+      - name: Run ansible-lint on app playbook
+        uses: ansible/ansible-lint-action@main
+        with:
+          path: "ansible/setup-app.yml"
+      
+  ansible-run:
+    runs-on: ubuntu-latest
+    container:
+      image: amazonlinux:latest
+    steps:
+      - name: Execute bastion playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: setup-bastion.yml
+          directory: ansible/
+          options: |
+            --inventory dev
+            --verbose
+
+      - name: Execute app playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: setup-app.yml
+          directory: ansible/
+          options: |
+            --inventory dev
+            --verbose
+    
