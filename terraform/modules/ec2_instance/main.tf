@@ -20,6 +20,7 @@ resource "aws_instance" "instance" {
         Terraform           = true
         Type                = var.instance_name
     } 
+    user_data               = var.user_data
 }
 
 resource "aws_key_pair" "name" {

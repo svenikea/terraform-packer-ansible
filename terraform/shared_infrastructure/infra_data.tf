@@ -23,12 +23,12 @@ data "aws_ip_ranges" "service_ip" {
 
 data "aws_ami" "bastion_instance_data"{
     most_recent                 = true
-    #owners                      = ["self"]
-    owners                      = ["amazon"]
+    owners                      = ["self"]
+    #owners                      = ["amazon"]
     filter {
         name                    = "name"
-        #values                  = ["bastion-ami-gold"]
-        values                  = ["amzn2-ami-hvm-*"]
+        values                  = ["bastion-ami-gold"]
+        #values                  = ["amzn2-ami-hvm-*"]
     }
     filter {
         name                    = "architecture"

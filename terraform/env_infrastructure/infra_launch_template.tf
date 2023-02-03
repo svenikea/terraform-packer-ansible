@@ -15,6 +15,11 @@ module "launch_template" {
     iops                                = var.iops
     image_id                            = data.aws_ami.app_instance_data.id
     instance_profile_name               = module.launch_template_role.profile_name
+
+    user_data                           = <<EOF
+        #!/bin/bash
+        systemctl start nginx
+    EOF
 }
 
 module "launch_template_security_group" {
