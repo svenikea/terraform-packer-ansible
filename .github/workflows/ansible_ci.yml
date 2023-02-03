@@ -22,6 +22,7 @@ jobs:
           path: "ansible/setup-app.yml"
       
   ansible-run:
+    needs: ansible-lint
     runs-on: ubuntu-latest
     container:
       image: amazonlinux:latest
