@@ -28,7 +28,7 @@ jobs:
       image: amazonlinux:latest
     steps:
       - name: Execute bastion playbook
-        uses: ansible/ansible-lint-action@v6
+        uses: ansible/ansible-lint-action@v6.11.0
         with:
           playbook: setup-bastion.yml
           directory: ansible/
