@@ -1,0 +1,5 @@
+- name: Enable CodeDeploy Agent
+  ansible.builtin.service:
+    name: codedeploy-agent
+    enabled: true
+    state: stopped

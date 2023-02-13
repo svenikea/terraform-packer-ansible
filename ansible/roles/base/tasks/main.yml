@@ -39,3 +39,5 @@
   community.general.timezone:
     name: "{{ time_zone }}"
   ignore_errors: "{{ ansible_check_mode }}"
+  tags:
+    - skip_ansible_lint
