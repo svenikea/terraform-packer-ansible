@@ -197,6 +197,10 @@ data "aws_iam_policy_document" "launch_template_role" {
 }
 
 data "aws_route53_zone" "current_zone" {
-  name         = "${var.project_domain}"
-  private_zone = false
+  name              = "${var.project_domain}"
+  private_zone      = false
+}
+
+data "aws_iam_role" "codedeploy_role" {
+  name              = "${var.project}-shared-CodeDeployServiceRole"
 }

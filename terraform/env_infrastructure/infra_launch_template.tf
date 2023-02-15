@@ -47,4 +47,9 @@ module "launch_template_role" {
     instance_profile                    = "launch_template"
     assume_role_policy                  = data.aws_iam_policy_document.launch_template_role.json
     inline_role_policies                = data.aws_iam_policy_document.launch_template_policy.json
+    attach_role_policies                = [
+        "arn:aws:iam::aws:policy/AWSCodeCommitReadOnly",
+        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforAWSCodeDeploy"
+    ]
 }
