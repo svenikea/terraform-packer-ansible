@@ -10,5 +10,5 @@ module "codedeploy_service_role" {
     project                             = var.project
     env                                 = var.env
     assume_role_policy                  = data.aws_iam_policy_document.codedeploy_service_role.json
-    attach_role_policies                = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+    attach_role_policies                = ["arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"]
 }

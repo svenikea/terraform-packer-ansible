@@ -14,7 +14,7 @@ resource "aws_codedeploy_deployment_group" "deploy_group" {
         }
     } 
     dynamic "auto_rollback_configuration" {
-        for_each            = var.auto_rollback_configuration == true ? toset(var.auto_rollback_configuration) : []
+        for_each            = var.auto_rollback_configuration == true ? toset(["${var.auto_rollback_configuration}"]) : []
         content {
             enabled         = true
             events          = ["DEPLOYMENT_FAILURE"]

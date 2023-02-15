@@ -1,6 +1,6 @@
 module "codedeploy_group" {
     source                          = "../modules/codedeploy_group"
-    app_name                        = var.app_name
+    app_name                        = var.project
     env                             = var.env
     codedeploy_role                 = data.aws_iam_role.codedeploy_role.arn
     deployment_config_name          = "CodeDeployDefault.AllAtOnce"
