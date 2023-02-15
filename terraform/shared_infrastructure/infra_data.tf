@@ -198,3 +198,23 @@ data "aws_iam_policy_document" "develop_role_policy" {
     resources = ["arn:${data.aws_partition.current.id}:codecommit:${var.region}:${data.aws_caller_identity.current.account_id}:*"]
   }
 }
+
+data "aws_iam_policy_document" "codedeploy_service_role" {
+  statement {
+    actions         = ["sts:AssumeRole"]
+    principals {
+      type          = "Service"
+      identifiers   = ["codedeploy.amazonaws.com"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "codedeploy_agent_role" {
+  statement {
+    actions         = ["sts:AssumeRole"]
+    principals {
+      type          = "Service"
+      identifiers   = ["ec2.amazonaws.com"]
+    }
+  }
+}
