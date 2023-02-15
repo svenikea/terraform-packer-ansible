@@ -22,4 +22,10 @@ resource "aws_launch_template" "ec2_launch_template" {
     }
     user_data                   = var.user_data != null ? base64encode("${var.user_data}") : null
     key_name                    = var.key_name
+    tag_specifications {
+      resource_type             = "instance"
+      tags = {
+        Name                    = var.env
+      }
+    }
 }
